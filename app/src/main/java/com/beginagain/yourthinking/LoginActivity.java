@@ -34,6 +34,8 @@ public class LoginActivity extends AppCompatActivity {
     // 구글  로그인 버튼
     private SignInButton signInButton;
 
+    final String PREFNAME = "Preferences";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        signInButton = findViewById(R.id.btn_login_google);
+        signInButton = findViewById(R.id.btn_google_login);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,26 +138,24 @@ public class LoginActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser user) { //update ui code here
         if (user != null) {
-            // Name, email address, and profile photo Url
             String name = user.getDisplayName();
             String email = user.getEmail();
             Uri photoUrl = user.getPhotoUrl();
-
-            // Check if user's email is verified
             boolean emailVerified = user.isEmailVerified();
-
-            // The user's ID, unique to the Firebase project. Do NOT use this value to
-            // authenticate with your backend server, if you have one. Use
-            // FirebaseUser.getIdToken() instead.
             String uid = user.getUid();
 
-            Log.d(TAG, "name : " + name);
-            Log.d(TAG, "email : " + email);
-            Log.d(TAG, "photoUrl : " + photoUrl);
-            Log.d(TAG, "emailVerified : " + emailVerified);
-            Log.d(TAG, "uid : " + uid);
+            SharedPreferences settings = getSharedPreferences(PREFNAME, MODE_PRIVATE);
+            SharedPreferences.Editor editor = settings.edit();
+
+            editor.putString("username", name);
+            editor.putString("useremail", email);
+            editor.putString("userphotoUrl", String.valueOf(photoUrl));
+            editor.putString("useruid", uid);
+            editor.putBoolean("isLogin", true);
+            editor.apply();
 
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
         }
     }
 }
