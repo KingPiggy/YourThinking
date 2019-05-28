@@ -11,14 +11,15 @@ import android.view.ViewGroup;
 import com.beginagain.yourthinking.R;
 
 public class Menu3Fragment extends Fragment {
+    View view;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_menu3, container, false);
+        view = inflater.inflate(R.layout.fragment_menu3, container, false);
 
 
-        return inflater.inflate(R.layout.fragment_menu3, container, false);
+        return view;
     }
 }

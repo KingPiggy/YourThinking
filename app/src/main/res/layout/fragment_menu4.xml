@@ -10,10 +10,10 @@
         android:text="MENU 4"/>
 
     <Button
-        android:id="@+id/btn_google_logout"
+        android:id="@+id/btn_menu4_userinfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="구글 로그아웃"/>
+        android:text="사용자정보"/>
 
 
 </LinearLayout>
