@@ -13,4 +13,10 @@
         android:layout_height="wrap_content"
         android:text="구글 로그아웃" />
 
+    <Button
+        android:id="@+id/btn_google_revoke"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="구글 회원탈퇴" />
+
 </LinearLayout>
