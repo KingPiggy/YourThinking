@@ -7,7 +7,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="MENU 4"/>
+        android:text="MENU 5"/>
 
+    <Button
+        android:id="@+id/btn_menu5_userinfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="사용자정보"/>
 
 </LinearLayout>

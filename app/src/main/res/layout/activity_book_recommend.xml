@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BookRecommendActivity"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/layout_recommend_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="30dp"
+            android:layout_height="80dp" />
+
+        <Button
+            android:id="@+id/btn_recommend_bestseller"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="베스트셀러" />
+
+        <Button
+            android:id="@+id/btn_recommend_new"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="신간 도서" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="분야별 추천"/>
+
+        <View
+            android:layout_width="30dp"
+            android:layout_height="80dp" />
+    </LinearLayout>
+
+
+</LinearLayout>

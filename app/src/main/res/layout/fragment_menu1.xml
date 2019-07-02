@@ -4,10 +4,26 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_temp"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/layout_menu1_rank"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="이동용 임시 버튼" />
+        android:orientation="horizontal">
 
+        <View
+            android:layout_width="30dp"
+            android:layout_height="65dp" />
+
+        <Button
+            android:id="@+id/btn_menu1_temp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="추천도서 조회" />
+
+        <View
+            android:layout_width="30dp"
+            android:layout_height="65dp" />
+
+    </LinearLayout>
 </LinearLayout>

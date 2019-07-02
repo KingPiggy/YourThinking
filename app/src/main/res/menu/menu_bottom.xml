@@ -3,22 +3,27 @@
 
     <item
         android:id="@+id/navigation_menu1"
-        android:icon="@android:drawable/ic_menu_call"
-        android:title="MENU1" />
+        android:icon="@drawable/ic_home"
+        android:title="Home" />
 
     <item
         android:id="@+id/navigation_menu2"
-        android:icon="@android:drawable/ic_menu_camera"
-        android:title="MENU2" />
+        android:icon="@drawable/ic_chat"
+        android:title="Chat" />
 
     <item
         android:id="@+id/navigation_menu3"
-        android:icon="@android:drawable/ic_menu_edit"
-        android:title="MENU3" />
+        android:icon="@drawable/ic_board"
+        android:title="Board" />
 
     <item
         android:id="@+id/navigation_menu4"
-        android:icon="@android:drawable/ic_menu_help"
-        android:title="MENU4" />
+        android:icon="@drawable/ic_maraton"
+        android:title="Maraton" />
+
+    <item
+        android:id="@+id/navigation_menu5"
+        android:icon="@drawable/ic_mypage"
+        android:title="MyPage" />
 
 </menu>

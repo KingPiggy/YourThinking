@@ -41,7 +41,6 @@ public class UserInfoActivity extends AppCompatActivity {
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-
         SharedPreferences settings = getSharedPreferences(PREFNAME, MODE_PRIVATE);
         editor = settings.edit();
 

@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.beginagain.yourthinking.BookMaratonActivity;
+import com.beginagain.yourthinking.BookRecommendActivity;
 import com.beginagain.yourthinking.LoginActivity;
 import com.beginagain.yourthinking.MainActivity;
 import com.beginagain.yourthinking.R;
@@ -36,13 +37,19 @@ public class Menu1Fragment extends Fragment {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
 
-            Snackbar.make(getActivity().findViewById(android.R.id.content), "환영합니다.", Snackbar.LENGTH_SHORT)
-                    .setAction("Action", null).show();
-
         } else {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
         }
+
+        mTempBtn = (Button)view.findViewById(R.id.btn_menu1_temp);
+        mTempBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), BookRecommendActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }

@@ -12,18 +12,25 @@ import android.widget.Button;
 
 import com.beginagain.yourthinking.R;
 import com.beginagain.yourthinking.UserInfoActivity;
-import com.google.firebase.auth.FirebaseAuth;
 
-public class Menu4Fragment extends Fragment {
-
+public class Menu5Fragment extends Fragment {
     View view;
+    Button mUserInfoBtn;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.fragment_menu4, container, false);
+        view = inflater.inflate(R.layout.fragment_menu5, container, false);
 
+        mUserInfoBtn = (Button) view.findViewById(R.id.btn_menu5_userinfo);
+        mUserInfoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), UserInfoActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
         return view;
