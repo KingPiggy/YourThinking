@@ -4,43 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BookRecommendActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".BookRecommendActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/layout_recommend_btn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <View
-            android:layout_width="30dp"
-            android:layout_height="80dp" />
+        android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/btn_recommend_bestseller"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
             android:text="베스트셀러" />
 
         <Button
             android:id="@+id/btn_recommend_new"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_toRightOf="@id/btn_recommend_bestseller"
             android:text="신간 도서" />
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="분야별 추천"/>
+        <Spinner
+            android:id="@+id/spinner_recommend_category"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:entries="@array/카테고리"></Spinner>
 
-        <View
-            android:layout_width="30dp"
-            android:layout_height="80dp" />
-    </LinearLayout>
+    </RelativeLayout>
 
-
+    <TextView
+        android:id="@+id/temp_recommend"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:text="" />
 </LinearLayout>
