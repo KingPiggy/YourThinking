@@ -39,5 +39,13 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:gravity="center"
-        android:text="" />
+        android:text="여기는 스피너 아이템 테스트용" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_recommend"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical">
+
+    </android.support.v7.widget.RecyclerView>
 </LinearLayout>
