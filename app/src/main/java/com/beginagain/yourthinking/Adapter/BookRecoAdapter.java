@@ -44,9 +44,9 @@ public class BookRecoAdapter extends RecyclerView.Adapter<BookRecoAdapter.MyView
         myViewHolder.cardView.setTag(position);
         myViewHolder.mTitle.setText(item.getTitle());
         myViewHolder.mAuthor.setText(item.getAuthor());
-        myViewHolder.mCompany.setText(item.getCompany());
+        myViewHolder.mCompany.setText(item.getPublisher());
         myViewHolder.mISBN.setText(item.getIsbn());
-        //Picasso.get().load(item.getImage()).into(holder.mThumbnail);
+        Picasso.get().load(item.getImage()).into(myViewHolder.mThumbnail);
 
     }
 

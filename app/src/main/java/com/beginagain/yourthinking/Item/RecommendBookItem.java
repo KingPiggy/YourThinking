@@ -1,14 +1,14 @@
 package com.beginagain.yourthinking.Item;
 
 public class RecommendBookItem {
-    String title, author, company, isbn, image;
+    String title, author, publisher, isbn, image;
 
     public RecommendBookItem(){}
 
-    public RecommendBookItem(String title, String author, String company, String isbn, String image) {
+    public RecommendBookItem(String title, String author, String publisher, String isbn, String image) {
         this.title = title;
         this.author = author;
-        this.company = company;
+        this.publisher = publisher;
         this.isbn = isbn;
         this.image = image;
     }
@@ -29,12 +29,12 @@ public class RecommendBookItem {
         this.author = author;
     }
 
-    public String getCompany() {
-        return company;
+    public String getPublisher() {
+        return publisher;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
     }
 
     public String getIsbn() {
