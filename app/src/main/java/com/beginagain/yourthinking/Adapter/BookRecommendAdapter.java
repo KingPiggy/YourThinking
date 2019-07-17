@@ -16,12 +16,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class BookRecoAdapter extends RecyclerView.Adapter<BookRecoAdapter.MyViewHolder> {
+public class BookRecommendAdapter extends RecyclerView.Adapter<BookRecommendAdapter.MyViewHolder> {
     Context context;
     ArrayList<RecommendBookItem> items;
     int itemLayout;
 
-    public BookRecoAdapter(Context context, ArrayList<RecommendBookItem> items, int itemLayout) {
+    public BookRecommendAdapter(Context context, ArrayList<RecommendBookItem> items, int itemLayout) {
         this.context = context;
         this.items = items;
         this.itemLayout = itemLayout;
@@ -29,13 +29,13 @@ public class BookRecoAdapter extends RecyclerView.Adapter<BookRecoAdapter.MyView
 
     @NonNull
     @Override
-    public BookRecoAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public BookRecommendAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_recommend_book, null);
         return new MyViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BookRecoAdapter.MyViewHolder myViewHolder, int position) {
+    public void onBindViewHolder(@NonNull BookRecommendAdapter.MyViewHolder myViewHolder, int position) {
         if (getItemCount() <= 0 && position >= getItemCount()) {
             return;
         }

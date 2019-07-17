@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardview_maraton_item"
+        cardCornerRadius="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="2dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_maraton_item_thumbnail"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="fitXY" />
+
+            <TextView
+                android:id="@+id/text_view_maraton_item_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@id/iv_maraton_item_thumbnail"
+                android:text="책 타이틀"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/text_view_maraton_item_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_view_maraton_item_title"
+                android:layout_alignLeft="@id/text_view_maraton_item_title"
+                android:layout_marginTop="5dp"
+                android:text="총 페이지"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/text_view_maraton_item_read"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/text_view_maraton_item_total"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@id/text_view_maraton_item_total"
+                android:text="읽은 페이지"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/text_view_maraton_item_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_view_maraton_item_total"
+                android:layout_alignLeft="@id/text_view_maraton_item_total"
+                android:layout_marginTop="5dp"
+                android:text="진행 상태"
+                android:textSize="12dp" />
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+</RelativeLayout>
