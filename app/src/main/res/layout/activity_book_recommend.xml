@@ -29,8 +29,8 @@
             android:id="@+id/spinner_recommend_category"
             android:layout_width="150dp"
             android:layout_height="50dp"
-            android:layout_alignParentRight="true"
-            android:entries="@array/카테고리"></Spinner>
+            android:layout_alignParentEnd="true"
+            android:entries="@array/카테고리" />
 
     </RelativeLayout>
 

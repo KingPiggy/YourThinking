@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <TextView
+    <Button
+        android:id="@+id/btn_make_chat_searchroom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="MENU 2" />
+        android:layout_toLeftOf="@id/btn_make_chat_makeroom"
+        android:text="채팅방 검색" />
 
-</LinearLayout>
+    <Button
+        android:id="@+id/btn_make_chat_makeroom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="right"
+        android:text="채팅방 생성" />
+
+    <ListView
+        android:id="@+id/listview_make_chat_chatlist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/btn_make_chat_makeroom" />
+
+
+</RelativeLayout>
