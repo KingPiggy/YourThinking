@@ -14,8 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".MakeChatRoomInfoActivity"></activity>
+        <activity android:name=".ChatActivity"></activity>
         <activity android:name=".MakeChatRoomActivity" />
         <activity android:name=".BookRecommendActivity" />
         <activity android:name=".UserInfoActivity" />
