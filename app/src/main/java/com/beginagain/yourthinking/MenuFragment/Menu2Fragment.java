@@ -84,6 +84,7 @@ public class Menu2Fragment extends Fragment {
 
     private void showChatList() {
         arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, room);
+        arrayAdapter.clear();
         mChatRoomListView.setAdapter(arrayAdapter);
 
         // 데이터 받아오기 및 어댑터 데이터 추가 및 삭제 등..리스너 관리

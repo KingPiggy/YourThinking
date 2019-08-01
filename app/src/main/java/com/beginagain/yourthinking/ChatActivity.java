@@ -1,6 +1,9 @@
 package com.beginagain.yourthinking;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.beginagain.yourthinking.Item.ChatDTO;
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,6 +22,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Iterator;
 
@@ -28,7 +34,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private ListView mListView;
     private EditText mChatEdit;
-    private Button mSendBtn;
+    private Button mSendBtn, mExitBtn;
 
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
@@ -44,6 +50,7 @@ public class ChatActivity extends AppCompatActivity {
         mListView = (ListView) findViewById(R.id.listview_chat);
         mChatEdit = (EditText) findViewById(R.id.edittext_chat);
         mSendBtn = (Button) findViewById(R.id.btn_chat_send);
+        mExitBtn = (Button) findViewById(R.id.btn_chat_exit);
 
         // 로그인 화면에서 받아온 채팅방 이름, 유저 이름 저장
         Intent intent = getIntent();
@@ -71,6 +78,59 @@ public class ChatActivity extends AppCompatActivity {
                 databaseReference.child("chat").child(chatRoomName).child("message").push().setValue(chat); // 데이터 푸쉬
                 mChatEdit.setText(""); //입력창 초기화
 
+            }
+        });
+
+        mExitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());     // 여기서 this는 Activity의 this
+                builder.setTitle("채팅에서 퇴장하시겠습니까?")        // 제목 설정
+                        .setMessage("지금까지 자신의 채팅 내역이 사라집니다.")        // 메세지 설정
+                        .setCancelable(false)        // 뒤로 버튼 클릭시 취소 가능 설정
+                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            // 확인 버튼 클릭시 설정
+                            public void onClick(DialogInterface dialog, int whichButton) {
+
+                                Query myQuery =  databaseReference.child("chat").child(chatRoomName).child("message").orderByChild("userName").equalTo(userName);
+                                myQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot myQuery: dataSnapshot.getChildren()) {
+                                            myQuery.getRef().removeValue();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                        Log.e("Hoon", "onCancelled", databaseError.toException());
+                                    }
+                                });
+
+//                                Query myQuery2 =  databaseReference.child("chat").child(chatRoomName).child("message");
+//                                myQuery2.addListenerForSingleValueEvent(new ValueEventListener() {
+//                                    @Override
+//                                    public void onDataChange(DataSnapshot snapshot) {
+//                                        if (snapshot.getValue() == null) {
+//                                            databaseReference.child("chat").child(chatRoomName).setValue(null);
+//                                        }
+//                                    }
+//                                    @Override
+//                                    public void onCancelled(@NonNull DatabaseError databaseError) {}
+//                                });
+
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            // 취소 버튼 클릭시 설정
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog dialog = builder.create();    // 알림창 객체 생성
+                dialog.show();    // 알림창 띄우기
             }
         });
     }

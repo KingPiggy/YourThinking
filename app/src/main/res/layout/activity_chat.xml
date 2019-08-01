@@ -6,15 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".ChatActivity">
 
+    <Button
+        android:id="@+id/btn_chat_exit"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:text="퇴장"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/btn_chat_exit"
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
             <ListView
                 android:id="@+id/listview_chat"
@@ -25,18 +32,21 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/btn_chat_send"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="send" />
+            android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/edittext_chat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="8" />
+
+            <Button
+                android:id="@+id/btn_chat_send"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="전송" />
+
         </LinearLayout>
 
     </LinearLayout>
