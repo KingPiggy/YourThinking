@@ -31,6 +31,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import static android.app.Activity.RESULT_OK;
+
 public class Menu2Fragment extends Fragment {
     View view;
 
@@ -39,12 +41,10 @@ public class Menu2Fragment extends Fragment {
 
     private ArrayAdapter<String> arrayAdapter;
     private ArrayList<String> room = new ArrayList<>();
-    // private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().getRoot();
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
 
-
-    private String name;
+    public static final int code = 1000;
 
     @Nullable
     @Override
@@ -69,11 +69,26 @@ public class Menu2Fragment extends Fragment {
                 String chatRoomName = ((TextView) view).getText().toString();
                 Intent intent = new Intent(getActivity(), ChatActivity.class);
                 intent.putExtra("chatRoomName", chatRoomName);
-                startActivity(intent);
+                startActivityForResult(intent, code);
             }
         });
 
+        arrayAdapter.notifyDataSetChanged();
+
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == RESULT_OK){
+            switch (requestCode){
+                case 1000:
+                    Log.d("hoon", "응답성공");
+                    showChatList();
+                    break;
+            }
+        }
+
     }
 
     void init() {
@@ -87,11 +102,9 @@ public class Menu2Fragment extends Fragment {
         arrayAdapter.clear();
         mChatRoomListView.setAdapter(arrayAdapter);
 
-        // 데이터 받아오기 및 어댑터 데이터 추가 및 삭제 등..리스너 관리
         databaseReference.child("chat").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Log.e("LOG", "dataSnapshot.getKey() : " + dataSnapshot.getKey());
                 arrayAdapter.add(dataSnapshot.getKey());
                 arrayAdapter.notifyDataSetChanged();
             }
