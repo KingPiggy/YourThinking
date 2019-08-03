@@ -43,8 +43,9 @@ public class ChatActivity extends AppCompatActivity {
 
     private EditText mChatEdit;
     private Button mSendBtn, mExitBtn;
+
     private RecyclerView mRecyclerView;
-    RecyclerView.LayoutManager layoutManager;
+    private RecyclerView.LayoutManager layoutManager;
     private ArrayList<ChatDTO> chatItems = new ArrayList<ChatDTO>();
     private ChatItemAdapter recyclerAdapter;
 

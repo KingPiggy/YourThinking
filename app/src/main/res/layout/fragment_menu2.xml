@@ -19,8 +19,8 @@
         android:layout_gravity="right"
         android:text="채팅방 생성" />
 
-    <ListView
-        android:id="@+id/listview_make_chat_chatlist"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_make_chat_chatlist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/btn_make_chat_makeroom" />

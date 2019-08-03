@@ -19,7 +19,6 @@ public class MakeChatRoomActivity extends AppCompatActivity {
 
     String roomTitle, bookTitle, desc;
 
-    //    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("room");
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
 
