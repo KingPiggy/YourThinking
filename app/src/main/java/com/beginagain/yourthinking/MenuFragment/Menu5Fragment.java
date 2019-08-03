@@ -6,11 +6,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.beginagain.yourthinking.R;
@@ -28,7 +26,7 @@ public class Menu5Fragment extends Fragment {
     de.hdodenhof.circleimageview.CircleImageView mUserImage;
 
     String name, email;
-    Uri photoUrl;
+    Uri profilePhotoUrl;
 
     @Nullable
     @Override
@@ -59,11 +57,11 @@ public class Menu5Fragment extends Fragment {
             // Name, email address, and profile photo Url
             name = user.getDisplayName();
             email = user.getEmail();
-            photoUrl = user.getPhotoUrl();
+            profilePhotoUrl = user.getPhotoUrl();
 
             mUserName.setText(name);
             mUserEmail.setText(email);
-            Picasso.get().load(photoUrl).into(mUserImage);
+            Picasso.get().load(profilePhotoUrl).into(mUserImage);
         }
     }
 }
