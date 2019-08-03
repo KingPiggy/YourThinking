@@ -16,6 +16,7 @@ import android.widget.EditText;
 
 import com.beginagain.yourthinking.Adapter.ChatItemAdapter;
 import com.beginagain.yourthinking.Item.ChatDTO;
+import com.beginagain.yourthinking.MenuFragment.Menu2Fragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;

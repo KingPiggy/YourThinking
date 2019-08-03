@@ -23,12 +23,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-
-import static android.app.Activity.RESULT_OK;
 
 public class Menu2Fragment extends Fragment {
     View view;
@@ -67,25 +63,10 @@ public class Menu2Fragment extends Fragment {
             }
         });
 
-//        adapter.notifyDataSetChanged();
-
-        //                startActivityForResult(intent, code);
+        adapter.notifyDataSetChanged();
 
         return view;
     }
-//
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if(resultCode == RESULT_OK){
-//            switch (requestCode){
-//                case 1000:
-//                    Log.d("hoon", "응답성공");
-//                    showChatList();
-//                    break;
-//            }
-//        }
-//
-//    }
 
     void init() {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_make_chat_chatlist);
@@ -101,23 +82,26 @@ public class Menu2Fragment extends Fragment {
         databaseReference.child("chat").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Log.d("hoon", "스냅샷 테스트 겟키: " + dataSnapshot.getKey());
-                Log.d("hoon", "스냅샷 테스트 : " + dataSnapshot.child(dataSnapshot.getKey()).getKey());
-                Log.d("hoon", "스냅샷 테스트 : ");
-                String roomTitle = dataSnapshot.getKey();
-                ChatRoomItem chatRoomItem = new ChatRoomItem(roomTitle, "gd", "gd");
+                ChatRoomItem chatRoomItem = dataSnapshot.child("info").getValue(ChatRoomItem.class);
                 chatRoomItems.add(chatRoomItem);
-               adapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-//                arrayAdapter.notifyDataSetChanged();
+                ChatRoomItem chatRoomItem = dataSnapshot.child("info").getValue(ChatRoomItem.class);
+                String toDeleteTitle = chatRoomItem.getRoomTitle();
+
+                for(ChatRoomItem a : chatRoomItems){
+                    if(a.getRoomTitle().equals(toDeleteTitle))
+                        chatRoomItems.remove(a);
+                }
+
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -130,8 +114,5 @@ public class Menu2Fragment extends Fragment {
 
             }
         });
-
-//                chatRoomItems.add(roomInfo);
-//                adapter.notifyDataSetChanged();
     }
 }

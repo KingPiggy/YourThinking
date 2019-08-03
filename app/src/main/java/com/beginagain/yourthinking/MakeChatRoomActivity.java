@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.beginagain.yourthinking.Item.ChatRoomItem;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -41,10 +42,13 @@ public class MakeChatRoomActivity extends AppCompatActivity {
                 desc = mRoomDescEditText.getText().toString();
 
                 Map<String, Object> map = new HashMap<String, Object>();
-                map.put("name", roomTitle);
-                map.put("book", bookTitle);
+                map.put("roomTitle", roomTitle);
+                map.put("bookTitle", bookTitle);
                 map.put("desc", desc);
                 databaseReference.child("chat").child(roomTitle).child("info").updateChildren(map);
+
+//                ChatRoomItem chatRoomItem = new ChatRoomItem(roomTitle, bookTitle, desc);
+//                databaseReference.child("chatroom").push().setValue(chatRoomItem);
 
                 finish();
             }

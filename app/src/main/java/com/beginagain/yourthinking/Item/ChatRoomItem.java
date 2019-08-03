@@ -3,6 +3,10 @@ package com.beginagain.yourthinking.Item;
 public class ChatRoomItem {
     private String roomTitle, bookTitle, desc;
 
+    public  ChatRoomItem(){
+
+    }
+
     public ChatRoomItem(String roomTitle, String bookTitle, String desc) {
         this.roomTitle = roomTitle;
         this.bookTitle = bookTitle;
