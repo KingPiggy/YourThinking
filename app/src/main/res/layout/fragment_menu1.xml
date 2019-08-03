@@ -19,7 +19,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="추천도서 조회" />
+            android:text="추천도서 조회 TOP 30" />
 
         <View
             android:layout_width="30dp"

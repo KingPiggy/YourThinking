@@ -30,7 +30,6 @@ import java.util.ArrayList;
 
 public class BookRecommendActivity extends AppCompatActivity {
     Spinner mCategorySpinner;
-    TextView mTempTv;
     Button mBestSellerBtn, mNewBooksBtn;
 
     RecyclerView mRecyclerView;
@@ -59,7 +58,6 @@ public class BookRecommendActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String item = parent.getItemAtPosition(position).toString();
-                mTempTv.setText(item + " : " + categoryNo[position]);
                 selectedCategory = categoryNo[position];
                 new BookRecoAsyncTask().execute();
             }
@@ -85,14 +83,14 @@ public class BookRecommendActivity extends AppCompatActivity {
                 case R.id.btn_recommend_bestseller:
                     isBestSeller = 1;
                     isNewBooks = 0;
-                    Toast.makeText(getApplicationContext(), "이거 베스트셀러", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "베스트셀러 목록입니다.", Toast.LENGTH_SHORT).show();
 
                     new BookRecoAsyncTask().execute();
                     break;
                 case R.id.btn_recommend_new:
                     isBestSeller = 0;
                     isNewBooks = 1;
-                    Toast.makeText(getApplicationContext(), "이거 신간", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "신간 도서 목록입니다.", Toast.LENGTH_SHORT).show();
 
                     new BookRecoAsyncTask().execute();
                     break;
@@ -101,7 +99,6 @@ public class BookRecommendActivity extends AppCompatActivity {
     };
 
     private void init() {
-        mTempTv = (TextView) findViewById(R.id.temp_recommend);
         mBestSellerBtn = (Button) findViewById(R.id.btn_recommend_bestseller);
         mNewBooksBtn = (Button) findViewById(R.id.btn_recommend_new);
         mCategorySpinner = (Spinner) findViewById(R.id.spinner_recommend_category);
@@ -169,7 +166,7 @@ public class BookRecommendActivity extends AppCompatActivity {
                     String title = bookItem.getString("title");
                     String author = bookItem.getString("author");
                     String publisher = bookItem.getString("publisher");
-                    String isbn = bookItem.getString("isbn");
+                    String isbn = "ISBN : " + bookItem.getString("isbn");
                     String image = bookItem.getString("coverLargeUrl");
                     // 쓸만한거 : description : 설명, "priceStandard":가격, "translator":"",
 

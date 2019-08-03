@@ -19,7 +19,7 @@
                 android:id="@+id/iv_maraton_item_thumbnail"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:scaleType="fitXY" />
+                android:scaleType="fitXY"/>
 
             <TextView
                 android:id="@+id/text_view_maraton_item_title"

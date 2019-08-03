@@ -163,6 +163,8 @@ public class ChatActivity extends AppCompatActivity {
     private void chatConversation(DataSnapshot dataSnapshot) {
         ChatDTO chatDTO = dataSnapshot.getValue(ChatDTO.class);
         // 채팅 뿌려주는 부분
+        // if DTO.uid == 나의 uid
+
         adapter.add(chatDTO.getUserName() + " : " + chatDTO.getMessage() + "\n" + chatDTO.getTime());
         adapter.notifyDataSetChanged();
     }

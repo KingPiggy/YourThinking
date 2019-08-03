@@ -17,16 +17,20 @@
 
             <ImageView
                 android:id="@+id/iv_recommend_item_thumbnail"
-                android:layout_width="100dp"
+                android:layout_width="75dp"
                 android:layout_height="100dp"
+                android:background="@drawable/digimon"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="10dp"
                 android:scaleType="fitXY" />
 
             <TextView
                 android:id="@+id/text_view_recommend_item_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/iv_recommend_item_thumbnail"
                 android:text="책 타이틀"
                 android:textSize="14dp" />
