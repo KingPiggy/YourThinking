@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_board"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Board.BookBoardActivity">
+
+    <TextView
+        android:id="@+id/text_view_board_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:textSize="30dp"
+        android:text="책에 대한 자유로운 이야기" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_Board"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_below="@id/text_view_board_title"
+        android:layout_marginTop="30dp"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginRight="15sp"
+            android:layout_marginBottom="160dp"
+            android:src="@drawable/ic_search"
+            android:visibility="invisible"
+            app:backgroundTint="#ffffff"
+            app:elevation="6dp"
+            app:pressedTranslationZ="12dp" />
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_write"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginRight="15sp"
+            android:layout_marginBottom="90dp"
+            android:src="@drawable/ic_write"
+            android:visibility="invisible"
+            app:backgroundTint="#ffffff"
+            app:elevation="6dp"
+            app:pressedTranslationZ="12dp" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="15sp"
+            android:backgroundTint="#9500ff"
+            android:src="@drawable/ic_add" />
+
+    </FrameLayout>
+</RelativeLayout>

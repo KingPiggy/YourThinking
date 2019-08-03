@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="2dp"
+    app:cardMaxElevation="2dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_board_item_thumbnail"
+        android:layout_width="65dp"
+        android:layout_height="90dp"
+        android:scaleType="fitXY"/>
+
+        <TextView
+            android:id="@+id/text_view_board_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/iv_board_item_thumbnail"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:text="반갑습니다"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_view_board_item_title"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/iv_board_item_thumbnail"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_view_board_item_name"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:drawableStart="@drawable/ic_person"
+                android:text="Name"
+                android:textSize="12sp"
+                tools:ignore="HardCodedText"/>
+
+            <TextView
+                android:id="@+id/text_view_board_item_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_time"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:text="0000-00-00 00:00"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
