@@ -85,32 +85,34 @@ public class SearchBoardActivity extends AppCompatActivity implements View.OnCli
                                 String name = (String) dc.getData().get("name");
                                 String date = (String) dc.getData().get("date");
                                 String image = (String) dc.getData().get("image");
+                                String author = (String)dc.getData().get("author"); // 8.3
+                                String booktitle = (String)dc.getData().get("booktitle"); // 8.3
 
                                 switch (spinnercount) {
                                     case "0":
                                         if(text.toLowerCase().contains(name)){
-                                            BookBoardItem data = new BookBoardItem(id, title, contents, name, date, image);
+                                            BookBoardItem data = new BookBoardItem(id, title, contents, name, date, image, author, booktitle);
                                             mSearchList.add(data);
                                         }else if(name.toLowerCase().contains(text)) {
-                                            BookBoardItem data = new BookBoardItem(id, title, contents, name, date, image);
+                                            BookBoardItem data = new BookBoardItem(id, title, contents, name, date, image, author, booktitle);
                                             mSearchList.add(data);
                                         }
                                         break;
                                     case "1":
                                         if(text.toLowerCase().contains(title)){
-                                            BookBoardItem data = new BookBoardItem(id, title, contents, name, date ,image);
+                                            BookBoardItem data = new BookBoardItem(id, title, contents, name, date ,image, author, booktitle);
                                             mSearchList.add(data);
                                         }else if(title.toLowerCase().contains(text)) {
-                                            BookBoardItem data = new BookBoardItem(id, title, contents, name, date ,image);
+                                            BookBoardItem data = new BookBoardItem(id, title, contents, name, date ,image, author, booktitle);
                                             mSearchList.add(data);
                                         }
                                         break;
                                     case "2":
                                         if(text.toLowerCase().contains(contents)){
-                                            BookBoardItem data = new BookBoardItem(id, title, contents, name, date ,image);
+                                            BookBoardItem data = new BookBoardItem(id, title, contents, name, date ,image, author, booktitle);
                                             mSearchList.add(data);
                                         }else if(contents.toLowerCase().contains(text)) {
-                                            BookBoardItem data = new BookBoardItem(id, title, contents, name, date ,image);
+                                            BookBoardItem data = new BookBoardItem(id, title, contents, name, date ,image, author, booktitle);
                                             mSearchList.add(data);
                                         }
                                         break;

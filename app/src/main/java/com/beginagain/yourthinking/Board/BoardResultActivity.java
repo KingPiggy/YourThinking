@@ -6,13 +6,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.beginagain.yourthinking.Adapter.ReplyAdapter;
 import com.beginagain.yourthinking.Item.BookReplyItem;
 import com.beginagain.yourthinking.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -31,6 +31,9 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
+import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -54,19 +57,21 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
     private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-    private TextView mName, mTitle, mContents, mDate;
-    private String name, title, contents, date, id ;
-    private String rid, rname, rcontents, rdate;
+    private TextView mName, mTitle, mContents, mDate, mAuthor, mBookTitle;
+    private String name, title, contents, date, id, author, image, bookTitle;
+    private String rid, recommendid; // 8.4
+    private ImageView mImage;
 
     private EditText mReplyContentText;
-    private TextView mReplyNameText;
+    private TextView mReplyNameText, mRecommnedCount;
 
     private RecyclerView mReplyRecyclerView;
-
     private ReplyAdapter mAdapter;
+
     private List<BookReplyItem> mReplyList; // private static 기존
 
     long mNow = System.currentTimeMillis();
+    public int count =0;
     Date mReDate = new Date(mNow);
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
     String formatDate = mFormat.format(mReDate);
@@ -84,6 +89,7 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
 
         mReplyNameText = (TextView)findViewById(R.id.text_view_reply_name);
         mReplyContentText = (EditText)findViewById(R.id.et_reply_contents);
+        mRecommnedCount = (TextView)findViewById(R.id.text_view_result_recommend);
 
         mReplyNameText.setText(mReName);
 
@@ -91,6 +97,9 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
         mTitle = (TextView)findViewById(R.id.text_view_result_title);
         mContents = (TextView)findViewById(R.id.text_view_result_contents);
         mDate = (TextView)findViewById(R.id.text_view_result_date);
+        mBookTitle = (TextView)findViewById(R.id.text_view_result_book_title);
+        mAuthor = (TextView)findViewById(R.id.text_view_result_author);
+        mImage = (ImageView)findViewById(R.id.iv_result);
 
         Intent intent = getIntent();
         id = intent.getStringExtra("Id");
@@ -98,10 +107,17 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
         title = intent.getStringExtra("Title");
         contents = intent.getStringExtra("Contents");
         date = intent.getStringExtra("Date");
+        author = intent.getStringExtra("Author");
+        image = intent.getStringExtra("Image");
+        bookTitle = intent.getStringExtra("BookTitle");
+
         mName.setText(name);
         mTitle.setText(title);
         mContents.setText(contents);
         mDate.setText(date);
+        mAuthor.setText(author);
+        mBookTitle.setText(bookTitle);
+        Picasso.get().load(image).into(mImage);
 
         mStore.collection("board").document(id)
                 .collection("reply").orderBy("date").limit(100)
@@ -122,53 +138,24 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
                         mReplyRecyclerView.setAdapter(mAdapter);
                     }
                 });
+        mStore.collection("board").document(id).collection("recommend")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        int recount = 0;
+                        for(QueryDocumentSnapshot dc : queryDocumentSnapshots) {
+                            recount++;
+                        }
+                        mRecommnedCount.setText("추천 : "+recount);
+                    }
+                });
 
         findViewById(R.id.btn_reply).setOnClickListener(this);
         findViewById(R.id.btn_board_delete).setOnClickListener(this);
         findViewById(R.id.btn_board_retouch).setOnClickListener(this);
+        findViewById(R.id.btn_board_recommend).setOnClickListener(this);
     }
 
-    private class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.ReplyViewHolder> {
-        private List<BookReplyItem> mReplyList;
-
-        public ReplyAdapter(List<BookReplyItem> mReplyList) {
-            this.mReplyList = mReplyList;
-        }
-
-        @NonNull
-        @Override
-        public ReplyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return new ReplyViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_reply_board, parent, false));
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull ReplyViewHolder holder, int position) {
-            BookReplyItem data = mReplyList.get(position);
-            holder.replyNameTextView.setText(data.getName());
-            holder.replyDateTextView.setText(data.getDate());
-            holder.replyContentsTextView.setText(data.getContents());
-        }
-
-        @Override
-        public int getItemCount() {
-            return mReplyList.size();
-        }
-
-        class ReplyViewHolder extends RecyclerView.ViewHolder {
-
-            private TextView replyNameTextView;
-            private TextView replyDateTextView;
-            private TextView replyContentsTextView;
-
-            public ReplyViewHolder(View itemView) {
-                super(itemView);
-                replyNameTextView = itemView.findViewById(R.id.text_view_reply_item_name);
-                replyContentsTextView = itemView.findViewById(R.id.text_view_reply_item_content);
-                replyDateTextView = itemView.findViewById(R.id.text_view_reply_item_date);
-
-            }
-        }
-    }
     @Override
     public void onClick(View v) {
         switch(v.getId()){
@@ -213,7 +200,6 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-
                                 }
                             });
                 }else{
@@ -222,42 +208,60 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.btn_board_retouch:
                 Intent touchIntent = new Intent(BoardResultActivity.this, RetouchBoardActivity.class);
-                touchIntent.putExtra("Id", id);
-                touchIntent.putExtra("Name",name);
-                touchIntent.putExtra("Title", title);
-                touchIntent.putExtra("Contents", contents);
-                touchIntent.putExtra("Date", date);
-
-                startActivity(touchIntent);
+                if(mReName.equals(name)) {
+                    touchIntent.putExtra("Id", id);
+                    touchIntent.putExtra("Name", name);
+                    touchIntent.putExtra("Title", title);
+                    touchIntent.putExtra("Contents", contents);
+                    touchIntent.putExtra("Date", date);
+                    startActivity(touchIntent);
+                }else{
+                    Toast.makeText(BoardResultActivity.this, "작성자가 아닙니다", Toast.LENGTH_SHORT).show();
+                }
                 break;
+            case R.id.btn_board_recommend:
 
+                mStore.collection("board").document(id).collection("recommend")
+                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                                for(QueryDocumentSnapshot dc : queryDocumentSnapshots) {
+                                    String name = (String) dc.getData().get("name");
+                                    if(mReName.equals(name)){
+                                        count = 1;
+                                        break;
+                                    }
+                                }
+                                if(count ==0){
+                                    recommendid = mStore.collection("board").document(id).collection("recommend").document().getId();
+                                    Map<String, Object> recommendPost = new HashMap<>();
+                                    recommendPost.put("id", recommendid);
+                                    recommendPost.put("name", mReName);
+                                    recommendPost.put("date",formatDate);
+                                    mStore.collection("board").document(id)
+                                        .collection("recommend").document().set(recommendPost);
+                                    Toast.makeText(BoardResultActivity.this, "추천!", Toast.LENGTH_SHORT).show();
+                                }
+                            }});
+                if(count==1){
+                    Toast.makeText(BoardResultActivity.this, "이미추천!", Toast.LENGTH_SHORT).show();
+                }
+                break;
         }
-
     }
     // 컬렉션 삭제위해서 쓰는것, doc 참고
-    private Task<Void> deleteCollection(final CollectionReference collection,
-                                        final int batchSize,
-                                        Executor executor) {
-
+    private Task<Void> deleteCollection(final CollectionReference collection, final int batchSize, Executor executor) {
         return Tasks.call(executor, new Callable<Void>() {
             @Override
             public Void call() throws Exception {
-                // Get the first batch of documents in the collection
                 Query query = collection.orderBy(FieldPath.documentId()).limit(batchSize);
-
-                // Get a list of deleted documents
                 List<DocumentSnapshot> deleted = deleteQueryBatch(query);
 
-                // While the deleted documents in the last batch indicate that there
-                // may still be more documents in the collection, page down to the
-                // next batch and delete again
                 while (deleted.size() >= batchSize) {
-                    // Move the query cursor to start after the last doc in the batch
                     DocumentSnapshot last = deleted.get(deleted.size() - 1);
                     query = collection.orderBy(FieldPath.documentId())
                             .startAfter(last.getId())
                             .limit(batchSize);
-
                     deleted = deleteQueryBatch(query);
                 }
                 return null;

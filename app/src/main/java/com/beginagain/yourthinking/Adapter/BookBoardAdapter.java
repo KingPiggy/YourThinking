@@ -18,7 +18,7 @@ import java.util.List;
 
 public class BookBoardAdapter extends RecyclerView.Adapter<BookBoardAdapter.MainViewHolder> {
 
-    String mName, mTitle, mContents, mDate, mId, mImage;
+    String mName, mTitle, mContents, mDate, mId, mImage, mAuthor, mBooktitle;
 
     List<BookBoardItem> mSearchList;
 
@@ -73,7 +73,9 @@ public class BookBoardAdapter extends RecyclerView.Adapter<BookBoardAdapter.Main
                     mTitle = data.getTitle();
                     mContents = data.getContents();
                     mDate = data.getDate();
-                    mImage = data.getDate();
+                    mImage = data.getImage();
+                    mAuthor = data.getAuthor();
+                    mBooktitle = data.getBooktitle();
 
                     intent.putExtra("Id", mId);
                     intent.putExtra("Name",mName);
@@ -81,6 +83,8 @@ public class BookBoardAdapter extends RecyclerView.Adapter<BookBoardAdapter.Main
                     intent.putExtra("Contents", mContents);
                     intent.putExtra("Date", mDate);
                     intent.putExtra("Image", mImage);
+                    intent.putExtra("Author", mAuthor);
+                    intent.putExtra("BookTitle", mBooktitle);
                     view.getContext().startActivity(intent);
                     // Toast.makeText(BookBoardActivity.this, "아무것도 없어요!", Toast.LENGTH_SHORT).show();
                 }

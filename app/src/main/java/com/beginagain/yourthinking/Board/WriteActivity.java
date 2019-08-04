@@ -121,6 +121,8 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
                 post.put("contents", mWriteContentText.getText().toString());
                 post.put("date", mWriteDateText.getText().toString());
                 post.put("image", thumnail);
+                post.put("booktitle",title);
+                post.put("author", author);
 
                 // id로 필드이름이 같더라도 구별 가능하게 함
                 mStore.collection("board").document(id).set(post)
@@ -155,7 +157,7 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
             String myKey = "88137ABBC6F43E258E287321232C8A33FF52C15F971D8B66FA5B42B4FBC74016";
             String urlSource = "";
             String queryType = "&queryType=title";
-            String iec = "&inputEncoding=euc-kr";
+            String iec = "&inputEncoding=utf-8";
             String outputStyle = "json"; // 혹은 json
 
             String str, receiveMsg = "";

@@ -55,9 +55,11 @@ public class MyBoardActivity extends AppCompatActivity {
                             String name = (String) dc.getData().get("name");
                             String date = (String) dc.getData().get("date");
                             String image = (String) dc.getData().get("image");
+                            String author = (String)dc.getData().get("author"); // 8.3
+                            String booktitle = (String)dc.getData().get("booktitle"); // 8.3
 
                             if (mName.equals(name)){
-                                BookBoardItem data = new BookBoardItem(id, title, contents, name, date,image);
+                                BookBoardItem data = new BookBoardItem(id, title, contents, name, date, image, author, booktitle);
                                 mSearchList.add(data);
                             }
                         }

@@ -9,13 +9,40 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <ImageView
+                android:id="@+id/iv_result"
+                android:layout_width="65dp"
+                android:layout_height="90dp"
+                android:layout_marginTop="30dp" />
+
+            <TextView
+                android:id="@+id/text_view_result_book_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:layout_toRightOf="@id/iv_result"
+                android:text=" 책 제목"
+                android:textSize="22dp"/>
+
+            <TextView
+                android:id="@+id/text_view_result_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_view_result_book_title"
+                android:layout_toRightOf="@id/iv_result"
+                android:layout_marginLeft="7dp"
+                android:text="책 저자"
+                android:textSize="15dp"/>
+
             <TextView
                 android:id="@+id/text_view_result_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="20dp"
-                android:text="글 제목"/>
+                android:layout_below="@id/iv_result"
+                android:text="글 제목"
+                android:textSize="20dp"/>
 
             <TextView
                 android:id="@+id/text_view_result_name"
@@ -37,6 +64,16 @@
                 android:layout_marginTop="10dp"/>
 
             <TextView
+                android:id="@+id/text_view_result_recommend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_view_result_title"
+                android:layout_toRightOf="@id/text_view_result_date"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:text="추천수 : 00"/>
+
+            <TextView
                 android:id="@+id/text_view_result_contents"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -45,25 +82,34 @@
                 android:layout_marginLeft="20dp"
                 android:text="글 내용"/>
 
-            <Button
-                android:id="@+id/btn_board_retouch"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:layout_below="@id/text_view_result_contents"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="20dp"
-                android:text="수정"/>
+                android:gravity="center_horizontal"
+                android:layout_marginTop="20dp">
 
-            <Button
-                android:id="@+id/btn_board_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/btn_board_retouch"
-                android:layout_below="@id/text_view_result_contents"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="20dp"
-                android:text="삭제"/>
+                <Button
+                    android:id="@+id/btn_board_retouch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="수정"/>
 
+                <Button
+                    android:id="@+id/btn_board_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:text="삭제"/>
+
+                <Button
+                    android:id="@+id/btn_board_recommend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:text="추천"/>
+            </LinearLayout>
         </RelativeLayout>
 
         <LinearLayout

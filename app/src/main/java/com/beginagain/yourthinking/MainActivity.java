@@ -1,6 +1,7 @@
 package com.beginagain.yourthinking;
 
-import android.content.Intent;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
@@ -8,9 +9,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-
 
 import com.beginagain.yourthinking.MenuFragment.Menu1Fragment;
 import com.beginagain.yourthinking.MenuFragment.Menu2Fragment;
@@ -68,7 +66,26 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder alert_ex = new AlertDialog.Builder(this);
+        alert_ex.setMessage("정말로 종료하시겠습니까?");
 
+        alert_ex.setPositiveButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
+            }
+        });
+        alert_ex.setNegativeButton("종료", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finishAffinity();
+            }
+        });
+        alert_ex.setTitle("Your Thinking");
+        AlertDialog alert = alert_ex.create();
+        alert.show();
     }
 }

@@ -26,7 +26,7 @@ public class RetouchBoardActivity extends AppCompatActivity implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_retouch);
+        setContentView(R.layout.activity_board_retouch);
 
         mTitle = findViewById(R.id.et_retouch_title);
         mContents = findViewById(R.id.et_retouch_content);

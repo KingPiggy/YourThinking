@@ -69,8 +69,10 @@ public class BookBoardActivity extends AppCompatActivity implements View.OnClick
                             String name = (String) dc.getData().get("name");
                             String date = (String) dc.getData().get("date");
                             String image = (String) dc.getData().get("image");
+                            String author = (String)dc.getData().get("author"); // 8.3
+                            String booktitle = (String)dc.getData().get("booktitle"); // 8.3
 
-                            BookBoardItem data = new BookBoardItem(id, title, contents, name, date, image);
+                            BookBoardItem data = new BookBoardItem(id, title, contents, name, date, image, author, booktitle);
                             mBoardList.add(data);
                         }
                         mAdapter = new BookBoardAdapter(mBoardList);

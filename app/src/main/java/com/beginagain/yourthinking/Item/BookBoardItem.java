@@ -8,6 +8,8 @@ public class BookBoardItem {
     private String name;
     private String date;
     private String image;
+    private String author;
+    private String booktitle;
 
     public BookBoardItem() {
     }
@@ -19,13 +21,15 @@ public class BookBoardItem {
         this.name = name;
         this.date = date;
     }
-    public BookBoardItem(String id, String title, String contents, String name, String date, String image){
+    public BookBoardItem(String id, String title, String contents, String name, String date, String image, String author, String booktitle){
         this.id = id;
         this.title = title;
         this.contents = contents;
         this.name = name;
         this.date = date;
         this.image = image;
+        this.author = author;
+        this.booktitle = booktitle;
     }
 
     public String getId() {
@@ -75,17 +79,22 @@ public class BookBoardItem {
     public void setImage(String image){
         this.image = image;
     }
-/**
-    @Override
-    public String toString() {
-        return "BookBoardItem{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", contents='" + contents + '\'' +
-                ", name='" + name + '\'' +
-                ", date='" +date + '\'' +
-                '}';
-    }**/
+
+    public String getAuthor(){
+        return author;
+    }
+
+    public void setAuthor(String author){
+        this.author = author;
+    }
+
+    public String getBooktitle(){
+        return booktitle;
+    }
+
+    public void setBooktitle(String booktitle){
+        this.booktitle = booktitle;
+    }
 
     @Override
     public String toString() {
@@ -95,7 +104,9 @@ public class BookBoardItem {
                 ", contents='" + contents + '\'' +
                 ", name='" + name + '\'' +
                 ", date='" +date + '\'' +
-                ", count='"+image+'\''+
+                ", image='"+image+'\''+
+                ", author='"+author+'\''+
+                ", booktitle='"+booktitle+'\''+
                 '}';
     }
 }
