@@ -22,11 +22,16 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.MyView
     Context context;
     ArrayList<ChatRoomItem> items;
     int itemLayout;
+    int peopleCount = 0;
 
     public ChatRoomAdapter(Context context, ArrayList<ChatRoomItem> items, int itemLayout) {
         this.context = context;
         this.items = items;
         this.itemLayout = itemLayout;
+    }
+
+    public void setPeopleCount(int peopleCount) {
+        this.peopleCount = peopleCount;
     }
 
     @NonNull
@@ -48,14 +53,12 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.MyView
         myViewHolder.mRoomName.setText(item.getRoomTitle());
         myViewHolder.mBookName.setText(item.getBookTitle());
         myViewHolder.mDesc.setText(item.getDesc());
+        myViewHolder.mPeopleCount.setText("참여인원 " + this.peopleCount);
         myViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("hoon","온클릭");
                 int pos = (int) view.getTag();
-                Log.d("hoon","pos:"+pos);
                 String chatRoomName = items.get(pos).getRoomTitle();
-                Log.d("hoon","룸네임:"+chatRoomName);
 
                 Intent intent = new Intent(context, ChatActivity.class);
                 intent.putExtra("chatRoomName", chatRoomName);
@@ -73,8 +76,8 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.MyView
         return this.items.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
-        public TextView mRoomName, mBookName, mDesc;
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        public TextView mRoomName, mBookName, mDesc, mPeopleCount;
         public CardView cardView;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -85,6 +88,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.MyView
             mRoomName = (TextView) itemView.findViewById(R.id.text_view_chat_room_item_room_title);
             mBookName = (TextView) itemView.findViewById(R.id.text_view_chat_room_item_book_title);
             mDesc = (TextView) itemView.findViewById(R.id.text_view_chat_room_item_room_desc);
+            mPeopleCount = (TextView) itemView.findViewById(R.id.text_view_chat_room_item_count);
         }
 
 

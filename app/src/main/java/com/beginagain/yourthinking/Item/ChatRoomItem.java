@@ -2,7 +2,6 @@ package com.beginagain.yourthinking.Item;
 
 public class ChatRoomItem {
     private String roomTitle, bookTitle, desc;
-
     public  ChatRoomItem(){
 
     }
@@ -36,4 +35,5 @@ public class ChatRoomItem {
     public void setDesc(String desc) {
         this.desc = desc;
     }
+
 }

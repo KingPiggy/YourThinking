@@ -30,11 +30,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ChatActivity extends AppCompatActivity {
     private String chatRoomName;
     private String userName, uid; // 파이어베이스 추출
-    Uri profilePhotoUrl;
+    private Uri profilePhotoUrl;
 
     private String time;
     private long mNow;
@@ -54,7 +56,10 @@ public class ChatActivity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
 
-    Boolean isChatExist = false;
+    private Boolean isChatExist = false;
+
+    private int peopleCount;
+    private ArrayList<String> uidItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +99,10 @@ public class ChatActivity extends AppCompatActivity {
                 ChatDTO chat = new ChatDTO(userName, mChatEdit.getText().toString(), uid, time, strPhotoUri);
                 databaseReference.child("chat").child(chatRoomName).child("message").push().setValue(chat);
                 mChatEdit.setText("");
+
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.put(uid, "");
+                databaseReference.child("chat").child(chatRoomName).child("people").updateChildren(map);
 
                 isChatExist = true;
             }
@@ -160,6 +169,8 @@ public class ChatActivity extends AppCompatActivity {
                 dialog.show();    // 알림창 띄우기
             }
         });
+
+        checkPeopleCount();
     }
 
     private void init() {
@@ -168,6 +179,14 @@ public class ChatActivity extends AppCompatActivity {
         mChatEdit = (EditText) findViewById(R.id.edittext_chat);
         mSendBtn = (Button) findViewById(R.id.btn_chat_send);
         mExitBtn = (Button) findViewById(R.id.btn_chat_exit);
+    }
+
+    private int checkPeopleCount(){
+        for(ChatDTO c : chatItems){
+
+        }
+
+        return 0;
     }
 
     private String getTime() {
@@ -208,7 +227,6 @@ public class ChatActivity extends AppCompatActivity {
 
     private void chatConversation(DataSnapshot dataSnapshot) {
         ChatDTO chatDTO = dataSnapshot.getValue(ChatDTO.class);
-        // if DTO.uid == 나의 uid
 
         chatItems.add(chatDTO);
         recyclerAdapter.notifyDataSetChanged();
