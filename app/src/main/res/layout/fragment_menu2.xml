@@ -19,6 +19,15 @@
         android:layout_gravity="right"
         android:text="채팅방 생성" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floating_chat_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="@color/mainColor"
+        android:src="@drawable/ic_add" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_make_chat_chatlist"
         android:layout_width="match_parent"

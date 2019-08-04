@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 import com.beginagain.yourthinking.Adapter.ChatRoomAdapter;
@@ -29,8 +31,8 @@ import java.util.ArrayList;
 public class Menu2Fragment extends Fragment {
     View view;
 
-    Button mRoomMakeBtn, mRoomSearchBtn;
-
+    Button mRoomSearchBtn;
+    FloatingActionButton mFloatingActionButton;
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
 
@@ -55,11 +57,20 @@ public class Menu2Fragment extends Fragment {
 
         showChatList();
 
-        mRoomMakeBtn.setOnClickListener(new View.OnClickListener() {
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MakeChatRoomActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        mRoomSearchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                chatRoomItems.clear();
+
             }
         });
 
@@ -70,8 +81,8 @@ public class Menu2Fragment extends Fragment {
 
     void init() {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_make_chat_chatlist);
-        mRoomMakeBtn = (Button) view.findViewById(R.id.btn_make_chat_makeroom);
         mRoomSearchBtn = (Button) view.findViewById(R.id.btn_make_chat_searchroom);
+        mFloatingActionButton = (FloatingActionButton) view.findViewById(R.id.floating_chat_add);
     }
 
     private void showChatList() {
@@ -83,7 +94,12 @@ public class Menu2Fragment extends Fragment {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 ChatRoomItem chatRoomItem = dataSnapshot.child("info").getValue(ChatRoomItem.class);
+
                 chatRoomItems.add(chatRoomItem);
+
+                Log.d("hoon", "DB에서 뽑은 놈" + chatRoomItem);
+                Log.d("hoon", "전체 리스트" + chatRoomItems);
+
                 adapter.notifyDataSetChanged();
             }
 
@@ -96,8 +112,8 @@ public class Menu2Fragment extends Fragment {
                 ChatRoomItem chatRoomItem = dataSnapshot.child("info").getValue(ChatRoomItem.class);
                 String toDeleteTitle = chatRoomItem.getRoomTitle();
 
-                for(ChatRoomItem a : chatRoomItems){
-                    if(a.getRoomTitle().equals(toDeleteTitle))
+                for (ChatRoomItem a : chatRoomItems) {
+                    if (a.getRoomTitle().equals(toDeleteTitle))
                         chatRoomItems.remove(a);
                 }
 

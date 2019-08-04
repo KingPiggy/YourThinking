@@ -4,8 +4,10 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
+    <color name="mainColor">#0477BF</color>
     <color name="black">#000</color>
     <color name="softblack">#292929</color>
     <color name="boundary">#f1f1f1</color>
+    <color name="white">#fff</color>
 
 </resources>
