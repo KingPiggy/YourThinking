@@ -16,17 +16,18 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:appComponentFactory">
+        <activity android:name=".MyChatActivity"></activity>
         <activity android:name=".ChatActivity" />
         <activity android:name=".MakeChatRoomActivity" />
         <activity android:name=".BookRecommendActivity" />
         <activity android:name=".Board.WriteActivity" />
-        <activity android:name=".Board.RetouchBoardActivity"/>
-        <activity android:name=".Board.SearchBoardActivity"/>
+        <activity android:name=".Board.RetouchBoardActivity" />
+        <activity android:name=".Board.SearchBoardActivity" />
         <activity android:name=".UserInfoActivity" />
         <activity android:name=".BookMaratonActivity" />
         <activity android:name=".Board.BookBoardActivity" />
-        <activity android:name=".Board.BoardResultActivity"/>
-        <activity android:name=".Board.MyBoardActivity"/>
+        <activity android:name=".Board.BoardResultActivity" />
+        <activity android:name=".Board.MyBoardActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +20,14 @@ import java.util.ArrayList;
 public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.MyViewHolder> {
     Context context;
     ArrayList<ChatRoomItem> items;
+    ArrayList<Integer> uidCounts;
     int itemLayout;
     int peopleCount = 0;
 
-    public ChatRoomAdapter(Context context, ArrayList<ChatRoomItem> items, int itemLayout) {
+    public ChatRoomAdapter(Context context, ArrayList<ChatRoomItem> items, ArrayList<Integer> uidCounts, int itemLayout) {
         this.context = context;
         this.items = items;
+        this.uidCounts = uidCounts;
         this.itemLayout = itemLayout;
     }
 
@@ -53,7 +54,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.MyView
         myViewHolder.mRoomName.setText(item.getRoomTitle());
         myViewHolder.mBookName.setText(item.getBookTitle());
         myViewHolder.mDesc.setText(item.getDesc());
-        myViewHolder.mPeopleCount.setText("참여인원 " + this.peopleCount);
+        myViewHolder.mPeopleCount.setText("참여인원 " + uidCounts.get(position));
         myViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,6 +66,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.MyView
                 context.startActivity(intent);
             }
         });
+
     }
 
     @Override

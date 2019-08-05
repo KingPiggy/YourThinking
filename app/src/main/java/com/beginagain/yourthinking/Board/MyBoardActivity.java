@@ -63,6 +63,7 @@ public class MyBoardActivity extends AppCompatActivity {
                                 mSearchList.add(data);
                             }
                         }
+
                         mAdapter = new BookBoardAdapter(mSearchList);
                         mSearchRecyclerView.setAdapter(mAdapter);
                     }

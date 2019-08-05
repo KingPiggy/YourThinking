@@ -72,20 +72,8 @@
         android:layout_height="2dp"
         android:background="@color/boundary" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:gravity="center"
-        android:text="내가 쓴 댓글"
-        android:textColor="@color/softblack"
-        android:textSize="18dp" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/boundary" />
-
-    <TextView
+    <Button
+        android:id="@+id/btn_menu5_my_chat"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:gravity="center"
