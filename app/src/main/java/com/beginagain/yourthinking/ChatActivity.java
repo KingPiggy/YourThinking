@@ -104,6 +104,11 @@ public class ChatActivity extends AppCompatActivity {
                 map.put(uid, "");
                 databaseReference.child("chat").child(chatRoomName).child("people").updateChildren(map);
 
+
+                Map<String, Object> map2 = new HashMap<String, Object>();
+                map2.put(chatRoomName, "");
+                databaseReference.child("mychat").child(uid).updateChildren(map2);
+
                 isChatExist = true;
             }
         });

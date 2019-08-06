@@ -8,12 +8,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 
 import com.beginagain.yourthinking.Adapter.ChatRoomAdapter;
@@ -25,7 +23,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -41,10 +38,7 @@ public class Menu2Fragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private ChatRoomAdapter adapter;
     private ArrayList<ChatRoomItem> chatRoomItems = new ArrayList<>();
-
-    private ArrayList<String> uidItems = new ArrayList<>();
-    private int peopleCount = 0;
-    public static final int code = 1000;
+    private ArrayList<Integer> uidCounts = new ArrayList<>();
 
     @Nullable
     @Override
@@ -59,7 +53,6 @@ public class Menu2Fragment extends Fragment {
         mRecyclerView.setNestedScrollingEnabled(false);
 
         showChatList();
-        showPeopleCount();
 
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,40 +82,26 @@ public class Menu2Fragment extends Fragment {
         mFloatingActionButton = (FloatingActionButton) view.findViewById(R.id.floating_chat_add);
     }
 
-    private void showPeopleCount() {
-        databaseReference.child("chat").child("people").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.getKey().isEmpty()) {
-                    String uid = dataSnapshot.getKey();
-
-                    if (!uidItems.contains(uid)) {
-                        uidItems.add(uid);
-                    }
-
-                    adapter.setPeopleCount(uidItems.size());
-                    adapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
     private void showChatList() {
-        adapter = new ChatRoomAdapter(getActivity(), chatRoomItems, R.layout.fragment_menu2);
+        adapter = new ChatRoomAdapter(getActivity(), chatRoomItems, uidCounts, R.layout.fragment_menu2);
         chatRoomItems.clear();
+        uidCounts.clear();
         mRecyclerView.setAdapter(adapter);
 
         databaseReference.child("chat").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                adapter.notifyDataSetChanged();
+
                 ChatRoomItem chatRoomItem = dataSnapshot.child("info").getValue(ChatRoomItem.class);
+                int count = (int) dataSnapshot.child("people").getChildrenCount();
+
+//                for(DataSnapshot b : dataSnapshot.child("people").getChildren()){
+//                    Log.d("hoon", "호우호우" + b.getKey());
+//                }
 
                 chatRoomItems.add(chatRoomItem);
+                uidCounts.add(count);
 
                 adapter.notifyDataSetChanged();
             }
@@ -135,6 +114,8 @@ public class Menu2Fragment extends Fragment {
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 ChatRoomItem chatRoomItem = dataSnapshot.child("info").getValue(ChatRoomItem.class);
                 String toDeleteTitle = chatRoomItem.getRoomTitle();
+
+                adapter.notifyDataSetChanged();
 
                 for (ChatRoomItem a : chatRoomItems) {
                     if (a.getRoomTitle().equals(toDeleteTitle))

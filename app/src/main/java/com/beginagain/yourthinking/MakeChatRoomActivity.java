@@ -16,7 +16,7 @@ import java.util.Map;
 public class MakeChatRoomActivity extends AppCompatActivity {
 
     EditText mRoomTitleEditText, mBookTitleEditText, mRoomDescEditText; // DESC 만들기
-    Button mOkayBtn;
+    Button mOkayBtn, mCancelBtn;
 
     String roomTitle, bookTitle, desc;
 
@@ -32,6 +32,14 @@ public class MakeChatRoomActivity extends AppCompatActivity {
         mRoomTitleEditText = (EditText) findViewById(R.id.edittext_make_chatroom_roomtitle);
         mBookTitleEditText = (EditText) findViewById(R.id.edittext_make_chatroom_booktitle);
         mRoomDescEditText = (EditText) findViewById(R.id.edittext_make_chatroom_desc);
+
+        mCancelBtn = (Button) findViewById(R.id.btn_make_chatroom_cancel);
+        mCancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         mOkayBtn = (Button) findViewById(R.id.btn_make_chatroom_okay);
         mOkayBtn.setOnClickListener(new View.OnClickListener() {

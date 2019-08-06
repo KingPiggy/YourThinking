@@ -9,8 +9,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.beginagain.yourthinking.MyChatActivity;
 import com.beginagain.yourthinking.R;
 import com.beginagain.yourthinking.UserInfoActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,6 +30,8 @@ public class Menu5Fragment extends Fragment {
     String name, email;
     Uri profilePhotoUrl;
 
+    private Button mMyChatBtn;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -43,6 +47,14 @@ public class Menu5Fragment extends Fragment {
             }
         });
 
+        mMyChatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), MyChatActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return view;
     }
 
@@ -51,6 +63,8 @@ public class Menu5Fragment extends Fragment {
         mUserName = (TextView) view.findViewById(R.id.text_view_menu5_profile_name);
         mUserEmail = (TextView) view.findViewById(R.id.text_view_menu5_profile_email);
         mUserImage = (CircleImageView) view.findViewById(R.id.image_menu5_profile_image);
+
+        mMyChatBtn = (Button) view.findViewById(R.id.btn_menu5_my_chat);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
