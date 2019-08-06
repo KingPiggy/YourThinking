@@ -56,7 +56,6 @@ public class ChatActivity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
 
-    private Boolean isChatExist = false;
     private int count;
 
     @Override
@@ -99,15 +98,13 @@ public class ChatActivity extends AppCompatActivity {
                 mChatEdit.setText("");
 
                 Map<String, Object> map = new HashMap<String, Object>();
-                map.put(uid, "");
+                map.put(uid, uid);
                 databaseReference.child("chat").child(chatRoomName).child("people").updateChildren(map);
 
 
                 Map<String, Object> map2 = new HashMap<String, Object>();
-                map2.put(chatRoomName, "");
+                map2.put(chatRoomName, chatRoomName);
                 databaseReference.child("mychat").child(uid).updateChildren(map2);
-
-                isChatExist = true;
             }
         });
 
@@ -130,8 +127,6 @@ public class ChatActivity extends AppCompatActivity {
                                         for (DataSnapshot myQuery : dataSnapshot.getChildren()) {
                                             myQuery.getRef().removeValue();
                                         }
-
-                                        isChatExist = false;
                                     }
 
                                     @Override
@@ -148,6 +143,38 @@ public class ChatActivity extends AppCompatActivity {
                                         if (count == 1) {
                                             DatabaseReference deleteRef = databaseReference.child("chat");
                                             deleteRef.child(chatRoomName).removeValue();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                        Log.e("hoon", "onCancelled", databaseError.toException());
+                                    }
+                                });
+
+                                // 참여인원에서 삭제
+                                final Query myQuery3 = databaseReference.child("chat").child(chatRoomName).child("people").equalTo(uid);
+                                myQuery3.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot myQuery : dataSnapshot.getChildren()) {
+                                            myQuery.getRef().removeValue();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                        Log.e("hoon", "onCancelled", databaseError.toException());
+                                    }
+                                });
+
+                                // 참여한 채팅에서 삭제
+                                final Query myQuery4 = databaseReference.child("mychat").child(uid).equalTo(chatRoomName);
+                                myQuery4.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot myQuery : dataSnapshot.getChildren()) {
+                                            myQuery.getRef().removeValue();
                                         }
                                     }
 
