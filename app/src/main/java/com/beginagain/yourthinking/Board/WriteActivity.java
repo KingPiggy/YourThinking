@@ -123,6 +123,7 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
                 post.put("image", thumnail);
                 post.put("booktitle",title);
                 post.put("author", author);
+                post.put("recount", 0);
 
                 // id로 필드이름이 같더라도 구별 가능하게 함
                 mStore.collection("board").document(id).set(post)
