@@ -11,13 +11,13 @@
         android:text="게시판"
         android:textSize="30dp"
         android:layout_gravity="center"
-        android:layout_marginBottom="100dp"/>
+        android:layout_marginBottom="130dp"/>
 
     <Button
         android:id="@+id/btn_in_board"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="40dp"
         android:text="게시판 들어가기"
         android:textSize="20dp" />
 
@@ -25,22 +25,14 @@
         android:id="@+id/btn_search_board"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="40dp"
         android:text="게시판 검색"
-        android:textSize="20dp"/>
-
-    <Button
-        android:id="@+id/btn_search_recommend"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="추천 글"
         android:textSize="20dp"/>
 
     <Button
         android:id="@+id/btn_my_board"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:text="내가 쓴 글"
         android:textSize="20dp"/>
 

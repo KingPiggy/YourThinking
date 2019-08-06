@@ -12,11 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.beginagain.yourthinking.Adapter.BoardSearchAdapter;
 import com.beginagain.yourthinking.Adapter.ReplyAdapter;
-import com.beginagain.yourthinking.BookRecommendActivity;
 import com.beginagain.yourthinking.Item.BookReplyItem;
-import com.beginagain.yourthinking.MainActivity;
 import com.beginagain.yourthinking.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -35,8 +32,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -115,7 +110,7 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
         image = intent.getStringExtra("Image");
         bookTitle = intent.getStringExtra("BookTitle");
         pageNull = intent.getStringExtra("Page");
-        Toast.makeText(this, pageNull,Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, pageNull,Toast.LENGTH_SHORT).show();
 
         mName.setText(name);
         mTitle.setText(title);
@@ -156,12 +151,10 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
                         mStore.collection("board").document(id).update("recount",recount);
                     }
                 });
-
         findViewById(R.id.btn_reply).setOnClickListener(this);
         findViewById(R.id.btn_board_delete).setOnClickListener(this);
         findViewById(R.id.btn_board_retouch).setOnClickListener(this);
         findViewById(R.id.btn_board_recommend).setOnClickListener(this);
-
     }
 
     @Override
@@ -228,7 +221,6 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
                 }
                 break;
             case R.id.btn_board_recommend:
-
                 mStore.collection("board").document(id).collection("recommend")
                         .addSnapshotListener(new EventListener<QuerySnapshot>() {
                             @Override

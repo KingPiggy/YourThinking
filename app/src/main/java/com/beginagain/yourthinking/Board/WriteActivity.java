@@ -241,6 +241,7 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
     public void onBackPressed() {
         Intent intent = new Intent(WriteActivity.this, BookBoardActivity.class);
         startActivity(intent);
+        finish();
         //super.onBackPressed();
     }
 }

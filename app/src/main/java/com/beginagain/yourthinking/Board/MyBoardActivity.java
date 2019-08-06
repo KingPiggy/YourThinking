@@ -75,6 +75,7 @@ public class MyBoardActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
         //super.onBackPressed();
     }
 }

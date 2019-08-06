@@ -127,12 +127,9 @@ public class BookBoardActivity extends AppCompatActivity implements View.OnClick
                             mBoardList.add(data);
                         }
                         mAdapter = new BookBoardAdapter(mBoardList);
-                      //  mAdapter.notifyDataSetChanged();
                         mMainRecyclerView.setAdapter(mAdapter);
                     }
                 });
-        //Intent intent = new Intent(this, BoardResultActivity.class);
-       // intent.putExtra("page",1);
 
     }
     @Override
@@ -180,7 +177,6 @@ public class BookBoardActivity extends AppCompatActivity implements View.OnClick
                 break;
         }
     }
-
     public void anim() {
         if (isFabOpen) {
             fabSearch.startAnimation(fab_close);
@@ -204,6 +200,7 @@ public class BookBoardActivity extends AppCompatActivity implements View.OnClick
     public void onBackPressed() {
         Intent intent = new Intent(BookBoardActivity.this, MainActivity.class);
         startActivity(intent);
+        finish();
         //super.onBackPressed();
     }
 }

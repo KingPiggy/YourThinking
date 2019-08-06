@@ -63,4 +63,9 @@ public class RetouchBoardActivity extends AppCompatActivity implements View.OnCl
                     }
                 });
     }
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+    }
 }
