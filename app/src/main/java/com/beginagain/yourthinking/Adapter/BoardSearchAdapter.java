@@ -1,6 +1,5 @@
 package com.beginagain.yourthinking.Adapter;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -9,23 +8,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.beginagain.yourthinking.Board.BoardResultActivity;
 import com.beginagain.yourthinking.Item.BookBoardItem;
 import com.beginagain.yourthinking.R;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class BookBoardAdapter extends RecyclerView.Adapter<BookBoardAdapter.MainViewHolder> {
+public class BoardSearchAdapter extends RecyclerView.Adapter<BoardSearchAdapter.MainViewHolder> {
 
     String mName, mTitle, mContents, mDate, mId, mImage, mAuthor, mBooktitle;
 
     List<BookBoardItem> mSearchList;
 
-    public BookBoardAdapter(List<BookBoardItem> mSearchList) {
+    public BoardSearchAdapter(List<BookBoardItem> mSearchList) {
         this.mSearchList = mSearchList;
 
     }
@@ -92,11 +89,10 @@ public class BookBoardAdapter extends RecyclerView.Adapter<BookBoardAdapter.Main
                     intent.putExtra("Image", mImage);
                     intent.putExtra("Author", mAuthor);
                     intent.putExtra("BookTitle", mBooktitle);
-                    intent.putExtra("Page","Board");
+                    intent.putExtra("Page","Search");
                     view.getContext().startActivity(intent);
                 }
             });
         }
     }
 }
-

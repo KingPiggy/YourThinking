@@ -22,6 +22,7 @@
         <activity android:name=".Board.WriteActivity" />
         <activity android:name=".Board.RetouchBoardActivity"/>
         <activity android:name=".Board.SearchBoardActivity"/>
+        <activity android:name=".Board.RecommendBoardActivity"/>
         <activity android:name=".UserInfoActivity" />
         <activity android:name=".BookMaratonActivity" />
         <activity android:name=".Board.BookBoardActivity" />

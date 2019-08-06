@@ -12,8 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.beginagain.yourthinking.Adapter.BoardSearchAdapter;
 import com.beginagain.yourthinking.Adapter.ReplyAdapter;
+import com.beginagain.yourthinking.BookRecommendActivity;
 import com.beginagain.yourthinking.Item.BookReplyItem;
+import com.beginagain.yourthinking.MainActivity;
 import com.beginagain.yourthinking.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -72,6 +75,7 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
 
     long mNow = System.currentTimeMillis();
     public int count =0;
+    String pageNull=null;
     Date mReDate = new Date(mNow);
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
     String formatDate = mFormat.format(mReDate);
@@ -110,6 +114,8 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
         author = intent.getStringExtra("Author");
         image = intent.getStringExtra("Image");
         bookTitle = intent.getStringExtra("BookTitle");
+        pageNull = intent.getStringExtra("Page");
+        Toast.makeText(this, pageNull,Toast.LENGTH_SHORT).show();
 
         mName.setText(name);
         mTitle.setText(title);
@@ -147,6 +153,7 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
                             recount++;
                         }
                         mRecommnedCount.setText("추천 : "+recount);
+                        mStore.collection("board").document(id).update("recount",recount);
                     }
                 });
 
@@ -154,6 +161,7 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
         findViewById(R.id.btn_board_delete).setOnClickListener(this);
         findViewById(R.id.btn_board_retouch).setOnClickListener(this);
         findViewById(R.id.btn_board_recommend).setOnClickListener(this);
+
     }
 
     @Override
@@ -279,5 +287,21 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
         Tasks.await(batch.commit());
 
         return querySnapshot.getDocuments();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(pageNull.equals("My")){
+            Intent intent = new Intent(this, MyBoardActivity.class);
+            startActivity(intent);
+        }else if(pageNull.equals("Board")){
+            Intent intent = new Intent(this, BookBoardActivity.class);
+            startActivity(intent);
+        }else if(pageNull.equals("Search")){
+            super.onBackPressed();
+            Intent intent = new Intent(this, SearchBoardActivity.class);
+            startActivity(intent);
+        }
+        finish();
     }
 }

@@ -71,7 +71,7 @@
                 android:layout_toRightOf="@id/text_view_result_date"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="20dp"
-                android:text="추천수 : 00"/>
+                android:text="추천 : "/>
 
             <TextView
                 android:id="@+id/text_view_result_contents"

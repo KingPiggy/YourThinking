@@ -43,7 +43,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:ems="6"/>
+            android:ems="6"
+            android:imeOptions="actionSearch"
+            android:singleLine = "true"
+            android:lines = "1"/>/>
 
         <Button
             android:id="@+id/btn_search_data"

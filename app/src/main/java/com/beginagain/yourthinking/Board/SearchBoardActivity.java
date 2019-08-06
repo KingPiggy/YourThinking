@@ -1,9 +1,11 @@
 package com.beginagain.yourthinking.Board;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,8 +14,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.beginagain.yourthinking.Adapter.BoardSearchAdapter;
 import com.beginagain.yourthinking.Adapter.BookBoardAdapter;
 import com.beginagain.yourthinking.Item.BookBoardItem;
+import com.beginagain.yourthinking.MainActivity;
 import com.beginagain.yourthinking.R;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,7 +34,7 @@ public class SearchBoardActivity extends AppCompatActivity implements View.OnCli
     private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
 
     private RecyclerView searchRecyclerView;
-    public BookBoardAdapter mAdapter;
+    public BoardSearchAdapter mAdapter;
     private List<BookBoardItem> mSearchList;
     EditText editSearch;
     private Button btnSearch;
@@ -118,10 +122,17 @@ public class SearchBoardActivity extends AppCompatActivity implements View.OnCli
                                         break;
                                 }
                             }
-                            mAdapter = new BookBoardAdapter(mSearchList);
+                            mAdapter = new BoardSearchAdapter(mSearchList);
                             searchRecyclerView.setAdapter(mAdapter);
                         }
                     });
         }
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+        //super.onBackPressed();
     }
 }

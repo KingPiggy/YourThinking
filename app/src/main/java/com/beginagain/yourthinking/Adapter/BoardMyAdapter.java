@@ -1,6 +1,5 @@
 package com.beginagain.yourthinking.Adapter;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -9,25 +8,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.beginagain.yourthinking.Board.BoardResultActivity;
 import com.beginagain.yourthinking.Item.BookBoardItem;
 import com.beginagain.yourthinking.R;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class BookBoardAdapter extends RecyclerView.Adapter<BookBoardAdapter.MainViewHolder> {
+public class BoardMyAdapter extends RecyclerView.Adapter<BoardMyAdapter.MainViewHolder> {
 
     String mName, mTitle, mContents, mDate, mId, mImage, mAuthor, mBooktitle;
 
     List<BookBoardItem> mSearchList;
 
-    public BookBoardAdapter(List<BookBoardItem> mSearchList) {
+    public BoardMyAdapter(List<BookBoardItem> mSearchList) {
         this.mSearchList = mSearchList;
-
     }
 
     @NonNull
@@ -92,11 +88,11 @@ public class BookBoardAdapter extends RecyclerView.Adapter<BookBoardAdapter.Main
                     intent.putExtra("Image", mImage);
                     intent.putExtra("Author", mAuthor);
                     intent.putExtra("BookTitle", mBooktitle);
-                    intent.putExtra("Page","Board");
+                    intent.putExtra("Page","My");
                     view.getContext().startActivity(intent);
+                    // Toast.makeText(BookBoardActivity.this, "아무것도 없어요!", Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
 }
-
