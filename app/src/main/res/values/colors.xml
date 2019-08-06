@@ -4,10 +4,17 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
-    <color name="mainColor">#0477BF</color>
+
+
     <color name="black">#000</color>
-    <color name="softblack">#292929</color>
-    <color name="boundary">#f1f1f1</color>
+    <color name="blackSoft">#292929</color>
     <color name="white">#fff</color>
 
+    <color name="primary">#b3e5fc</color>
+    <color name="primaryLight">#b3e5fc</color>
+    <color name="primaryDeep">#82b3c9</color>
+
+    <color name="deepGray">#e1e2e1</color>
+    <color name="lightGray">#f5f5f6</color>
+    
 </resources>

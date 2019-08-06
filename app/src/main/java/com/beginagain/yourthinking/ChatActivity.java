@@ -57,9 +57,7 @@ public class ChatActivity extends AppCompatActivity {
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
 
     private Boolean isChatExist = false;
-
-    private int peopleCount;
-    private ArrayList<String> uidItems = new ArrayList<>();
+    private int count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +69,7 @@ public class ChatActivity extends AppCompatActivity {
         // 로그인 화면에서 받아온 채팅방 이름, 유저 이름 저장
         Intent intent = getIntent();
         chatRoomName = intent.getStringExtra("chatRoomName");
-
+        count = intent.getIntExtra("count", 1);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             userName = user.getDisplayName();
@@ -147,7 +145,7 @@ public class ChatActivity extends AppCompatActivity {
                                 myQuery2.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
-                                        if (dataSnapshot.getChildrenCount() == 0 || !isChatExist) {
+                                        if (count == 1) {
                                             DatabaseReference deleteRef = databaseReference.child("chat");
                                             deleteRef.child(chatRoomName).removeValue();
                                         }
@@ -186,8 +184,8 @@ public class ChatActivity extends AppCompatActivity {
         mExitBtn = (Button) findViewById(R.id.btn_chat_exit);
     }
 
-    private int checkPeopleCount(){
-        for(ChatDTO c : chatItems){
+    private int checkPeopleCount() {
+        for (ChatDTO c : chatItems) {
 
         }
 

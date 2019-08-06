@@ -42,7 +42,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:text="이야기 나눌 책"
-                android:textColor="@color/softblack"
+                android:textColor="@color/blackSoft"
                 android:textSize="12dp" />
 
             <ImageView

@@ -3,7 +3,7 @@
     android:id="@+id/fragment_menu2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/boundary">
+    android:background="@color/lightGray">
 
     <Button
         android:id="@+id/btn_make_chat_searchroom"
@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:backgroundTint="@color/mainColor"
+        android:backgroundTint="@color/primary"
         android:src="@drawable/ic_add" />
 
     <android.support.v7.widget.RecyclerView

@@ -63,6 +63,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.MyView
 
                 Intent intent = new Intent(context, ChatActivity.class);
                 intent.putExtra("chatRoomName", chatRoomName);
+                intent.putExtra("count", uidCounts.get(pos));
                 context.startActivity(intent);
             }
         });

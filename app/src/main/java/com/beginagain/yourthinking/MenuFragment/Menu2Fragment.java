@@ -65,8 +65,8 @@ public class Menu2Fragment extends Fragment {
         mRoomSearchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 chatRoomItems.clear();
+
 
             }
         });

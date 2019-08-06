@@ -36,7 +36,7 @@
             android:layout_below="@id/text_view_menu5_profile_name"
             android:layout_alignLeft="@id/text_view_menu5_profile_name"
             android:text="유저 이메일"
-            android:textColor="@color/softblack"
+            android:textColor="@color/blackSoft"
             android:textSize="12dp" />
 
     </RelativeLayout>
@@ -44,33 +44,33 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@color/boundary" />
+        android:background="@color/deepGray" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:gravity="center"
         android:text="독서 통계"
-        android:textColor="@color/softblack"
+        android:textColor="@color/blackSoft"
         android:textSize="18dp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@color/boundary" />
+        android:background="@color/deepGray" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:gravity="center"
         android:text="내가 쓴 글"
-        android:textColor="@color/softblack"
+        android:textColor="@color/blackSoft"
         android:textSize="18dp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@color/boundary" />
+        android:background="@color/deepGray" />
 
     <Button
         android:id="@+id/btn_menu5_my_chat"
@@ -78,12 +78,12 @@
         android:layout_height="100dp"
         android:gravity="center"
         android:text="내가 참여한 채팅방"
-        android:textColor="@color/softblack"
+        android:textColor="@color/blackSoft"
         android:textSize="18dp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@color/boundary" />
+        android:background="@color/deepGray" />
 
 </LinearLayout>

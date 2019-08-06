@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/lightGray"
     tools:context=".MakeChatRoomActivity">
 
     <LinearLayout
@@ -14,12 +15,12 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:background="#c1c1e8"
+            android:layout_height="50dp"
+            android:background="@color/primaryDeep"
             android:gravity="center_vertical|left"
             android:paddingLeft="10dp"
             android:text="채팅방 제목"
-            android:textSize="20dp" />
+            android:textSize="16dp" />
 
         <EditText
             android:id="@+id/edittext_make_chatroom_roomtitle"
@@ -39,12 +40,12 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:background="#c1c1e8"
+            android:layout_height="50dp"
+            android:background="@color/primaryDeep"
             android:gravity="center_vertical|left"
             android:paddingLeft="10dp"
             android:text="도서"
-            android:textSize="20dp" />
+            android:textSize="16dp" />
 
         <EditText
             android:id="@+id/edittext_make_chatroom_booktitle"
@@ -64,12 +65,12 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:background="#c1c1e8"
+            android:layout_height="50dp"
+            android:background="@color/primaryDeep"
             android:gravity="center_vertical|left"
             android:paddingLeft="10dp"
             android:text="소개"
-            android:textSize="20dp" />
+            android:textSize="16dp" />
 
         <EditText
             android:id="@+id/edittext_make_chatroom_desc"
@@ -93,6 +94,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginRight="10dp"
+            android:background="@color/primaryDeep"
             android:text="확인" />
 
         <Button
@@ -100,6 +103,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@color/primaryDeep"
             android:text="취소" />
 
     </LinearLayout>
