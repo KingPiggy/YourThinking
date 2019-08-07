@@ -147,7 +147,7 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
                         for(QueryDocumentSnapshot dc : queryDocumentSnapshots) {
                             recount++;
                         }
-                        mRecommnedCount.setText("추천 : "+recount);
+                        mRecommnedCount.setText("추천 "+recount);
                         mStore.collection("board").document(id).update("recount",recount);
                     }
                 });

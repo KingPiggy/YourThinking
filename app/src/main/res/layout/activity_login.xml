@@ -14,7 +14,7 @@
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:layout_centerInParent="true"
-        android:background="@drawable/digimon"/>
+        android:background="@drawable/digimon" />
 
 
     <com.google.android.gms.common.SignInButton
@@ -27,4 +27,13 @@
 
     </com.google.android.gms.common.SignInButton>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_google_login"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="원활한 서비스를 위해 로그인이 필요합니다."
+        android:textColor="@color/blackSoft"
+        android:textSize="16dp" />
 </RelativeLayout>

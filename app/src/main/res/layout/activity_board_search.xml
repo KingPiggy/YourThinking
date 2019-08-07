@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/text_view_search_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:background="@color/primary"
         android:gravity="center_horizontal"
-        android:layout_marginTop="40dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:text="검색"
-        android:textSize="30dp"/>
+        android:textSize="30dp" />
 
     <LinearLayout
         android:id="@+id/ll_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_below="@id/text_view_search_user"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp">
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,8 +31,8 @@
             android:layout_marginLeft="20dp"
             android:gravity="center_vertical"
             android:text="검색"
-            android:textSize="15dp"
-            android:textColor="@color/colorPrimaryDark"/>
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="15dp" />
 
         <Spinner
             android:id="@+id/spinner_search"
@@ -38,6 +41,7 @@
             android:entries="@array/search">
 
         </Spinner>
+
         <EditText
             android:id="@+id/et_search"
             android:layout_width="wrap_content"
@@ -45,15 +49,15 @@
             android:layout_marginLeft="10dp"
             android:ems="6"
             android:imeOptions="actionSearch"
-            android:singleLine = "true"
-            android:lines = "1"/>/>
+            android:lines="1"
+            android:singleLine="true" />/>
 
         <Button
             android:id="@+id/btn_search_data"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="검색"/>
+            android:text="검색" />
 
     </LinearLayout>
 
@@ -63,7 +67,6 @@
         android:layout_height="match_parent"
         android:layout_below="@id/ll_search"
         android:layout_marginTop="20dp"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager">
-    </android.support.v7.widget.RecyclerView>
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"></android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

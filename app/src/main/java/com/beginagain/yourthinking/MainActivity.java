@@ -2,6 +2,8 @@ package com.beginagain.yourthinking;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
@@ -14,7 +16,6 @@ import com.beginagain.yourthinking.MenuFragment.Menu1Fragment;
 import com.beginagain.yourthinking.MenuFragment.Menu2Fragment;
 import com.beginagain.yourthinking.MenuFragment.Menu3Fragment;
 import com.beginagain.yourthinking.MenuFragment.Menu4Fragment;
-import com.beginagain.yourthinking.MenuFragment.Menu5Fragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,12 +24,15 @@ public class MainActivity extends AppCompatActivity {
     private Menu2Fragment menu2Fragment = new Menu2Fragment();
     private Menu3Fragment menu3Fragment = new Menu3Fragment();
     private Menu4Fragment menu4Fragment = new Menu4Fragment();
-    private Menu5Fragment menu5Fragment = new Menu5Fragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().setStatusBarColor(Color.parseColor("#82b3c9")); // deep
+        }
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         // 첫 화면 지정
@@ -55,10 +59,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                     case R.id.navigation_menu4: {
                         transaction.replace(R.id.layout_main_frame, menu4Fragment).commitAllowingStateLoss();
-                        break;
-                    }
-                    case R.id.navigation_menu5: {
-                        transaction.replace(R.id.layout_main_frame, menu5Fragment).commitAllowingStateLoss();
                         break;
                     }
                 }

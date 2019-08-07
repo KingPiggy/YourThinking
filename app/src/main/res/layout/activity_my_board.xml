@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@color/lightGray">
 
     <TextView
         android:id="@+id/text_view_search_board"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
+        android:background="@color/primary"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:text="내가 쓴 글"
-        android:textSize="30dp"/>
+        android:textSize="30dp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_search"
@@ -19,7 +23,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/text_view_search_board"
         android:layout_marginTop="20dp"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager">
-    </android.support.v7.widget.RecyclerView>
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"></android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

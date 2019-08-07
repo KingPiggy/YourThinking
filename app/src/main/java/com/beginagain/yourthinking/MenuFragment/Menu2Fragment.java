@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
 public class Menu2Fragment extends Fragment {
     View view;
@@ -100,9 +102,25 @@ public class Menu2Fragment extends Fragment {
 //                    Log.d("hoon", "호우호우" + b.getKey());
 //                }
 
+//                if (chatRoomItems.size() == 0) {
+//                    chatRoomItems.add(chatRoomItem);
+//                }
+//                else {
+//                    try {
+//                        for (ChatRoomItem iter : chatRoomItems) {
+//                            if (!iter.getRoomTitle().equals(chatRoomItem.getRoomTitle())) {
+//                                Log.d("hoon", "h" + iter.getRoomTitle() + " \nzz" + chatRoomItem.getRoomTitle());
+//                                chatRoomItems.add(chatRoomItem);
+//                            }
+//                        }
+//                    }
+//                    catch (ConcurrentModificationException ignored){
+//                       // 흠 어케 처리할까..
+//                    }
+//                }
+
                 chatRoomItems.add(chatRoomItem);
                 uidCounts.add(count);
-
                 adapter.notifyDataSetChanged();
             }
 
@@ -117,10 +135,10 @@ public class Menu2Fragment extends Fragment {
 
                 adapter.notifyDataSetChanged();
 
-                for (ChatRoomItem a : chatRoomItems) {
-                    if (a.getRoomTitle().equals(toDeleteTitle))
-                        chatRoomItems.remove(a);
-                }
+//                for (ChatRoomItem a : chatRoomItems) {
+//                    if (a.getRoomTitle().equals(toDeleteTitle))
+//                        chatRoomItems.remove(a);
+//                }
 
                 adapter.notifyDataSetChanged();
             }

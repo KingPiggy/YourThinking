@@ -5,28 +5,111 @@
     android:background="@color/lightGray"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/layout_menu1_rank"
+    <Button
+        android:id="@+id/btn_menu1_ranked_book"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:background="@color/primary"
+        android:text="추천도서 조회 TOP 30"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btn_menu1_temp"
-            android:layout_width="match_parent"
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:background="@drawable/digimon" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="0.7">
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/image_menu1_profile_image"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="10dp"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp" />
+
+        <TextView
+            android:id="@+id/text_view_menu1_profile_name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/primaryDeep"
-            android:text="추천도서 조회 TOP 30"
-            android:textColor="@color/white"
-            android:textSize="16dp"
-            android:textStyle="bold" />
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/image_menu1_profile_image"
+            android:text="유저 이름"
+            android:textColor="@color/blackSoft"
+            android:textSize="18dp" />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/text_view_menu1_profile_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_view_menu1_profile_name"
+            android:layout_alignLeft="@id/text_view_menu1_profile_name"
+            android:text="유저 이메일"
+            android:textColor="@color/blackSoft"
+            android:textSize="12dp" />
+
+        <ImageButton
+            android:id="@+id/image_btn_menu1_profile_settings"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/ic_settings_black_24dp"
+            android:backgroundTint="@color/blackSoft" />
+    </RelativeLayout>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:background="@color/deepGray"
         android:gravity="center"
-        android:text="Home"
-        android:textSize="40dp" />
+        android:text="독서마라톤 관련" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/btn_menu1_recommend"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginRight="30dp"
+            android:layout_toLeftOf="@id/btn_menu1_my_board"
+            android:background="@drawable/ic_oval"
+            android:text="추천글" />
+
+        <Button
+            android:id="@+id/btn_menu1_my_board"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/ic_oval"
+            android:text="내가 쓴 글" />
+
+        <Button
+            android:id="@+id/btn_menu1_my_chat"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@id/btn_menu1_my_board"
+            android:background="@drawable/ic_oval"
+            android:text="참여한 채팅" />
+
+    </RelativeLayout>
 </LinearLayout>

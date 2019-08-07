@@ -21,9 +21,4 @@
         android:icon="@drawable/ic_maraton"
         android:title="Maraton" />
 
-    <item
-        android:id="@+id/navigation_menu5"
-        android:icon="@drawable/ic_mypage"
-        android:title="MyPage" />
-
 </menu>

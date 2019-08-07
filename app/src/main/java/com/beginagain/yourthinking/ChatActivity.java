@@ -16,7 +16,6 @@ import android.widget.EditText;
 
 import com.beginagain.yourthinking.Adapter.ChatItemAdapter;
 import com.beginagain.yourthinking.Item.ChatDTO;
-import com.beginagain.yourthinking.MenuFragment.Menu2Fragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -101,7 +100,6 @@ public class ChatActivity extends AppCompatActivity {
                 map.put(uid, uid);
                 databaseReference.child("chat").child(chatRoomName).child("people").updateChildren(map);
 
-
                 Map<String, Object> map2 = new HashMap<String, Object>();
                 map2.put(chatRoomName, chatRoomName);
                 databaseReference.child("mychat").child(uid).updateChildren(map2);
@@ -136,7 +134,7 @@ public class ChatActivity extends AppCompatActivity {
                                 });
 
                                 // 채팅방 삭제
-                                final Query myQuery2 = databaseReference.child("chat").child(chatRoomName).child("message");
+                                final Query myQuery2 = databaseReference.child("chat").child(chatRoomName).child("message").equalTo(uid);
                                 myQuery2.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -157,9 +155,8 @@ public class ChatActivity extends AppCompatActivity {
                                 myQuery3.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
-                                        for (DataSnapshot myQuery : dataSnapshot.getChildren()) {
-                                            myQuery.getRef().removeValue();
-                                        }
+                                        DatabaseReference deleteRef = databaseReference.child("chat").child(chatRoomName).child("people");
+                                        deleteRef.child(uid).removeValue();
                                     }
 
                                     @Override
@@ -173,9 +170,8 @@ public class ChatActivity extends AppCompatActivity {
                                 myQuery4.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
-                                        for (DataSnapshot myQuery : dataSnapshot.getChildren()) {
-                                            myQuery.getRef().removeValue();
-                                        }
+                                        DatabaseReference deleteRef = databaseReference.child("mychat").child(uid);
+                                        deleteRef.child(chatRoomName).removeValue();
                                     }
 
                                     @Override
@@ -201,6 +197,13 @@ public class ChatActivity extends AppCompatActivity {
         });
 
         checkPeopleCount();
+
+        mRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                mRecyclerView.scrollToPosition(mRecyclerView.getAdapter().getItemCount() - 1);
+            }
+        });
     }
 
     private void init() {

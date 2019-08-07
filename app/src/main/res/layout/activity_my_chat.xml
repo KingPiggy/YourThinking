@@ -8,11 +8,15 @@
 
     <TextView
         android:id="@+id/text_view_my_chat_temp"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:background="@color/primary"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:text="내가 참여한 채팅방"
-        android:textSize="20dp" />
+        android:textSize="30dp" />
 
     <ListView
         android:id="@+id/listview_my_chat_chatlist"
