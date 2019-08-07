@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -26,20 +27,61 @@
 
 
     <Button
+        android:id="@+id/btn_history"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:layout_below="@id/btn_menu4_make"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
+        android:text="독서마라톤 히스토리"
+        android:visibility="invisible" />
+
+    <Button
         android:id="@+id/btn_menu4_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
         android:text="마라톤 삭제" />
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view_maratonitem"
+    <ListView
+        android:id="@+id/bookMaratonLV"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/btn_menu4_delete">
+        android:layout_height="wrap_content"
+        android:layout_above="@id/btn_finish"
+        android:layout_below="@id/btn_menu4_delete"
+        android:layout_margin="3dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp">
 
-    </android.support.v7.widget.RecyclerView>
+    </ListView>
+
+    <TextView
+        android:id="@+id/maratonDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/btn_menu4_delete"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@id/btn_menu4_delete"
+        android:paddingLeft="8dp"
+        android:text="기간 : 2018.09.05 ~ 2019.05.02"
+        android:textAlignment="viewStart"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/btn_finish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="20dp"
+        android:text="도서 마라톤 완료" />
+
 
 </RelativeLayout>

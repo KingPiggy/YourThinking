@@ -5,6 +5,8 @@ public class MaratonBookItem {
     int total, read;
     boolean state;
 
+    int id;
+
     public MaratonBookItem() {
     }
 
@@ -44,5 +46,13 @@ public class MaratonBookItem {
 
     public void setState(boolean state) {
         this.state = state;
+    }
+
+
+
+    public int getId() { return id; }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

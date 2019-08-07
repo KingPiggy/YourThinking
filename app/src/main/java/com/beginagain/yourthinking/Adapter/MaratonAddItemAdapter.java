@@ -8,34 +8,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.beginagain.yourthinking.Item.MaratonBookItem;
 import com.beginagain.yourthinking.R;
 
 import java.util.ArrayList;
 
-
-public class MaratonItemAdapter extends RecyclerView.Adapter<MaratonItemAdapter.MyViewHolder> {
+public class MaratonAddItemAdapter extends RecyclerView.Adapter<MaratonAddItemAdapter.MyViewHolder> {
     Context context;
     ArrayList<MaratonBookItem> items;
     int itemLayout;
 
-    public MaratonItemAdapter(Context context, ArrayList<MaratonBookItem> items, int itemLayout) {
+    public MaratonAddItemAdapter(Context context, ArrayList<MaratonBookItem> items, int itemLayout) {
         this.context = context;
         this.items = items;
         this.itemLayout = itemLayout;
     }
-
     @NonNull
     @Override
-    public MaratonItemAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_maraton_book, null);
+    public MaratonAddItemAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_maraton_book_add, null);
         return new MyViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MaratonItemAdapter.MyViewHolder myViewHolder, int position) {
+    public void onBindViewHolder(@NonNull MaratonAddItemAdapter.MyViewHolder myViewHolder, int position) {
         if (getItemCount() <= 0 && position >= getItemCount()) {
             return;
         }
@@ -49,6 +46,7 @@ public class MaratonItemAdapter extends RecyclerView.Adapter<MaratonItemAdapter.
         //Picasso.get().load(item.getImage()).into(myViewHolder.mThumbnail);
 
     }
+
 
     @Override
     public int getItemCount() {
@@ -76,7 +74,7 @@ public class MaratonItemAdapter extends RecyclerView.Adapter<MaratonItemAdapter.
 
         @Override
         public void onClick(View view) {
-            Toast.makeText(context, "hi " + mTitle.getText().toString(), Toast.LENGTH_SHORT).show();
+
         }
     }
 }

@@ -1,22 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BookMaratonActivity">
+    tools:context=".BookMaraton.BookMaratonActivity"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+
+        <Button
+            android:id="@+id/btn_make_maraton_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="생성하기"/>
+
+
+
+    <LinearLayout
+        android:id="@+id/book_maraton_add_L"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="북 마라톤 생성하는 액티비티"
-        android:textSize="20dp" />
+        android:layout_below="@+id/btn_make_maraton_done"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_make_maraton_done"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="생성하기"/>
 
-</RelativeLayout>
+        <EditText
+            android:id="@+id/book_maraton_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="도서 이름"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/book_maraton_page"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="전체 쪽수"
+            android:inputType="numberSigned|numberDecimal"
+            android:maxLength="4" />
+
+        <Button
+            android:id="@+id/btn_maratonbook_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="책 추가 +" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1">
+
+            <EditText
+                android:id="@+id/book_maraton_from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:hint="시작 날짜 (ex20190101)"
+                android:inputType="date"
+                android:maxLength="8"
+                android:textAlignment="center" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:text="~" />
+
+            <EditText
+                android:id="@+id/book_maraton_to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:hint="종료 날짜 (ex20200101)"
+                android:inputType="date"
+                android:maxLength="8"
+                android:textAlignment="center" />
+        </LinearLayout>
+        <ListView
+            android:id="@+id/book_maraton_ListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp" />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

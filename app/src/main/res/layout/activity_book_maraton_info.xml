@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BookMaraton.BookMaratonInfo"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="독서 마라톤 진행중"
+        android:textSize="50dp" />
+    <Button
+        android:id="@+id/btnUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:layout_gravity="right"
+        android:text="입력하기"/>
+
+    <TextView
+        android:id="@+id/bookInfo_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="책이름~~~~~~"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/bookInfo_totalPageNum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="전체페이지"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/bookInfo_currentPage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="읽었던 페이지"
+        android:textSize="30dp" />
+
+    <EditText
+        android:id="@+id/currentPageNum_Edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="읽은 페이지를 입력해주세요."
+        android:inputType="numberSigned|numberDecimal"
+        android:maxLength="4"
+        android:textSize="30dp" />
+
+
+</LinearLayout>
