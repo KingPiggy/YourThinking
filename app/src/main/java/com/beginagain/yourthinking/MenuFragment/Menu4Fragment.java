@@ -73,6 +73,7 @@ public class Menu4Fragment extends Fragment {
         maratonDB = openDB(dbName_Maraton);
         historyDB = openDB(dbName_History);
 
+        Log.d("Test", "마라톤 진행 상황?" + isBookMaratonOnGoing());
         if (isBookMaratonOnGoing()) {
             showOnGoingMode();
             showList();
@@ -123,8 +124,8 @@ public class Menu4Fragment extends Fragment {
             }
         } catch (SQLiteException e) {
             Log.d("test", "DB 읽기 실패 : " + e.getMessage());
-        }finally {
-            if(c != null) {
+        } finally {
+            if (c != null) {
                 c.close();
             }
         }
@@ -289,8 +290,8 @@ public class Menu4Fragment extends Fragment {
 
         deleteMaratonDB();
 
-       insertHistoryData(maratonDate, maratonBooksStr, totalBooksNum);
-       showAddMode();
+        insertHistoryData(maratonDate, maratonBooksStr, totalBooksNum);
+        showAddMode();
     }
 
     private int getTotalBooksNum() {
@@ -300,17 +301,17 @@ public class Menu4Fragment extends Fragment {
             c = maratonDB.rawQuery("SELECT * FROM " + tableName_Maraton, null);
             totalBookNums = c.getCount();
         } catch (SQLException e) {
-            Log.d("test","getTotalBooksNum 에러 : " + e.getMessage());
+            Log.d("test", "getTotalBooksNum 에러 : " + e.getMessage());
         } finally {
-            if(c != null) {
+            if (c != null) {
                 c.close();
             }
         }
-        return  totalBookNums;
+        return totalBookNums;
     }
 
     private String getMaratonBooksTitleStr() {
-        String  booksTilte = "";
+        String booksTilte = "";
         try {
             c = maratonDB.rawQuery("SELECT * FROM " + tableName_Maraton, null);
 
@@ -322,8 +323,8 @@ public class Menu4Fragment extends Fragment {
             }
         } catch (SQLException e) {
             Log.d("test", "getMaratonBooksTitleStr 에러 : " + e.getMessage());
-        }finally {
-            if(c != null) {
+        } finally {
+            if (c != null) {
                 c.close();
             }
         }
@@ -331,7 +332,7 @@ public class Menu4Fragment extends Fragment {
     }
 
     private String getMaratonDate() {
-       return maratonDate.getText().toString();
+        return maratonDate.getText().toString();
     }
 
     private void insertHistoryData(String maratonDate, String maratonBooksStr, int totalBooksNum) {

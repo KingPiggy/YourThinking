@@ -90,7 +90,7 @@ public class BookMaratonActivity extends AppCompatActivity {
                     String maratonDate = dateFrom + dateTo;
 
                     editor = settings.edit();
-                    editor.putBoolean("isMaratonGoing", false);
+                    editor.putBoolean("isMaratonGoing", true);
                     editor.putString("maratonDate", maratonDate);
 
                     editor.commit();

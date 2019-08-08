@@ -138,7 +138,7 @@ public class ChatActivity extends AppCompatActivity {
                                 myQuery2.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
-                                        if (count == 1) {
+                                        if (count == 1 || count == 0) {
                                             DatabaseReference deleteRef = databaseReference.child("chat");
                                             deleteRef.child(chatRoomName).removeValue();
                                         }

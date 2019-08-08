@@ -8,11 +8,11 @@
     android:orientation="vertical">
 
 
-        <Button
-            android:id="@+id/btn_make_maraton_done"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="생성하기"/>
+    <Button
+        android:id="@+id/btn_make_maraton_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="생성하기"/>
 
 
 
