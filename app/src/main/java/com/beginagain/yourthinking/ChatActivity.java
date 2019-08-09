@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beginagain.yourthinking.Adapter.ChatItemAdapter;
@@ -51,6 +52,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private EditText mChatEdit;
     private Button mSendBtn, mExitBtn;
+    private TextView mRoomTitleTextView;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -76,6 +78,9 @@ public class ChatActivity extends AppCompatActivity {
         Intent intent = getIntent();
         chatRoomName = intent.getStringExtra("chatRoomName");
         count = intent.getIntExtra("count", 1);
+
+        mRoomTitleTextView.setText(chatRoomName);
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             userName = user.getDisplayName();
@@ -239,6 +244,7 @@ public class ChatActivity extends AppCompatActivity {
         mChatEdit = (EditText) findViewById(R.id.edittext_chat);
         mSendBtn = (Button) findViewById(R.id.btn_chat_send);
         mExitBtn = (Button) findViewById(R.id.btn_chat_exit);
+        mRoomTitleTextView = (TextView)findViewById(R.id.text_view_chat_room_title);
     }
 
     private int checkPeopleCount() {

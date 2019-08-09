@@ -8,6 +8,16 @@
     android:orientation="vertical"
     tools:context=".BookRecommendActivity">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/primary"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:text="추천도서 TOP 30"
+        android:textColor="@color/blackSoft"
+        android:textSize="16dp" />
+
     <RelativeLayout
         android:id="@+id/layout_recommend_btn"
         android:layout_width="match_parent"

@@ -8,10 +8,9 @@
     <Button
         android:id="@+id/btn_menu1_ranked_book"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.5"
+        android:layout_height="56dp"
         android:background="@color/primary"
-        android:text="추천도서 조회 TOP 30"
+        android:text="추천도서 TOP 30"
         android:textColor="@color/white"
         android:textSize="16dp"
         android:textStyle="bold" />

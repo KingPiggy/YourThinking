@@ -9,21 +9,20 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
+        android:layout_height="56dp"
         android:background="@color/primary"
-        android:gravity="center_horizontal"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
         android:text="글 수정"
         android:textColor="@color/blackSoft"
-        android:textSize="30dp" />
+        android:textSize="16dp" />
 
 
     <EditText
         android:id="@+id/et_retouch_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:hint="제목을 입력하세요"
         android:textColor="@color/blackSoft"
         android:textSize="20sp"

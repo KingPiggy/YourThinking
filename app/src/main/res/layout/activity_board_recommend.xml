@@ -6,20 +6,20 @@
 
     <TextView
         android:id="@+id/text_view_recommend_first"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
-        android:text="추천 게시판"
-        android:textSize="30dp" />
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/primary"
+        android:paddingLeft="10dp"
+        android:text="추천 게시글"
+        android:textSize="16dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/blackSoft" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_recommend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/text_view_recommend_first"
-        android:layout_marginTop="40dp"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager">
     </android.support.v7.widget.RecyclerView>
 

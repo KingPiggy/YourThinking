@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fragment_menu2"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_menu2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lightGray">
+
+    <TextView
+        android:id="@+id/text_view_menu2"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/primary"
+        android:paddingLeft="10dp"
+        android:text="독서 토론방"
+        android:textSize="16dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/blackSoft"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floating_chat_add"
@@ -12,14 +23,18 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
         android:backgroundTint="@color/primary"
-        app:borderWidth="0dp"
-        android:src="@drawable/ic_add" />
+        android:src="@drawable/ic_add"
+        app:borderWidth="0dp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_make_chat_chatlist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
+        android:layout_below="@id/text_view_menu2"
         android:layout_marginTop="10dp" />
 
 </RelativeLayout>

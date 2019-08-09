@@ -6,16 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/lightGray"
-        android:orientation="vertical">
+        android:background="@color/lightGray">
 
         <RelativeLayout
+            android:id="@+id/layout_board_big1"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_height="wrap_content">
 
             <RelativeLayout
                 android:id="@+id/layout_result"
@@ -121,13 +120,12 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="20dp"
                     android:text="글 내용"
-
                     android:textColor="@color/blackSoft" />
 
             </RelativeLayout>
 
-
             <LinearLayout
+                android:id="@+id/layout_result_btns"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/layout_result_middle"
@@ -159,10 +157,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_board_big1"
             android:layout_marginLeft="10dp"
-
-            android:layout_weight="1"
             android:orientation="vertical">
 
             <View
@@ -191,8 +188,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="닉네임"
-                    android:textSize="15dp"
-                    android:textColor="@color/blackSoft" />
+                    android:textColor="@color/blackSoft"
+                    android:textSize="15dp" />
 
                 <EditText
                     android:id="@+id/et_reply_contents"
@@ -216,11 +213,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                app:layoutManager="android.support.v7.widget.LinearLayoutManager"></android.support.v7.widget.RecyclerView>
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
         </LinearLayout>
 
-
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </ScrollView>

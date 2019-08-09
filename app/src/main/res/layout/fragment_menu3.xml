@@ -9,15 +9,13 @@
     <TextView
         android:id="@+id/text_view_board_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_height="56dp"
+        android:paddingLeft="10dp"
         android:background="@color/primary"
-        android:gravity="center"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:text="책에 대한 자유로운 이야기"
-        android:textColor="@color/blackSoft"
-        android:textSize="30dp" />
+        android:text="독후감 게시판"
+        android:textSize="16dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/blackSoft" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_Board"
