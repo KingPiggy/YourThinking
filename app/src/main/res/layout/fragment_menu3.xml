@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/lightGray"
     android:orientation="vertical">
 
@@ -13,12 +13,11 @@
         android:layout_centerHorizontal="true"
         android:background="@color/primary"
         android:gravity="center"
-        android:text="책에 대한 자유로운 이야기"
-        android:textColor="@color/blackSoft"
-        android:textSize="30dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        />
+        android:text="책에 대한 자유로운 이야기"
+        android:textColor="@color/blackSoft"
+        android:textSize="30dp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_Board"
@@ -39,9 +38,10 @@
             android:layout_gravity="bottom|end"
             android:layout_marginRight="15sp"
             android:layout_marginBottom="160dp"
+            android:backgroundTint="@color/primary"
             android:src="@drawable/ic_search"
             android:visibility="invisible"
-            app:backgroundTint="#ffffff"
+            app:borderWidth="0dp"
             app:elevation="6dp"
             app:pressedTranslationZ="12dp" />
 
@@ -53,9 +53,10 @@
             android:layout_gravity="bottom|end"
             android:layout_marginRight="15sp"
             android:layout_marginBottom="90dp"
+            android:backgroundTint="@color/primary"
             android:src="@drawable/ic_write"
             android:visibility="invisible"
-            app:backgroundTint="#ffffff"
+            app:borderWidth="0dp"
             app:elevation="6dp"
             app:pressedTranslationZ="12dp" />
 
@@ -66,9 +67,10 @@
             android:layout_gravity="bottom|end"
             android:layout_marginRight="15sp"
             android:layout_marginBottom="230dp"
+            android:backgroundTint="@color/primary"
             android:src="@drawable/ic_recommend"
             android:visibility="invisible"
-            app:backgroundTint="#ffffff"
+            app:borderWidth="0dp"
             app:elevation="6dp"
             app:pressedTranslationZ="12dp" />
 
@@ -78,8 +80,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="15sp"
-            android:backgroundTint="#9500ff"
-            android:src="@drawable/ic_add" />
+            android:backgroundTint="@color/primary"
+            android:src="@drawable/ic_add"
+            app:borderWidth="0dp" />
 
     </FrameLayout>
 
