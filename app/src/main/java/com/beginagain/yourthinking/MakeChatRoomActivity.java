@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.beginagain.yourthinking.Item.ChatRoomItem;
 import com.google.firebase.database.DatabaseReference;
@@ -56,6 +57,7 @@ public class MakeChatRoomActivity extends AppCompatActivity {
                 map.put("desc", desc);
                 databaseReference.child("chat").child(roomTitle).child("info").updateChildren(map);
 
+                Toast.makeText(getApplicationContext(), "채팅방이 갱신 되었습니다.", Toast.LENGTH_SHORT).show();
                 String pageNull = "Chat";
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.putExtra("page", pageNull);
