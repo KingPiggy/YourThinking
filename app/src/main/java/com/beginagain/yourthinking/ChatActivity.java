@@ -264,5 +264,11 @@ public class ChatActivity extends AppCompatActivity {
         chatItems.add(chatDTO);
         recyclerAdapter.notifyDataSetChanged();
     }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("page", "chat");
+        startActivity(intent);
+    }
 
 }

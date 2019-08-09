@@ -1,39 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/lightGray"
     android:orientation="vertical">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="130dp"
-        android:text="게시판"
-        android:textSize="30dp" />
-
-    <Button
-        android:id="@+id/btn_in_board"
+        android:id="@+id/text_view_board_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:text="게시판 들어가기"
-        android:textSize="20dp" />
+        android:layout_centerHorizontal="true"
+        android:background="@color/primary"
+        android:gravity="center"
+        android:text="책에 대한 자유로운 이야기"
+        android:textColor="@color/blackSoft"
+        android:textSize="30dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        />
 
-    <Button
-        android:id="@+id/btn_search_board"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_Board"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:text="게시판 검색"
-        android:textSize="20dp" />
+        android:layout_height="500dp"
+        android:layout_below="@id/text_view_board_title"
+        android:layout_marginTop="30dp"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
-    <Button
-        android:id="@+id/btn_my_board"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="내가 쓴 글"
-        android:textSize="20dp" />
+        android:layout_height="match_parent">
 
-</LinearLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginRight="15sp"
+            android:layout_marginBottom="160dp"
+            android:src="@drawable/ic_search"
+            android:visibility="invisible"
+            app:backgroundTint="#ffffff"
+            app:elevation="6dp"
+            app:pressedTranslationZ="12dp" />
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_write"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginRight="15sp"
+            android:layout_marginBottom="90dp"
+            android:src="@drawable/ic_write"
+            android:visibility="invisible"
+            app:backgroundTint="#ffffff"
+            app:elevation="6dp"
+            app:pressedTranslationZ="12dp" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_recommend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginRight="15sp"
+            android:layout_marginBottom="230dp"
+            android:src="@drawable/ic_recommend"
+            android:visibility="invisible"
+            app:backgroundTint="#ffffff"
+            app:elevation="6dp"
+            app:pressedTranslationZ="12dp" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="15sp"
+            android:backgroundTint="#9500ff"
+            android:src="@drawable/ic_add" />
+
+    </FrameLayout>
+
+</RelativeLayout>

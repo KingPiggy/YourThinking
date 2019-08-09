@@ -22,15 +22,15 @@
         <activity android:name=".BookMaraton.BookMaratonHistory" />
         <activity android:name=".MakeChatRoomActivity" />
         <activity android:name=".BookRecommendActivity" />
-        <activity android:name=".Board.WriteActivity" />
+        <activity android:name=".Board.WriteActivity" android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity android:name=".Board.RetouchBoardActivity" />
         <activity android:name=".Board.SearchBoardActivity" />
-        <activity android:name=".UserInfoActivity" />
-        <activity android:name=".Board.BookBoardActivity" />
-        <activity android:name=".Board.BoardResultActivity" />
+        <activity android:name=".Board.RecommendBoardActivity"/>
+        <activity android:name=".Board.BoardResultActivity" android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity android:name=".Board.MyBoardActivity" />
         <activity android:name=".BookMaraton.BookMaratonActivity" />
         <activity android:name=".BookMaraton.BookMaratonInfo" />
+        <activity android:name=".UserInfoActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

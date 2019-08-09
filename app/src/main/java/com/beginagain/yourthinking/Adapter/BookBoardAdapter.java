@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.beginagain.yourthinking.Board.BoardResultActivity;
 import com.beginagain.yourthinking.Item.BookBoardItem;
+import com.beginagain.yourthinking.MenuFragment.Menu3Fragment;
 import com.beginagain.yourthinking.R;
 import com.squareup.picasso.Picasso;
 
@@ -23,11 +24,10 @@ public class BookBoardAdapter extends RecyclerView.Adapter<BookBoardAdapter.Main
 
     String mName, mTitle, mContents, mDate, mId, mImage, mAuthor, mBooktitle;
 
-    List<BookBoardItem> mSearchList;
+     List<BookBoardItem> mSearchList;
 
     public BookBoardAdapter(List<BookBoardItem> mSearchList) {
         this.mSearchList = mSearchList;
-
     }
 
     @NonNull

@@ -27,20 +27,34 @@ public class MainActivity extends AppCompatActivity {
     private Menu3Fragment menu3Fragment = new Menu3Fragment();
     private Menu4Fragment menu4Fragment = new Menu4Fragment();
 
+    String page = null;
+
+    public BottomNavigationView bottomNavigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        fragmentManager.popBackStack();
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(Color.parseColor("#82b3c9")); // deep
         }
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_view);
+        // BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_view);
+        bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         // 첫 화면 지정
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.layout_main_frame, menu1Fragment).commitAllowingStateLoss();
+       // transaction.replace(R.id.layout_main_frame, menu1Fragment).commitAllowingStateLoss();
 
+        Intent intent = getIntent();
+        page = intent.getStringExtra("page");
+        if (page!=null) {
+            onFragmentChange(1);
+        }
+        else{
+            transaction.replace(R.id.layout_main_frame, menu1Fragment).commitAllowingStateLoss();
+        }
         // bottomNavigationView의 아이템이 선택될 때 호출될 리스너 등록
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -68,6 +82,12 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+    public void onFragmentChange(int index){
+        if(index == 1){
+            getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu3Fragment).commit();
+            bottomNavigationView.setSelectedItemId(R.id.navigation_menu3);
+        }
     }
 
     @Override

@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.beginagain.yourthinking.Adapter.BookApiAdapter;
 import com.beginagain.yourthinking.Item.RecommendBookItem;
+import com.beginagain.yourthinking.MenuFragment.Menu3Fragment;
 import com.beginagain.yourthinking.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -131,8 +132,7 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Toast.makeText(WriteActivity.this, "업로드 성공!", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(WriteActivity.this, BookBoardActivity.class);
-                                startActivity(intent);
+                                finish();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -240,9 +240,6 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
     }
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(WriteActivity.this, BookBoardActivity.class);
-        startActivity(intent);
-        finish();
-        //super.onBackPressed();
+        super.onBackPressed();
     }
 }
