@@ -45,14 +45,18 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         // 첫 화면 지정
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-       // transaction.replace(R.id.layout_main_frame, menu1Fragment).commitAllowingStateLoss();
+        // transaction.replace(R.id.layout_main_frame, menu1Fragment).commitAllowingStateLoss();
 
         Intent intent = getIntent();
         page = intent.getStringExtra("page");
-        if (page!=null) {
-            onFragmentChange(1);
-        }
-        else{
+        if (page != null) {
+            if (page.equals("Chat")) {
+                onFragmentChange(2);
+            } else if (page.equals("Board")) {
+                onFragmentChange(3);
+            }
+
+        } else {
             transaction.replace(R.id.layout_main_frame, menu1Fragment).commitAllowingStateLoss();
         }
         // bottomNavigationView의 아이템이 선택될 때 호출될 리스너 등록
@@ -83,8 +87,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    public void onFragmentChange(int index){
-        if(index == 1){
+
+    public void onFragmentChange(int index) {
+        if (index == 2) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu2Fragment).commit();
+            bottomNavigationView.setSelectedItemId(R.id.navigation_menu2);
+        }
+        if (index == 3) {
             getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu3Fragment).commit();
             bottomNavigationView.setSelectedItemId(R.id.navigation_menu3);
         }

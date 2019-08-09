@@ -303,7 +303,6 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
             startActivity(intent);
         }
         else if(pageNull.equals("Board")){
-            Toast.makeText(BoardResultActivity.this, pageNull, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("page", pageNull);
             startActivity(intent);

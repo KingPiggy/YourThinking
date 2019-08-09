@@ -1,5 +1,6 @@
 package com.beginagain.yourthinking.MenuFragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,6 +18,7 @@ import android.widget.Button;
 
 import com.beginagain.yourthinking.Adapter.ChatRoomAdapter;
 import com.beginagain.yourthinking.Item.ChatRoomItem;
+import com.beginagain.yourthinking.MainActivity;
 import com.beginagain.yourthinking.MakeChatRoomActivity;
 import com.beginagain.yourthinking.R;
 import com.google.firebase.database.ChildEventListener;
@@ -45,6 +47,8 @@ public class Menu2Fragment extends Fragment {
     private ArrayList<ChatRoomItem> chatRoomItems = new ArrayList<>();
     private ArrayList<Integer> uidCounts = new ArrayList<>();
 
+    MainActivity activity;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -72,6 +76,20 @@ public class Menu2Fragment extends Fragment {
         adapter.notifyDataSetChanged();
 
         return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        //이 메소드가 호출될떄는 프래그먼트가 엑티비티위에 올라와있는거니깐 getActivity메소드로 엑티비티참조가능
+        activity = (MainActivity) getActivity();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        //이제 더이상 엑티비티 참초가안됨
+        activity = null;
     }
 
     void init() {

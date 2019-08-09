@@ -66,7 +66,7 @@ public class Menu3Fragment extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_menu3, container, false);
 
-        activity.onFragmentChange(1);
+        activity.onFragmentChange(3);
 
         init();
         // mBoardList.clear();

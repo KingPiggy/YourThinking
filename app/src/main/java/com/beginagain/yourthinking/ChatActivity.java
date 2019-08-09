@@ -1,6 +1,7 @@
 package com.beginagain.yourthinking;
 
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -13,8 +14,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.beginagain.yourthinking.Adapter.ChatItemAdapter;
+import com.beginagain.yourthinking.Board.BoardResultActivity;
+import com.beginagain.yourthinking.Board.MyBoardActivity;
+import com.beginagain.yourthinking.Board.SearchBoardActivity;
 import com.beginagain.yourthinking.Item.ChatDTO;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,6 +41,7 @@ public class ChatActivity extends AppCompatActivity {
     private String chatRoomName;
     private String userName, uid; // 파이어베이스 추출
     private Uri profilePhotoUrl;
+    private String message;
 
     private String time;
     private long mNow;
@@ -56,6 +62,8 @@ public class ChatActivity extends AppCompatActivity {
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
 
     private int count;
+
+    String pageNull=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,13 +94,16 @@ public class ChatActivity extends AppCompatActivity {
         mSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mChatEdit.getText().toString().equals(""))
+
+                message = "";
+                message = mChatEdit.getText().toString();
+                if (message.equals(""))
                     return;
 
                 time = getTime();
                 String strPhotoUri = profilePhotoUrl.toString();
 
-                ChatDTO chat = new ChatDTO(userName, mChatEdit.getText().toString(), uid, time, strPhotoUri);
+                ChatDTO chat = new ChatDTO(userName, message, uid, time, strPhotoUri);
                 databaseReference.child("chat").child(chatRoomName).child("message").push().setValue(chat);
                 mChatEdit.setText("");
 
@@ -180,7 +191,12 @@ public class ChatActivity extends AppCompatActivity {
                                     }
                                 });
 
-                                setResult(RESULT_OK);
+                                Toast.makeText(getApplicationContext(), "채팅방이 갱신 되었습니다.", Toast.LENGTH_SHORT).show();
+                                pageNull = "Chat";
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                intent.putExtra("page", pageNull);
+                                startActivity(intent);
+
                                 finish();
                             }
                         })
@@ -204,6 +220,17 @@ public class ChatActivity extends AppCompatActivity {
                 mRecyclerView.scrollToPosition(mRecyclerView.getAdapter().getItemCount() - 1);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        pageNull = "Chat";
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("page", pageNull);
+        startActivity(intent);
+
+        finish();
     }
 
     private void init() {
@@ -263,12 +290,6 @@ public class ChatActivity extends AppCompatActivity {
 
         chatItems.add(chatDTO);
         recyclerAdapter.notifyDataSetChanged();
-    }
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("page", "chat");
-        startActivity(intent);
     }
 
 }

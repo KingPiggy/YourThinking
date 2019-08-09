@@ -1,5 +1,6 @@
 package com.beginagain.yourthinking;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -55,8 +56,10 @@ public class MakeChatRoomActivity extends AppCompatActivity {
                 map.put("desc", desc);
                 databaseReference.child("chat").child(roomTitle).child("info").updateChildren(map);
 
-//                ChatRoomItem chatRoomItem = new ChatRoomItem(roomTitle, bookTitle, desc);
-//                databaseReference.child("chatroom").push().setValue(chatRoomItem);
+                String pageNull = "Chat";
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("page", pageNull);
+                startActivity(intent);
 
                 finish();
             }
