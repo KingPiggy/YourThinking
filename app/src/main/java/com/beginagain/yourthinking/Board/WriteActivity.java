@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.beginagain.yourthinking.Adapter.BookApiAdapter;
 import com.beginagain.yourthinking.Item.RecommendBookItem;
+import com.beginagain.yourthinking.MainActivity;
 import com.beginagain.yourthinking.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -132,6 +133,9 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
                             public void onSuccess(Void aVoid) {
                                 Toast.makeText(WriteActivity.this, "업로드 성공!", Toast.LENGTH_SHORT).show();
                                 finish();
+                                Intent intent = new Intent(WriteActivity.this, MainActivity.class);
+                                intent.putExtra("page", "Board");
+                                startActivity(intent);
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {

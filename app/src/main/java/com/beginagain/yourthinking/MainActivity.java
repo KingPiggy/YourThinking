@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
             } else if(page.equals("Recommend")){
                 onFragmentChange(1);
             }
-
         } else {
             transaction.replace(R.id.layout_main_frame, menu1Fragment).commitAllowingStateLoss();
         }
@@ -83,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     }
                 }
-
                 return true;
             }
         });
