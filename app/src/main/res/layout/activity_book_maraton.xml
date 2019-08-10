@@ -2,18 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bookmaraton_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BookMaraton.BookMaratonActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".BookMaraton.BookMaratonActivity">
 
 
     <Button
         android:id="@+id/btn_make_maraton_done"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="생성하기"/>
-
+        android:text="생성하기" />
 
 
     <LinearLayout
@@ -44,6 +44,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="책 추가 +" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/bookmaraton_search_book"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:layout_below="@id/et_write_image"
+            android:background="@drawable/item_border"
+            android:padding="1dp"
+            android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -76,6 +85,7 @@
                 android:maxLength="8"
                 android:textAlignment="center" />
         </LinearLayout>
+
         <ListView
             android:id="@+id/book_maraton_ListView"
             android:layout_width="match_parent"
@@ -83,7 +93,6 @@
             android:layout_margin="5dp" />
 
     </LinearLayout>
-
 
 
 </LinearLayout>

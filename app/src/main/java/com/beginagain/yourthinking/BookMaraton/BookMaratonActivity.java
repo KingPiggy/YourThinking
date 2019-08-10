@@ -1,11 +1,16 @@
 package com.beginagain.yourthinking.BookMaraton;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,9 +20,21 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.beginagain.yourthinking.Adapter.BookApiAdapter;
 import com.beginagain.yourthinking.Item.MaratonBookItem;
+import com.beginagain.yourthinking.Item.RecommendBookItem;
 import com.beginagain.yourthinking.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -38,6 +55,12 @@ public class BookMaratonActivity extends AppCompatActivity {
     private static final String TAG_Title = "title";    // 테이블에서 검색 할때 태그 이름
     private static final String TAG_PageNum = "pageNum";    // 테이블에서 검색 할때 태그 이름
 
+    private EditText bookTitle_ET;
+    private EditText bookPageNum_ET;
+    RecyclerView mRecyclerView;
+    RecyclerView.LayoutManager layoutManager;
+    private ArrayList<RecommendBookItem> searchResults = new ArrayList<RecommendBookItem>();
+    private BookApiAdapter_for_maraton recyclerAdapter = new BookApiAdapter_for_maraton(this, searchResults, R.layout.activity_book_recommend);
     /**********************************/
 
     @Override
@@ -70,8 +93,29 @@ public class BookMaratonActivity extends AppCompatActivity {
 
     private void init() {
         maratonDB = openDB(dbName);
+        bookTitle_ET =  findViewById(R.id.book_maraton_name);
+        bookPageNum_ET =  findViewById(R.id.book_maraton_page);
+        mRecyclerView = findViewById(R.id.bookmaraton_search_book);
+        mDoneBtn = findViewById(R.id.btn_make_maraton_done);
 
-        mDoneBtn = (Button) findViewById(R.id.btn_make_maraton_done);
+        // 리싸이클 뷰 설정
+        mRecyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setAdapter(recyclerAdapter);
+        mRecyclerView.setNestedScrollingEnabled(false);
+
+        bookTitle_ET.setOnKeyListener(new View.OnKeyListener(){
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event){
+                if((event.getAction()==KeyEvent.ACTION_DOWN) && (keyCode==KeyEvent.KEYCODE_ENTER)){
+                    new BookSearchAPI_Task().execute();
+                    return true;
+                }
+                return false;
+            }
+        });
+
 
         // 생성하기 버튼 클릭시 db에 마라톤 데이터를 전송
         mDoneBtn.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +134,7 @@ public class BookMaratonActivity extends AppCompatActivity {
                     String maratonDate = dateFrom + dateTo;
 
                     editor = settings.edit();
-                    editor.putBoolean("isMaratonGoing", true);
+                    editor.putBoolean("isMaratonGoing", false);
                     editor.putString("maratonDate", maratonDate);
 
                     editor.commit();
@@ -110,12 +154,8 @@ public class BookMaratonActivity extends AppCompatActivity {
         mBookAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                EditText bookTitleET = (EditText) findViewById(R.id.book_maraton_name);
-                EditText bookPageNumET = (EditText) findViewById(R.id.book_maraton_page);
-                String bookTitle = bookTitleET.getText().toString();
-                String bookPageNum = bookPageNumET.getText().toString();
+                String bookTitle = bookTitle_ET.getText().toString();
+                String bookPageNum = bookPageNum_ET.getText().toString();
 
                 if (bookTitle.equals("") || bookPageNum.equals("")) {
                     Toast.makeText(getApplicationContext(), "책 이름과 쪽수를 입력해주세요.", Toast.LENGTH_SHORT).show();
@@ -191,5 +231,102 @@ public class BookMaratonActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
 
     }
+
+
+    private class BookSearchAPI_Task extends AsyncTask<Void, Void, ArrayList<RecommendBookItem>> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected ArrayList<RecommendBookItem> doInBackground(Void... params) {
+
+            //String myKey = "2824AAAF9F8FBF00CAD4BD88F5C3FB4B45E4DD6DBFD7EDD8332E57AFA7A6708C";
+            String myKey = "88137ABBC6F43E258E287321232C8A33FF52C15F971D8B66FA5B42B4FBC74016";
+            String urlSource = "";
+            String queryType = "&queryType=title";
+            String iec = "&inputEncoding=utf-8";
+            String outputStyle = "json"; // 혹은 json
+
+            String search_target = bookTitle_ET.getText().toString();
+            String str, receiveMsg = "";
+            ArrayList<RecommendBookItem> newItems = new ArrayList<RecommendBookItem>();
+
+            try {
+                urlSource = "http://book.interpark.com/api/search.api?key=" + myKey;
+                urlSource += "&query=" + search_target +iec +queryType+ "&output=" + outputStyle;
+                URL url = new URL(urlSource);
+
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                if (conn.getResponseCode() == conn.HTTP_OK) {
+                    InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
+                    BufferedReader reader = new BufferedReader(tmp);
+                    StringBuffer buffer = new StringBuffer();
+                    while ((str = reader.readLine()) != null) {
+                        buffer.append(str);
+                    }
+                    receiveMsg = buffer.toString();
+                    Log.i("receiveMsg : ", receiveMsg);
+
+                    reader.close();
+                } else {
+                    Toast.makeText(getApplicationContext(), "네트워크 환경이 좋지 않습니다. 잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                }
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                Intent intent = getIntent();
+                if(search_target==null) {
+                    String title = intent.getStringExtra("Title");
+                    String author = intent.getStringExtra("Author");
+                    String ISBN = intent.getStringExtra("ISBN");
+                    String thumnail = intent.getStringExtra("Thumbnail");
+                    String company = intent.getStringExtra("Company");
+
+                    RecommendBookItem recommendBookItem1 = new RecommendBookItem(title, author, company, ISBN, thumnail);
+                    newItems.add(recommendBookItem1);
+
+                }
+                if(search_target!=null) {
+                    JSONArray jarray = new JSONObject(receiveMsg).getJSONArray("item");
+
+                    for (int i = 0; i < jarray.length(); i++) {
+                        JSONObject bookItem = jarray.getJSONObject(i);
+
+                        String title = bookItem.getString("title");
+                        String author = bookItem.getString("author");
+                        String publisher = bookItem.getString("publisher");
+                        String isbn = bookItem.getString("isbn");
+                        String image = bookItem.getString("coverLargeUrl");
+                        // 쓸만한거 : description : 설명, "priceStandard":가격, "translator":"",
+
+                        RecommendBookItem recommendBookItem = new RecommendBookItem(title, author, publisher, isbn, image);
+                        newItems.add(recommendBookItem);
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return newItems;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<RecommendBookItem> newItems) {
+            if (newItems.isEmpty()) {
+                Toast.makeText(getApplicationContext(), "아이템이 없습니다.", Toast.LENGTH_SHORT).show();
+            }
+            searchResults.clear();
+            searchResults.addAll(newItems);
+            recyclerAdapter.notifyDataSetChanged();
+        }
+    }
+
     /***************************************************************************************************/
 }

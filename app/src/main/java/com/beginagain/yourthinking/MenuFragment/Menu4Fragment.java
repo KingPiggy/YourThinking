@@ -73,7 +73,6 @@ public class Menu4Fragment extends Fragment {
         maratonDB = openDB(dbName_Maraton);
         historyDB = openDB(dbName_History);
 
-        Log.d("Test", "마라톤 진행 상황?" + isBookMaratonOnGoing());
         if (isBookMaratonOnGoing()) {
             showOnGoingMode();
             showList();
@@ -124,8 +123,8 @@ public class Menu4Fragment extends Fragment {
             }
         } catch (SQLiteException e) {
             Log.d("test", "DB 읽기 실패 : " + e.getMessage());
-        } finally {
-            if (c != null) {
+        }finally {
+            if(c != null) {
                 c.close();
             }
         }
@@ -140,7 +139,7 @@ public class Menu4Fragment extends Fragment {
         listView.setVisibility(View.VISIBLE);
         maratonDate.setVisibility(View.VISIBLE);
         btnHistory.setVisibility(View.INVISIBLE);
-
+        btnFinish.setVisibility(View.INVISIBLE);
         String rawDate = prefs.getString("maratonDate", "");
         String formattedDate = formatDate(rawDate);
 
@@ -210,16 +209,16 @@ public class Menu4Fragment extends Fragment {
     }
 
     void init() {
-        mGuideText = (TextView) view.findViewById(R.id.text_view_menu4_guide);
-        mMakeBtn = (Button) view.findViewById(R.id.btn_menu4_make);
-        mDeleteBtn = (Button) view.findViewById(R.id.btn_menu4_delete);
-        listView = (ListView) view.findViewById(R.id.bookMaratonLV);
-        maratonDate = (TextView) view.findViewById(R.id.maratonDate);
+        mGuideText =  view.findViewById(R.id.text_view_menu4_guide);
+        mMakeBtn = view.findViewById(R.id.btn_menu4_make);
+        mDeleteBtn =  view.findViewById(R.id.btn_menu4_delete);
+        listView = view.findViewById(R.id.bookMaratonLV);
+        maratonDate = view.findViewById(R.id.maratonDate);
         btnFinish = view.findViewById(R.id.btn_finish);
         btnHistory = view.findViewById(R.id.btn_history);
 
         maratonDB = openDB(dbName_Maraton);
-        maratonDB.execSQL("CREATE TABLE IF NOT EXISTS " + dbName_Maraton
+        maratonDB.execSQL("CREATE TABLE IF NOT EXISTS " + tableName_Maraton
                 + " (title VARCHAR(20), pageNum VARCHAR(20), currentPageNum VARCHAR(5));");
 
         historyDB = openDB(dbName_History);
@@ -290,8 +289,8 @@ public class Menu4Fragment extends Fragment {
 
         deleteMaratonDB();
 
-        insertHistoryData(maratonDate, maratonBooksStr, totalBooksNum);
-        showAddMode();
+       insertHistoryData(maratonDate, maratonBooksStr, totalBooksNum);
+       showAddMode();
     }
 
     private int getTotalBooksNum() {
@@ -301,17 +300,17 @@ public class Menu4Fragment extends Fragment {
             c = maratonDB.rawQuery("SELECT * FROM " + tableName_Maraton, null);
             totalBookNums = c.getCount();
         } catch (SQLException e) {
-            Log.d("test", "getTotalBooksNum 에러 : " + e.getMessage());
+            Log.d("test","getTotalBooksNum 에러 : " + e.getMessage());
         } finally {
-            if (c != null) {
+            if(c != null) {
                 c.close();
             }
         }
-        return totalBookNums;
+        return  totalBookNums;
     }
 
     private String getMaratonBooksTitleStr() {
-        String booksTilte = "";
+        String  booksTilte = "";
         try {
             c = maratonDB.rawQuery("SELECT * FROM " + tableName_Maraton, null);
 
@@ -323,8 +322,8 @@ public class Menu4Fragment extends Fragment {
             }
         } catch (SQLException e) {
             Log.d("test", "getMaratonBooksTitleStr 에러 : " + e.getMessage());
-        } finally {
-            if (c != null) {
+        }finally {
+            if(c != null) {
                 c.close();
             }
         }
@@ -332,7 +331,7 @@ public class Menu4Fragment extends Fragment {
     }
 
     private String getMaratonDate() {
-        return maratonDate.getText().toString();
+       return maratonDate.getText().toString();
     }
 
     private void insertHistoryData(String maratonDate, String maratonBooksStr, int totalBooksNum) {
