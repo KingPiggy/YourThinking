@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,8 +41,6 @@ public class MakeChatRoomActivity extends AppCompatActivity {
         setContentView(R.layout.activity_make_chat_room);
 
         init();
-
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         mRoomTitleEditText.setOnKeyListener(new View.OnKeyListener() {
             @Override

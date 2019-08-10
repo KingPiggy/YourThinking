@@ -6,15 +6,17 @@ public class BookReplyItem {
     private String name;
     private String contents;
     private String date;
+    private String image;
 
     public BookReplyItem() {
     }
 
-    public BookReplyItem(String id, String name, String contents, String date) {
+    public BookReplyItem(String id, String name, String contents, String date, String image) {
         this.id = id;
         this.name = name;
         this.contents = contents;
         this.date = date;
+        this.image = image;
 
     }
 
@@ -46,6 +48,10 @@ public class BookReplyItem {
         this.date = date;
     }
 
+    public String getImage(){return image;}
+
+    public void setImage(){this.image = image;}
+
     @Override
     public String toString() {
         return "BookReplyItem{" +
@@ -53,6 +59,7 @@ public class BookReplyItem {
                 ", contents='" + contents + '\'' +
                 ", name='" + name + '\'' +
                 ", date='" +date + '\'' +
+                ",image='"+image + '\'' +
                 '}';
     }
 }

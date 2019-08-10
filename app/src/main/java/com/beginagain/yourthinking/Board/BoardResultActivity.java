@@ -1,6 +1,7 @@
 package com.beginagain.yourthinking.Board;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.beginagain.yourthinking.Adapter.ReplyAdapter;
 import com.beginagain.yourthinking.Item.BookReplyItem;
+import com.beginagain.yourthinking.MainActivity;
 import com.beginagain.yourthinking.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -66,6 +68,8 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
     private RecyclerView mReplyRecyclerView;
     private ReplyAdapter mAdapter;
 
+    private Uri replyImage;
+
     private List<BookReplyItem> mReplyList; // private static 기존
 
     long mNow = System.currentTimeMillis();
@@ -76,14 +80,18 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
     String formatDate = mFormat.format(mReDate);
 
     String mReName = user.getDisplayName();
+    String mReplyImage;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board_result);
 
-        mReplyRecyclerView = findViewById(R.id.recycler_Reply); // 이거수정
+        replyImage = user.getPhotoUrl();
+        mReplyImage = replyImage.toString();
 
+        mReplyRecyclerView = findViewById(R.id.recycler_Reply);
         mReplyList = new ArrayList<>();
 
         mReplyNameText = (TextView)findViewById(R.id.text_view_reply_name);
@@ -130,8 +138,9 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
                             String name = (String) dc.getData().get("name");
                             String contents = (String) dc.getData().get("contents");
                             String date = (String) dc.getData().get("date");
+                            String image = (String) dc.getData().get("image");
 
-                            BookReplyItem data = new BookReplyItem(rid, name, contents, date);
+                            BookReplyItem data = new BookReplyItem(rid, name, contents, date, image);
 
                             mReplyList.add(data);
                         }
@@ -167,6 +176,7 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
                 post.put("name",mReplyNameText.getText().toString());
                 post.put("contents", mReplyContentText.getText().toString());
                 post.put("date",formatDate);
+                post.put("image", mReplyImage);
 
                 mStore.collection("board").document(id)
                         .collection("reply").document(rid).set(post)
@@ -174,8 +184,9 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Toast.makeText(BoardResultActivity.this, "댓글 성공!", Toast.LENGTH_SHORT).show();
-                                Intent reintent = new Intent(BoardResultActivity.this, BookBoardActivity.class);
-                                startActivity(reintent);
+                               // Intent reintent = new Intent(BoardResultActivity.this, BoardResultActivity.class);
+                               // startActivity(reintent);
+                                finish();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -188,14 +199,17 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
             case R.id.btn_board_delete:
                 if(mReName.equals(name)) {
                     deleteCollection(mStore.collection("board").document(id).collection("reply"), 50, EXECUTOR);
+                    deleteCollection(mStore.collection("board").document(id).collection("recommend"), 50, EXECUTOR);
                     mStore.collection("board").document(id)
                             .delete()
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Toast.makeText(BoardResultActivity.this, "작성글 삭제", Toast.LENGTH_SHORT).show();
-                                    Intent delIntent = new Intent(BoardResultActivity.this, BookBoardActivity.class);
-                                    startActivity(delIntent);
+                                    Intent intent = new Intent(BoardResultActivity.this, MainActivity.class);
+                                    intent.putExtra("page", pageNull);
+                                    startActivity(intent);
+                                    finish();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -286,10 +300,13 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
         if(pageNull.equals("My")){
             Intent intent = new Intent(this, MyBoardActivity.class);
             startActivity(intent);
-        }else if(pageNull.equals("Board")){
-            Intent intent = new Intent(this, BookBoardActivity.class);
+        }
+        else if(pageNull.equals("Board")){
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("page", pageNull);
             startActivity(intent);
-        }else if(pageNull.equals("Search")){
+        }
+         else if(pageNull.equals("Search")){
             super.onBackPressed();
             Intent intent = new Intent(this, SearchBoardActivity.class);
             startActivity(intent);

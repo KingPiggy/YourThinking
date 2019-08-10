@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.beginagain.yourthinking.Item.ChatDTO;
-import com.beginagain.yourthinking.Item.RecommendBookItem;
 import com.beginagain.yourthinking.R;
 import com.squareup.picasso.Picasso;
 
