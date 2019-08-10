@@ -4,9 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.widget.TextView;
 
 import com.beginagain.yourthinking.Adapter.BoardMyAdapter;
+import com.beginagain.yourthinking.Adapter.BookBoardAdapter;
 import com.beginagain.yourthinking.Item.BookBoardItem;
 import com.beginagain.yourthinking.MainActivity;
 import com.beginagain.yourthinking.R;
@@ -32,8 +32,6 @@ public class MyBoardActivity extends AppCompatActivity {
     private RecyclerView mSearchRecyclerView;
     public BoardMyAdapter mAdapter;
     private List<BookBoardItem> mSearchList;
-    private TextView mCount;
-    private int count=0;
 
     String mName = user.getDisplayName();
 
@@ -44,12 +42,11 @@ public class MyBoardActivity extends AppCompatActivity {
 
         mSearchRecyclerView = findViewById(R.id.recycler_search);
 
-        mCount = findViewById(R.id.text_view_search_count);
-
         mSearchList= new ArrayList<>();
 
         mStore.collection("board")
                 .orderBy("date", Query.Direction.DESCENDING).limit(10000)
+                // 실시간 조회하려고 스냅 사용
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -67,20 +64,19 @@ public class MyBoardActivity extends AppCompatActivity {
                             if (mName.equals(name)){
                                 BookBoardItem data = new BookBoardItem(id, title, contents, name, date, image, author, booktitle);
                                 mSearchList.add(data);
-                                count++;
                             }
                         }
                         mAdapter = new BoardMyAdapter(mSearchList);
                         mSearchRecyclerView.setAdapter(mAdapter);
-                        mCount.setText(mName+"의 게시물 수 : "+count);
                     }
                 });
-
     }
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
+        //super.onBackPressed();
     }
 }
+

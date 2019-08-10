@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.beginagain.yourthinking.Adapter.BoardSearchAdapter;
+import com.beginagain.yourthinking.Adapter.BookBoardAdapter;
 import com.beginagain.yourthinking.Item.BookBoardItem;
 import com.beginagain.yourthinking.MainActivity;
 import com.beginagain.yourthinking.R;

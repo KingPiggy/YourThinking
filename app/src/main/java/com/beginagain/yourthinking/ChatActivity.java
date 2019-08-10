@@ -1,7 +1,6 @@
 package com.beginagain.yourthinking;
 
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -14,13 +13,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.beginagain.yourthinking.Adapter.ChatItemAdapter;
-import com.beginagain.yourthinking.Board.BoardResultActivity;
-import com.beginagain.yourthinking.Board.MyBoardActivity;
-import com.beginagain.yourthinking.Board.SearchBoardActivity;
 import com.beginagain.yourthinking.Item.ChatDTO;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -42,7 +36,6 @@ public class ChatActivity extends AppCompatActivity {
     private String chatRoomName;
     private String userName, uid; // 파이어베이스 추출
     private Uri profilePhotoUrl;
-    private String message;
 
     private String time;
     private long mNow;
@@ -52,7 +45,6 @@ public class ChatActivity extends AppCompatActivity {
 
     private EditText mChatEdit;
     private Button mSendBtn, mExitBtn;
-    private TextView mRoomTitleTextView;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -65,8 +57,6 @@ public class ChatActivity extends AppCompatActivity {
 
     private int count;
 
-    String pageNull=null;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,9 +68,6 @@ public class ChatActivity extends AppCompatActivity {
         Intent intent = getIntent();
         chatRoomName = intent.getStringExtra("chatRoomName");
         count = intent.getIntExtra("count", 1);
-
-        mRoomTitleTextView.setText(chatRoomName);
-
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             userName = user.getDisplayName();
@@ -99,16 +86,13 @@ public class ChatActivity extends AppCompatActivity {
         mSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                message = "";
-                message = mChatEdit.getText().toString();
-                if (message.equals(""))
+                if (mChatEdit.getText().toString().equals(""))
                     return;
 
                 time = getTime();
                 String strPhotoUri = profilePhotoUrl.toString();
 
-                ChatDTO chat = new ChatDTO(userName, message, uid, time, strPhotoUri);
+                ChatDTO chat = new ChatDTO(userName, mChatEdit.getText().toString(), uid, time, strPhotoUri);
                 databaseReference.child("chat").child(chatRoomName).child("message").push().setValue(chat);
                 mChatEdit.setText("");
 
@@ -154,7 +138,7 @@ public class ChatActivity extends AppCompatActivity {
                                 myQuery2.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
-                                        if (count == 1 || count == 0) {
+                                        if (count == 1) {
                                             DatabaseReference deleteRef = databaseReference.child("chat");
                                             deleteRef.child(chatRoomName).removeValue();
                                         }
@@ -196,12 +180,7 @@ public class ChatActivity extends AppCompatActivity {
                                     }
                                 });
 
-                                Toast.makeText(getApplicationContext(), "채팅방이 갱신 되었습니다.", Toast.LENGTH_SHORT).show();
-                                pageNull = "Chat";
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                intent.putExtra("page", pageNull);
-                                startActivity(intent);
-
+                                setResult(RESULT_OK);
                                 finish();
                             }
                         })
@@ -227,24 +206,12 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public void onBackPressed() {
-
-        pageNull = "Chat";
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("page", pageNull);
-        startActivity(intent);
-
-        finish();
-    }
-
     private void init() {
         // 위젯 ID 참조
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_chat);
         mChatEdit = (EditText) findViewById(R.id.edittext_chat);
         mSendBtn = (Button) findViewById(R.id.btn_chat_send);
         mExitBtn = (Button) findViewById(R.id.btn_chat_exit);
-        mRoomTitleTextView = (TextView)findViewById(R.id.text_view_chat_room_title);
     }
 
     private int checkPeopleCount() {

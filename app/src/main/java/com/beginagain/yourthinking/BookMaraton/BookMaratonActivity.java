@@ -47,15 +47,19 @@ public class BookMaratonActivity extends AppCompatActivity {
     //  '****' 표시 한 곳이 내가 한 부분
     /************************************/
     SQLiteDatabase maratonDB = null;       // 데이터 베이스 객체
-    ListView listView;                  // 리스트 뷰
-    ListAdapter adapter;                // 리스트 뷰 어댑터
-    ArrayList<HashMap<String, String>> books;   // 책 객체를 담고 있는 해쉬 맵을 담은 어레이 리스트
+    public static ListView listView;                  // 리스트 뷰
+    private ListAdapter adapter;                // 리스트 뷰 어댑터
+    public static ArrayList<HashMap<String, String>> books;   // 책 객체를 담고 있는 해쉬 맵을 담은 어레이 리스트
     private String dbName = "maratonDB";       // 디비 이름(너가 임의로 지정)
     private String tableName = "BookTable";  // 테이블 이름 (너가 임의로 지정)
-    private static final String TAG_Title = "title";    // 테이블에서 검색 할때 태그 이름
-    private static final String TAG_PageNum = "pageNum";    // 테이블에서 검색 할때 태그 이름
+    public static final String TAG_Title = "title";    // 테이블에서 검색 할때 태그 이름
+    public static final String TAG_PageNum = "pageNum";    // 테이블에서 검색 할때 태그 이름
+    public static final String TAG_imgURL = "img_URL";
+    public static final String TAG_currentPageNum = "currentPageNum";
+    Button btnDelete;
 
-    private EditText bookTitle_ET;
+
+    public static EditText bookTitle_ET;
     private EditText bookPageNum_ET;
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager layoutManager;
@@ -97,6 +101,7 @@ public class BookMaratonActivity extends AppCompatActivity {
         bookPageNum_ET =  findViewById(R.id.book_maraton_page);
         mRecyclerView = findViewById(R.id.bookmaraton_search_book);
         mDoneBtn = findViewById(R.id.btn_make_maraton_done);
+        btnDelete = findViewById(R.id.btn_delete_maratonList);
 
         // 리싸이클 뷰 설정
         mRecyclerView.setHasFixedSize(true);
@@ -105,17 +110,15 @@ public class BookMaratonActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(recyclerAdapter);
         mRecyclerView.setNestedScrollingEnabled(false);
 
-        bookTitle_ET.setOnKeyListener(new View.OnKeyListener(){
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event){
-                if((event.getAction()==KeyEvent.ACTION_DOWN) && (keyCode==KeyEvent.KEYCODE_ENTER)){
-                    new BookSearchAPI_Task().execute();
-                    return true;
-                }
-                return false;
+            public void onClick(View v) {
+                books.clear();
+                adapter = new BookmartonAdapter(books);
+                listView.setAdapter(adapter);
             }
         });
-
 
         // 생성하기 버튼 클릭시 db에 마라톤 데이터를 전송
         mDoneBtn.setOnClickListener(new View.OnClickListener() {
@@ -164,6 +167,7 @@ public class BookMaratonActivity extends AppCompatActivity {
                 }   else {
                     addBookToList(bookTitle, bookPageNum);
                     showList();
+                    new BookSearchAPI_Task().execute();
                 }
                 MaratonBookItem temp = new MaratonBookItem("제목이다", 100, 20);
             }
@@ -189,11 +193,12 @@ public class BookMaratonActivity extends AppCompatActivity {
                 HashMap<String, String> book = books.get(i);
                 String bookTitle = book.get(TAG_Title);
                 String bookPageNum = book.get(TAG_PageNum);
+                String url = book.get(TAG_imgURL);
 
                 maratonDB.execSQL("INSERT INTO " + tableName
-                        + " (title, pageNum, currentPageNum)  Values ('" + bookTitle + "', '" + bookPageNum + "', '0');");
+                        + " (title, pageNum, currentPageNum, img_URL)  Values ('" + bookTitle + "', '" + bookPageNum + "', '0', '" + url + "');");
 
-                Log.d("Test", "DB에 데이터 삽입 : (" + bookTitle + ", " + bookPageNum + ")");
+                Log.d("Test", "DB에 데이터 삽입 : (" + bookTitle + ", " + bookPageNum + ", url : " + url + ")");
             }
         } catch (SQLiteException e) {
             Log.d("Test", "데이터 삽입 실패 : " + e.getMessage());
@@ -209,6 +214,8 @@ public class BookMaratonActivity extends AppCompatActivity {
         HashMap<String, String> item = new HashMap<>();
         item.put(TAG_Title, bookTitle);
         item.put(TAG_PageNum, bookPageNum);
+        item.put(TAG_imgURL, null);
+        item.put(TAG_currentPageNum, "0");
 
         books.add(item);
     }
@@ -223,13 +230,8 @@ public class BookMaratonActivity extends AppCompatActivity {
     }
 
     private void showList() {
-
-        adapter = new SimpleAdapter(this,
-                books, R.layout.listview_item,
-                new String[]{"title", "pageNum",},
-                new int[]{R.id.ListView_oneitem_title_TV, R.id.pageNum});
+        adapter = new BookmartonAdapter(books);
         listView.setAdapter(adapter);
-
     }
 
 
@@ -244,7 +246,8 @@ public class BookMaratonActivity extends AppCompatActivity {
         protected ArrayList<RecommendBookItem> doInBackground(Void... params) {
 
             //String myKey = "2824AAAF9F8FBF00CAD4BD88F5C3FB4B45E4DD6DBFD7EDD8332E57AFA7A6708C";
-            String myKey = "88137ABBC6F43E258E287321232C8A33FF52C15F971D8B66FA5B42B4FBC74016";
+            //String myKey = "88137ABBC6F43E258E287321232C8A33FF52C15F971D8B66FA5B42B4FBC74016";
+            String myKey = "C4F75A31D86FE91CC363353F5CE11F556024DD100757BB6BEE5CD90FEBF6A332";
             String urlSource = "";
             String queryType = "&queryType=title";
             String iec = "&inputEncoding=utf-8";
@@ -320,7 +323,7 @@ public class BookMaratonActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<RecommendBookItem> newItems) {
             if (newItems.isEmpty()) {
-                Toast.makeText(getApplicationContext(), "아이템이 없습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "검색 결과가 없습니다.", Toast.LENGTH_SHORT).show();
             }
             searchResults.clear();
             searchResults.addAll(newItems);

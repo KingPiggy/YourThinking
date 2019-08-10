@@ -131,7 +131,8 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Toast.makeText(WriteActivity.this, "업로드 성공!", Toast.LENGTH_SHORT).show();
-                                finish();
+                                Intent intent = new Intent(WriteActivity.this, BookBoardActivity.class);
+                                startActivity(intent);
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -169,6 +170,7 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
                 urlSource += "&query=" + image +iec +queryType+ "&output=" + outputStyle;
                 URL url = new URL(urlSource);
 
+                Log.i("urlSource : ", url +"");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
                 if (conn.getResponseCode() == conn.HTTP_OK) {
@@ -179,7 +181,7 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
                         buffer.append(str);
                     }
                     receiveMsg = buffer.toString();
-                    Log.i("receiveMsg : ", receiveMsg);
+                    Log.i("receiveMsg : ", receiveMsg + "\n\n");
 
                     reader.close();
                 } else {
@@ -239,6 +241,9 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
     }
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        Intent intent = new Intent(WriteActivity.this, BookBoardActivity.class);
+        startActivity(intent);
+        finish();
+        //super.onBackPressed();
     }
 }

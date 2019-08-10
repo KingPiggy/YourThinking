@@ -13,8 +13,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.beginagain.yourthinking.Board.MyBoardActivity;
-import com.beginagain.yourthinking.Board.RecommendBoardActivity;
 import com.beginagain.yourthinking.BookRecommendActivity;
 import com.beginagain.yourthinking.LoginActivity;
 import com.beginagain.yourthinking.MyChatActivity;
@@ -78,16 +76,14 @@ public class Menu1Fragment extends Fragment {
         mRecommendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), RecommendBoardActivity.class);
-                startActivity(intent);
+
             }
         });
 
         mMyBoardBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), MyBoardActivity.class);
-                startActivity(intent);
+
             }
         });
 

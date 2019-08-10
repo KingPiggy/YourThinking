@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.beginagain.yourthinking.MenuFragment.Menu3Fragment;
 import com.beginagain.yourthinking.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -53,7 +52,7 @@ public class RetouchBoardActivity extends AppCompatActivity implements View.OnCl
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(RetouchBoardActivity.this, "수정완료!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(RetouchBoardActivity.this, Menu3Fragment.class);
+                        Intent intent = new Intent(RetouchBoardActivity.this, BookBoardActivity.class);
                         startActivity(intent);
                     }
                 })
