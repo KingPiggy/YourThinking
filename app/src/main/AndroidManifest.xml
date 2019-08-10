@@ -18,7 +18,7 @@
         tools:replace="android:appComponentFactory">
         <activity android:name=".MyChatActivity"></activity>
         <activity android:name=".ChatActivity" />
-        <activity android:name=".BookMaraton.BookMaratonHistory_info"></activity>
+        <activity android:name=".BookMaraton.BookMaratonHistory_info" />
         <activity android:name=".BookMaraton.BookMaratonHistory" />
         <activity android:name=".MakeChatRoomActivity" />
         <activity android:name=".BookRecommendActivity" />

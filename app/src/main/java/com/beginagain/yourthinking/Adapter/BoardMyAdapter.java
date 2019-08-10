@@ -90,7 +90,6 @@ public class BoardMyAdapter extends RecyclerView.Adapter<BoardMyAdapter.MainView
                     intent.putExtra("BookTitle", mBooktitle);
                     intent.putExtra("Page","My");
                     view.getContext().startActivity(intent);
-                    // Toast.makeText(BookBoardActivity.this, "아무것도 없어요!", Toast.LENGTH_SHORT).show();
                 }
             });
         }
