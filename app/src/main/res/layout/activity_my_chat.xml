@@ -10,12 +10,12 @@
         android:id="@+id/text_view_my_chat_temp"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="@color/primary"
+        android:background="@drawable/textview"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
         android:text="내가 참여한 채팅방"
         android:textColor="@color/blackSoft"
-        android:textSize="16dp"/>
+        android:textSize="16dp" />
 
     <ListView
         android:id="@+id/listview_my_chat_chatlist"

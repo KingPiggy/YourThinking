@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BookMaraton.BookMaratonInfo"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".BookMaraton.BookMaratonInfo">
 
     <TextView
         android:layout_width="wrap_content"
@@ -13,13 +13,14 @@
         android:layout_marginTop="50dp"
         android:text="독서 마라톤 진행중"
         android:textSize="50dp" />
+
     <Button
         android:id="@+id/btnUpdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30dp"
         android:layout_gravity="right"
-        android:text="입력하기"/>
+        android:text="입력하기"
+        android:textSize="30dp" />
 
     <TextView
         android:id="@+id/bookInfo_title"

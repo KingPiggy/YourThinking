@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="@color/primary"
+        android:background="@drawable/textview"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
         android:text="추천도서 TOP 30"
@@ -21,12 +21,14 @@
     <RelativeLayout
         android:id="@+id/layout_recommend_btn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
 
         <Button
             android:id="@+id/btn_recommend_bestseller"
             android:layout_width="100dp"
             android:layout_height="50dp"
+            android:background="@drawable/button"
             android:text="베스트셀러" />
 
         <Button
@@ -34,6 +36,7 @@
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:layout_toRightOf="@id/btn_recommend_bestseller"
+            android:background="@drawable/button"
             android:text="신간 도서" />
 
         <Spinner
@@ -49,6 +52,7 @@
         android:id="@+id/recycler_view_recommend"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
         android:scrollbars="vertical">
 
     </android.support.v7.widget.RecyclerView>

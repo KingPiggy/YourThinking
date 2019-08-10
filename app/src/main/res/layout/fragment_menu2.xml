@@ -10,12 +10,12 @@
         android:id="@+id/text_view_menu2"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="@color/primary"
+        android:background="@drawable/textview"
+        android:gravity="center_vertical"
         android:paddingLeft="10dp"
         android:text="독서 토론방"
-        android:textSize="16dp"
-        android:gravity="center_vertical"
-        android:textColor="@color/blackSoft"/>
+        android:textColor="@color/blackSoft"
+        android:textSize="16dp" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floating_chat_add"

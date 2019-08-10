@@ -43,6 +43,7 @@
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/layout_chat_profile"
             android:text="채팅 내용"
+            android:textColor="@color/blackSoft"
             android:textSize="12dp" />
 
         <TextView

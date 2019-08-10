@@ -9,21 +9,22 @@
         android:id="@+id/text_view_search_board"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="@color/primary"
+        android:background="@drawable/textview"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
         android:text="내가 쓴 게시글"
         android:textColor="@color/blackSoft"
         android:textSize="16dp" />
+
     <TextView
         android:id="@+id/text_view_search_count"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/text_view_search_board"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:text="00의 게시물 수 : 00"
-        android:textSize="15dp"/>
+        android:textSize="15dp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_search"
