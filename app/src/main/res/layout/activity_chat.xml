@@ -67,6 +67,7 @@
                 android:id="@+id/btn_chat_send"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:background="@drawable/button"
                 android:layout_weight="2"
                 android:text="전송" />
 

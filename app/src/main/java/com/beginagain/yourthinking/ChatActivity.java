@@ -67,7 +67,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private int count;
 
-    String pageNull=null;
+    String pageNull = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -245,7 +245,7 @@ public class ChatActivity extends AppCompatActivity {
         mChatEdit = (EditText) findViewById(R.id.edittext_chat);
         mSendBtn = (Button) findViewById(R.id.btn_chat_send);
         mExitBtn = (ImageButton) findViewById(R.id.btn_chat_exit);
-        mRoomTitleTextView = (TextView)findViewById(R.id.text_view_chat_room_title);
+        mRoomTitleTextView = (TextView) findViewById(R.id.text_view_chat_room_title);
     }
 
     private int checkPeopleCount() {
