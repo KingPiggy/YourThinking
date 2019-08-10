@@ -11,25 +11,25 @@
         android:id="@+id/layout_chat_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primary">
+        android:background="@drawable/textview">
 
         <TextView
             android:id="@+id/text_view_chat_room_title"
             android:layout_width="wrap_content"
             android:layout_height="56dp"
-            android:background="@color/primary"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
+            android:text="하하하하하"
             android:textColor="@color/blackSoft"
             android:textSize="16dp" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btn_chat_exit"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text="퇴장" />
+            android:background="@drawable/icon_door" />
 
     </RelativeLayout>
 

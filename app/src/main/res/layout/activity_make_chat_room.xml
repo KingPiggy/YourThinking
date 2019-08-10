@@ -14,12 +14,12 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="100dp"
             android:layout_height="56dp"
-            android:background="@color/primaryDeep"
-            android:gravity="center_vertical|left"
-            android:paddingLeft="10dp"
-            android:text="채팅방 제목"
+            android:background="@drawable/textview"
+            android:gravity="center"
+            android:text="제목"
+            android:textColor="@color/blackSoft"
             android:textSize="16dp" />
 
         <EditText
@@ -39,12 +39,12 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="100dp"
             android:layout_height="56dp"
-            android:background="@color/primaryDeep"
-            android:gravity="center_vertical|left"
-            android:paddingLeft="10dp"
+            android:background="@drawable/textview"
+            android:gravity="center"
             android:text="도서"
+            android:textColor="@color/blackSoft"
             android:textSize="16dp" />
 
         <EditText
@@ -64,18 +64,19 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="100dp"
             android:layout_height="56dp"
-            android:background="@color/primary"
-            android:gravity="center_vertical|left"
-            android:paddingLeft="10dp"
+            android:background="@drawable/textview"
+            android:gravity="center"
             android:text="소개"
+            android:textColor="@color/blackSoft"
             android:textSize="16dp" />
 
         <EditText
             android:id="@+id/edittext_make_chatroom_desc"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="top"
             android:hint="채팅방을 소개해주세요. (최대 50자)"
             android:maxLength="50"
             android:textSize="15dp" />
@@ -93,18 +94,28 @@
             android:id="@+id/btn_make_chatroom_okay"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_marginRight="10dp"
-            android:background="@color/primaryDeep"
-            android:text="확인" />
+            android:layout_weight="1"
+            android:background="@drawable/button"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="확인"
+            android:textColor="@color/blackSoft" />
 
         <Button
             android:id="@+id/btn_make_chatroom_cancel"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/primaryDeep"
-            android:text="취소" />
+            android:background="@drawable/button"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="취소"
+            android:textColor="@color/blackSoft" />
 
     </LinearLayout>
 

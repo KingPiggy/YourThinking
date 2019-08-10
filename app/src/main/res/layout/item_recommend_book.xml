@@ -32,6 +32,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/iv_recommend_item_thumbnail"
+                android:textColor="@color/blackSoft"
                 android:text="책 타이틀"
                 android:textSize="14dp" />
 
@@ -43,6 +44,7 @@
                 android:layout_alignLeft="@id/text_view_recommend_item_title"
                 android:layout_marginTop="5dp"
                 android:text="저자"
+                android:textColor="@color/blackSoft"
                 android:textSize="12dp" />
 
             <TextView
@@ -53,6 +55,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_toRightOf="@id/text_view_recommend_item_author"
                 android:text="출판사"
+                android:textColor="@color/blackSoft"
                 android:textSize="12dp" />
 
             <TextView

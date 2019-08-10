@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,7 +52,8 @@ public class ChatActivity extends AppCompatActivity {
     //    private SimpleDateFormat mFormat = new SimpleDateFormat("y/M/d a hh:mm");
 
     private EditText mChatEdit;
-    private Button mSendBtn, mExitBtn;
+    private Button mSendBtn;
+    private ImageButton mExitBtn;
     private TextView mRoomTitleTextView;
 
     private RecyclerView mRecyclerView;
@@ -127,7 +129,7 @@ public class ChatActivity extends AppCompatActivity {
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                 builder.setTitle("채팅에서 퇴장하시겠습니까?")        // 제목 설정
-                        .setMessage("지금까지 자신의 채팅 내역이 사라집니다.")        // 메세지 설정
+                        .setMessage("지금까지 자신의 채팅 메시지가 사라집니다.")        // 메세지 설정
                         .setCancelable(true)        // 뒤로 버튼 클릭시 취소 가능 설정
                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             // 확인 버튼 클릭시 설정
@@ -145,7 +147,6 @@ public class ChatActivity extends AppCompatActivity {
 
                                     @Override
                                     public void onCancelled(DatabaseError databaseError) {
-                                        Log.e("hoon", "onCancelled", databaseError.toException());
                                     }
                                 });
 
@@ -196,7 +197,7 @@ public class ChatActivity extends AppCompatActivity {
                                     }
                                 });
 
-                                Toast.makeText(getApplicationContext(), "채팅방이 갱신 되었습니다.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "목록이 갱신 되었습니다.", Toast.LENGTH_SHORT).show();
                                 pageNull = "Chat";
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 intent.putExtra("page", pageNull);
@@ -243,7 +244,7 @@ public class ChatActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_chat);
         mChatEdit = (EditText) findViewById(R.id.edittext_chat);
         mSendBtn = (Button) findViewById(R.id.btn_chat_send);
-        mExitBtn = (Button) findViewById(R.id.btn_chat_exit);
+        mExitBtn = (ImageButton) findViewById(R.id.btn_chat_exit);
         mRoomTitleTextView = (TextView)findViewById(R.id.text_view_chat_room_title);
     }
 

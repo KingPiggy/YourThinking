@@ -20,7 +20,7 @@
                 android:id="@+id/layout_result"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/deepGray">
+                android:background="@color/primary">
 
                 <ImageView
                     android:id="@+id/iv_result"
@@ -137,6 +137,7 @@
                     android:id="@+id/btn_board_retouch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/button"
                     android:text="수정" />
 
                 <Button
@@ -144,6 +145,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
+                    android:background="@drawable/button"
                     android:text="삭제" />
 
                 <Button
@@ -151,6 +153,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
+                    android:background="@drawable/button"
                     android:text="추천" />
             </LinearLayout>
         </RelativeLayout>
@@ -204,6 +207,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:background="@drawable/button"
                     android:text="작성" />
 
             </RelativeLayout>

@@ -9,18 +9,22 @@
 
     <Button
         android:id="@+id/btn_google_logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
         android:layout_centerInParent="true"
-        android:text="구글 로그아웃" />
+        android:background="@drawable/button"
+        android:text="구글 로그아웃"
+        android:textColor="@color/blackSoft" />
 
     <Button
         android:id="@+id/btn_google_revoke"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
         android:layout_below="@id/btn_google_logout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="구글 회원탈퇴" />
+        android:background="@drawable/button"
+        android:text="구글 회원탈퇴"
+        android:textColor="@color/blackSoft" />
 
 </RelativeLayout>

@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="@color/primary"
+        android:background="@drawable/textview"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
         android:text="글 수정"
@@ -48,6 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
+            android:background="@drawable/button"
             android:text="변경"
             tools:ignore="HardCodedText" />
     </RelativeLayout>

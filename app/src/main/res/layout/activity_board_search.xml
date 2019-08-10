@@ -8,12 +8,12 @@
         android:id="@+id/text_view_search_user"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="@color/primary"
+        android:background="@drawable/textview"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
         android:text="글 검색"
         android:textColor="@color/blackSoft"
-        android:textSize="16dp"  />
+        android:textSize="16dp" />
 
     <LinearLayout
         android:id="@+id/ll_search"
@@ -56,6 +56,7 @@
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:background="@drawable/button"
             android:text="검색" />
 
     </LinearLayout>

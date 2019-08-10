@@ -10,12 +10,12 @@
         android:id="@+id/text_view_board_title"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:paddingLeft="10dp"
-        android:background="@color/primary"
-        android:text="독후감 게시판"
-        android:textSize="16dp"
+        android:background="@drawable/textview"
         android:gravity="center_vertical"
-        android:textColor="@color/blackSoft" />
+        android:paddingLeft="10dp"
+        android:text="독후감 게시판"
+        android:textColor="@color/blackSoft"
+        android:textSize="16dp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_Board"

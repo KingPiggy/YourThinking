@@ -61,6 +61,7 @@
                 android:layout_below="@id/image_chat_room_item_person"
                 android:layout_centerHorizontal="true"
                 android:text="참여인원"
+                android:textColor="@color/blackSoft"
                 android:textSize="10dp" />
 
             <TextView
@@ -75,6 +76,7 @@
                 android:gravity="center"
                 android:maxLength="50"
                 android:text="채팅방 설명 20자"
+                android:textColor="@color/blackSoft"
                 android:textSize="12dp" />
         </RelativeLayout>
 
