@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.beginagain.yourthinking.BookMaraton.BookMaratonActivity;
 import com.beginagain.yourthinking.BookMaraton.BookMaratonHistory;
 import com.beginagain.yourthinking.BookMaraton.BookMaratonInfo;
+import com.beginagain.yourthinking.BookMaraton.BookmartonAdapter;
 import com.beginagain.yourthinking.R;
 
 import java.util.ArrayList;
@@ -104,20 +105,19 @@ public class Menu4Fragment extends Fragment {
                 do {
                     String title = c.getString(c.getColumnIndex(TAG_Title));
                     String pageNum = c.getString(c.getColumnIndex(TAG_PageNum)) + "p";
-                    String currentPage = c.getString(c.getColumnIndex(TAG_currPageNum)) + "p";
+                    String currentPage = c.getString(c.getColumnIndex(TAG_currPageNum));
+                    String url = c.getString(c.getColumnIndex(BookMaratonActivity.TAG_imgURL));
 
                     HashMap<String, String> item = new HashMap<String, String>();
                     item.put(TAG_Title, title);
                     item.put(TAG_PageNum, pageNum);
                     item.put(TAG_currPageNum, currentPage);
+                    item.put(BookMaratonActivity.TAG_imgURL, url);
 
                     books.add(item);
                 } while (c.moveToNext());
 
-                adapter = new SimpleAdapter(this.getContext(),
-                        books, R.layout.listview_item,
-                        new String[]{"title", "pageNum", "currentPageNum"},
-                        new int[]{R.id.ListView_oneitem_title_TV, R.id.pageNum, R.id.currentPage});
+                adapter = new BookmartonAdapter(books);
 
                 listView.setAdapter(adapter);
             }
@@ -219,7 +219,7 @@ public class Menu4Fragment extends Fragment {
 
         maratonDB = openDB(dbName_Maraton);
         maratonDB.execSQL("CREATE TABLE IF NOT EXISTS " + tableName_Maraton
-                + " (title VARCHAR(20), pageNum VARCHAR(20), currentPageNum VARCHAR(5));");
+                + " (title VARCHAR(20), pageNum VARCHAR(20), currentPageNum VARCHAR(5), img_URL VARCHAR(1000));");
 
         historyDB = openDB(dbName_History);
         historyDB.execSQL("CREATE TABLE IF NOT EXISTS " + tableName_History

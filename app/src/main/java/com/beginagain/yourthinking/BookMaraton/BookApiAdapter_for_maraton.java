@@ -1,7 +1,6 @@
 package com.beginagain.yourthinking.BookMaraton;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -10,24 +9,24 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.beginagain.yourthinking.Board.WriteActivity;
 import com.beginagain.yourthinking.Item.RecommendBookItem;
 import com.beginagain.yourthinking.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class BookApiAdapter_for_maraton extends RecyclerView.Adapter<BookApiAdapter_for_maraton.MyViewHolder> {
     Context context;
     ArrayList<RecommendBookItem> items;
-    String title, author, company, ISBN, thumbnail;
+    String title, author, company, ISBN, thumbnail_URL;
     int itemLayout;
 
     public BookApiAdapter_for_maraton(Context context, ArrayList<RecommendBookItem> items, int itemLayout) {
@@ -86,10 +85,6 @@ public class BookApiAdapter_for_maraton extends RecyclerView.Adapter<BookApiAdap
             mISBN = (TextView) itemView.findViewById(R.id.text_view_recommend_item_isbn);
             mThumbnail = (ImageView)itemView.findViewById(R.id.iv_recommend_item_thumbnail);
 
-
-            Log.d("test", "");
-
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -100,8 +95,24 @@ public class BookApiAdapter_for_maraton extends RecyclerView.Adapter<BookApiAdap
                     author = data.getAuthor();
                     company = data.getPublisher();
                     ISBN = data.getIsbn();
-                    thumbnail = data.getImage();
+                    thumbnail_URL = data.getImage();
 
+                    String bookTitle = BookMaratonActivity.bookTitle_ET.getText().toString();
+                    List<HashMap<String, String>> books = BookMaratonActivity.books;
+                    ListView listview = BookMaratonActivity.listView;
+                    String targetTilte = null;
+
+                    for(int i = 0; i < books.size(); i++) {
+                        HashMap book = books.get(i);
+
+                        targetTilte = book.get(BookMaratonActivity.TAG_Title).toString();
+                        if(bookTitle.equals(targetTilte)) {
+                            book.put(BookMaratonActivity.TAG_imgURL, thumbnail_URL);
+                        }
+                    }
+                    Toast.makeText(view.getContext(), title + " 선택" , Toast.LENGTH_LONG).show();
+
+                    listview.setAdapter(new BookmartonAdapter(books));
                     /*
                     searchResult = view.getContext().getSharedPreferences("searchResult", Context.MODE_PRIVATE);
                     editor = searchResult.edit();
@@ -111,7 +122,7 @@ public class BookApiAdapter_for_maraton extends RecyclerView.Adapter<BookApiAdap
                     editor.putString("xx", "xx"); // 입력
                     editor.commit(); // 파일에 최종 반영함
 */
-                    Toast.makeText(view.getContext(), "url : " + thumbnail, Toast.LENGTH_LONG).show();
+
                 }
             });
         }

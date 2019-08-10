@@ -92,6 +92,7 @@ public class MakeChatRoomActivity extends AppCompatActivity {
             }
         });
 
+        mOkayBtn = (Button) findViewById(R.id.btn_make_chatroom_okay);
         mOkayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

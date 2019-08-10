@@ -5,15 +5,16 @@
     android:id="@+id/bookmaraton_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FCFFFDFD"
     android:orientation="vertical"
     tools:context=".BookMaraton.BookMaratonActivity">
 
 
     <Button
         android:id="@+id/btn_make_maraton_done"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="생성하기" />
+        android:text="도서 마라톤 시작하기" />
 
 
     <LinearLayout
@@ -39,17 +40,35 @@
             android:inputType="numberSigned|numberDecimal"
             android:maxLength="4" />
 
-        <Button
-            android:id="@+id/btn_maratonbook_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="책 추가 +" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <Button
+                android:id="@+id/btn_maratonbook_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="책 추가 +" />
+
+            <Button
+                android:id="@+id/btn_delete_maratonList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="리스트 삭제" />
+
+        </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/bookmaraton_search_book"
             android:layout_width="match_parent"
             android:layout_height="110dp"
             android:layout_below="@id/et_write_image"
+            android:layout_margin="5dp"
             android:background="@drawable/item_border"
             android:padding="1dp"
             android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
