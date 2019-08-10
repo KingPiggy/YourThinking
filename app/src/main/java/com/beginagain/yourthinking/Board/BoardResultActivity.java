@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.beginagain.yourthinking.Adapter.ReplyAdapter;
 import com.beginagain.yourthinking.Item.BookReplyItem;
 import com.beginagain.yourthinking.MainActivity;
-import com.beginagain.yourthinking.MenuFragment.Menu3Fragment;
 import com.beginagain.yourthinking.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

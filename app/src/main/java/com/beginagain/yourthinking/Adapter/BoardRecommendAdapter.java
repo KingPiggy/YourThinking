@@ -16,14 +16,14 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class BookBoardAdapter extends RecyclerView.Adapter<BookBoardAdapter.MainViewHolder> {
+public class BoardRecommendAdapter  extends RecyclerView.Adapter<BoardRecommendAdapter.MainViewHolder> {
 
     String mName, mTitle, mContents, mDate, mId, mImage, mAuthor, mBooktitle;
 
-     List<BookBoardItem> mSearchList;
+    List<BookBoardItem> mRecommendList;
 
-    public BookBoardAdapter(List<BookBoardItem> mSearchList) {
-        this.mSearchList = mSearchList;
+    public BoardRecommendAdapter(List<BookBoardItem> mRecommendList) {
+        this.mRecommendList = mRecommendList;
     }
 
     @NonNull
@@ -34,7 +34,7 @@ public class BookBoardAdapter extends RecyclerView.Adapter<BookBoardAdapter.Main
 
     @Override
     public void onBindViewHolder(@NonNull MainViewHolder holder, int position) {
-        BookBoardItem data = mSearchList.get(position);
+        BookBoardItem data = mRecommendList.get(position);
         holder.boardNameTextView.setText(data.getName());
         holder.boardTitleTextView.setText(data.getTitle());
         holder.boardDateTextView.setText(data.getDate());
@@ -43,10 +43,10 @@ public class BookBoardAdapter extends RecyclerView.Adapter<BookBoardAdapter.Main
 
     @Override
     public int getItemCount() {
-        if (mSearchList == null) {
+        if (mRecommendList == null) {
             return 0;
         }
-        return mSearchList.size();
+        return mRecommendList.size();
     }
 
     public class MainViewHolder extends RecyclerView.ViewHolder {
@@ -67,7 +67,7 @@ public class BookBoardAdapter extends RecyclerView.Adapter<BookBoardAdapter.Main
                 @Override
                 public void onClick(View view) {
                     int pos = getAdapterPosition() ;
-                    BookBoardItem data = mSearchList.get(pos);
+                    BookBoardItem data = mRecommendList.get(pos);
 
                     Intent intent = new Intent(view.getContext(), BoardResultActivity.class);
 
@@ -88,11 +88,10 @@ public class BookBoardAdapter extends RecyclerView.Adapter<BookBoardAdapter.Main
                     intent.putExtra("Image", mImage);
                     intent.putExtra("Author", mAuthor);
                     intent.putExtra("BookTitle", mBooktitle);
-                    intent.putExtra("Page","Board");
+                    intent.putExtra("Page","Recommend");
                     view.getContext().startActivity(intent);
                 }
             });
         }
     }
 }
-

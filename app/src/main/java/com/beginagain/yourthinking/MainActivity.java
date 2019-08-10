@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -54,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
                 onFragmentChange(2);
             } else if (page.equals("Board")) {
                 onFragmentChange(3);
+            } else if(page.equals("Recommend")){
+                onFragmentChange(1);
             }
 
         } else {
@@ -89,6 +90,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onFragmentChange(int index) {
+        if(index==1){
+            getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu1Fragment).commit();
+            bottomNavigationView.setSelectedItemId(R.id.navigation_menu1);
+        }
         if (index == 2) {
             getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu2Fragment).commit();
             bottomNavigationView.setSelectedItemId(R.id.navigation_menu2);

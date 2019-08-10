@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import com.beginagain.yourthinking.Adapter.BookApiAdapter;
 import com.beginagain.yourthinking.Item.RecommendBookItem;
-import com.beginagain.yourthinking.MenuFragment.Menu3Fragment;
 import com.beginagain.yourthinking.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

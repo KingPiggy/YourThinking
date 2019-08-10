@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import com.beginagain.yourthinking.Adapter.BoardMyAdapter;
 import com.beginagain.yourthinking.Item.BookBoardItem;
@@ -31,6 +32,8 @@ public class MyBoardActivity extends AppCompatActivity {
     private RecyclerView mSearchRecyclerView;
     public BoardMyAdapter mAdapter;
     private List<BookBoardItem> mSearchList;
+    private TextView mCount;
+    private int count=0;
 
     String mName = user.getDisplayName();
 
@@ -40,6 +43,8 @@ public class MyBoardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_board);
 
         mSearchRecyclerView = findViewById(R.id.recycler_search);
+
+        mCount = findViewById(R.id.text_view_search_count);
 
         mSearchList= new ArrayList<>();
 
@@ -62,12 +67,15 @@ public class MyBoardActivity extends AppCompatActivity {
                             if (mName.equals(name)){
                                 BookBoardItem data = new BookBoardItem(id, title, contents, name, date, image, author, booktitle);
                                 mSearchList.add(data);
+                                count++;
                             }
                         }
                         mAdapter = new BoardMyAdapter(mSearchList);
                         mSearchRecyclerView.setAdapter(mAdapter);
+                        mCount.setText(mName+"의 게시물 수 : "+count);
                     }
                 });
+
     }
     @Override
     public void onBackPressed() {

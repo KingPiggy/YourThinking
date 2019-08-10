@@ -3,15 +3,12 @@ package com.beginagain.yourthinking.Board;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 
-import com.beginagain.yourthinking.Adapter.BookBoardAdapter;
+import com.beginagain.yourthinking.Adapter.BoardRecommendAdapter;
 import com.beginagain.yourthinking.Item.BookBoardItem;
 import com.beginagain.yourthinking.MainActivity;
-import com.beginagain.yourthinking.MenuFragment.Menu3Fragment;
 import com.beginagain.yourthinking.R;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,7 +27,7 @@ public class RecommendBoardActivity  extends AppCompatActivity {
     public RecyclerView recommendRecyclerView;
 
     public List<BookBoardItem> mRecommendList;
-    public BookBoardAdapter mAdapter;
+    public BoardRecommendAdapter mAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,7 +54,7 @@ public class RecommendBoardActivity  extends AppCompatActivity {
                             BookBoardItem data = new BookBoardItem(id, title, contents, name, date, image, author, booktitle);
                             mRecommendList.add(data);
                         }
-                        mAdapter = new BookBoardAdapter(mRecommendList);
+                        mAdapter = new BoardRecommendAdapter(mRecommendList);
                         mAdapter.notifyDataSetChanged();
                         recommendRecyclerView.setAdapter(mAdapter);
                     }
