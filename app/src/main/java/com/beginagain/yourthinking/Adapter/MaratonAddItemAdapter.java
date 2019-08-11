@@ -26,13 +26,13 @@ public class MaratonAddItemAdapter extends RecyclerView.Adapter<MaratonAddItemAd
     }
     @NonNull
     @Override
-    public MaratonAddItemAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_maraton_book_add, null);
         return new MyViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MaratonAddItemAdapter.MyViewHolder myViewHolder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int position) {
         if (getItemCount() <= 0 && position >= getItemCount()) {
             return;
         }
