@@ -311,6 +311,10 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
             Intent intent = new Intent(this, SearchBoardActivity.class);
             startActivity(intent);
         }
+         else if(pageNull.equals("Recommend")){
+            Intent intent = new Intent(this, RecommendBoardActivity.class);
+            startActivity(intent);
+        }
         finish();
     }
 }
