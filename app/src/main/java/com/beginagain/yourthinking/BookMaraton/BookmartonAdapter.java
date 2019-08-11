@@ -68,7 +68,7 @@ public class BookmartonAdapter extends BaseAdapter {
 
         bookTitle.setText(book.get(BookMaratonActivity.TAG_Title).toString());
         pageNum.setText(book.get(BookMaratonActivity.TAG_PageNum).toString());
-        currentPage_TV.setText(book.get(BookMaratonActivity.TAG_currentPageNum) + "p");
+        currentPage_TV.setText(book.get(BookMaratonActivity.TAG_currentPageNum) + "");
         String url = book.get(BookMaratonActivity.TAG_imgURL) + "";
 
         if(!url.equals("null"))

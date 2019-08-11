@@ -105,7 +105,7 @@ public class Menu4Fragment extends Fragment {
                 do {
                     String title = c.getString(c.getColumnIndex(TAG_Title));
                     String pageNum = c.getString(c.getColumnIndex(TAG_PageNum)) + "p";
-                    String currentPage = c.getString(c.getColumnIndex(TAG_currPageNum));
+                    String currentPage = c.getString(c.getColumnIndex(TAG_currPageNum))+"p";
                     String url = c.getString(c.getColumnIndex(BookMaratonActivity.TAG_imgURL));
 
                     HashMap<String, String> item = new HashMap<String, String>();

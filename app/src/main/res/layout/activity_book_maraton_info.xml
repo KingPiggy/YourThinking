@@ -7,12 +7,11 @@
     android:orientation="vertical"
     tools:context=".BookMaraton.BookMaratonInfo">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="독서 마라톤 진행중"
-        android:textSize="50dp" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:srcCompat="@drawable/logo_plus" />
+
 
     <Button
         android:id="@+id/btnUpdate"
@@ -20,29 +19,76 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:text="입력하기"
+        android:background="@drawable/textview"
+        android:textSize="30dp" />
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="책제목  :  "
+
+        android:textColor="#000000"
         android:textSize="30dp" />
 
     <TextView
         android:id="@+id/bookInfo_title"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="책이름~~~~~~"
+        android:text="~~~"
+        android:textColor="#000000"
         android:textSize="30dp" />
+</LinearLayout>
 
-    <TextView
-        android:id="@+id/bookInfo_totalPageNum"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="전체페이지"
-        android:textSize="30dp" />
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/bookInfo_currentPage"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="전체페이지   :   "
+            android:textColor="#000000"
+            android:textSize="30dp" />
+
+        <TextView
+            android:id="@+id/bookInfo_totalPageNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="~~~"
+            android:textColor="#000000"
+            android:textSize="30dp" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="읽었던 페이지"
-        android:textSize="30dp" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="읽은 페이지  :  "
+
+            android:textColor="#000000"
+            android:textSize="30dp" />
+
+        <TextView
+            android:id="@+id/bookInfo_currentPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="~~"
+            android:textColor="#000000"
+            android:textSize="30dp" />
+    </LinearLayout>
+
 
     <EditText
         android:id="@+id/currentPageNum_Edit"
@@ -51,6 +97,7 @@
         android:hint="읽은 페이지를 입력해주세요."
         android:inputType="numberSigned|numberDecimal"
         android:maxLength="4"
+        android:textColor="#1976D2"
         android:textSize="30dp" />
 
 

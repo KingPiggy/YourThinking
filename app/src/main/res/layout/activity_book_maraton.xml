@@ -45,20 +45,26 @@
             android:layout_height="match_parent"
             android:layout_margin="5dp"
             android:orientation="horizontal"
-            android:weightSum="1">
+            android:weightSum="3">
 
             <Button
                 android:id="@+id/btn_maratonbook_add"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_weight="1"
                 android:text="책 추가 +" />
+            <Button
+                android:id="@+id/btn_maratonbook_add_search"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="책 검색" />
 
             <Button
                 android:id="@+id/btn_delete_maratonList"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_weight="1"
                 android:text="리스트 삭제" />
 
         </LinearLayout>

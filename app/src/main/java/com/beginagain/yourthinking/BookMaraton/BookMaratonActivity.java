@@ -41,7 +41,7 @@ import java.util.HashMap;
 public class BookMaratonActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
     final String PREFNAME = "Preferences";
-    Button mDoneBtn, mBookAddBtn;
+    Button mDoneBtn, mBookAddBtn,mBookAddSearchBtn;
 
 
     //  '****' 표시 한 곳이 내가 한 부분
@@ -169,9 +169,18 @@ public class BookMaratonActivity extends AppCompatActivity {
                     showList();
                     new BookSearchAPI_Task().execute();
                 }
-                MaratonBookItem temp = new MaratonBookItem("제목이다", 100, 20);
             }
         });
+        mBookAddSearchBtn = (Button) findViewById(R.id.btn_maratonbook_add_search);
+        mBookAddSearchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new BookSearchAPI_Task().execute();
+            }
+        });
+
+
+
 
     }
 
