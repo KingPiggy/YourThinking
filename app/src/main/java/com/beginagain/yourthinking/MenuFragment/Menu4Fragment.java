@@ -35,14 +35,14 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Menu4Fragment extends Fragment {
     /*************************************/
-    private String dbName_Maraton = "maratonDB";
+    public static String dbName_Maraton = "maratonDB";
     private String dbName_History = "HistoryDB";
-    private String tableName_Maraton = "BookTable";
+    public static String tableName_Maraton = "BookTable";
     private String tableName_History = "HistoryTable";  // 테이블 이름
 
     private static final String TAG_Title = "title";
-    private static final String TAG_PageNum = "pageNum";
-    private static final String TAG_currPageNum = "currentPageNum";
+    public static final String TAG_PageNum = "pageNum";
+    public static final String TAG_currPageNum = "currentPageNum";
     final String PREFNAME = "Preferences";
 
     SQLiteDatabase maratonDB = null;

@@ -74,14 +74,53 @@
             android:backgroundTint="@color/blackSoft" />
     </RelativeLayout>
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
         android:layout_weight="1"
-        android:background="@color/deepGray"
         android:gravity="center"
-        android:text="독서마라톤 관련" />
+        android:text="독서마라톤 관련"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/maratonProgressText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="독서마라톤 진행률 "
+            android:textColor="@color/black"
+            android:textSize="30dp"
+            android:visibility="invisible"/>
+
+        <ProgressBar
+            android:id="@+id/maratonProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:max="100"
+            android:progress="50"
+            android:progressTint="@color/primary"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:id="@+id/maratonProgressNot"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="진행중인 마라톤이 없습니다."
+            android:textSize="30dp"
+            android:textColor="@color/black"
+            android:visibility="visible"/>
+
+
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
