@@ -67,7 +67,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private int count;
 
-    String pageNull=null;
+    String pageNull = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +121,13 @@ public class ChatActivity extends AppCompatActivity {
                 Map<String, Object> map2 = new HashMap<String, Object>();
                 map2.put(chatRoomName, chatRoomName);
                 databaseReference.child("mychat").child(uid).updateChildren(map2);
+
+                mRecyclerView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mRecyclerView.scrollToPosition(mRecyclerView.getAdapter().getItemCount() - 1);
+                    }
+                });
             }
         });
 
@@ -245,7 +252,7 @@ public class ChatActivity extends AppCompatActivity {
         mChatEdit = (EditText) findViewById(R.id.edittext_chat);
         mSendBtn = (Button) findViewById(R.id.btn_chat_send);
         mExitBtn = (ImageButton) findViewById(R.id.btn_chat_exit);
-        mRoomTitleTextView = (TextView)findViewById(R.id.text_view_chat_room_title);
+        mRoomTitleTextView = (TextView) findViewById(R.id.text_view_chat_room_title);
     }
 
     private int checkPeopleCount() {
