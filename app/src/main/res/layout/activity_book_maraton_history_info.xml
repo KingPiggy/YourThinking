@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:background="#0A0A0A"
         android:padding="10dp"
-        android:text="완료한 독서 마라톤"
+        android:text="완료한 도서 목록"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="#FFFFFF"

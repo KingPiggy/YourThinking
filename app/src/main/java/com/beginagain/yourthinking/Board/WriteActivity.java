@@ -1,7 +1,11 @@
 package com.beginagain.yourthinking.Board;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,12 +35,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
+import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -69,6 +77,8 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
     // 8.2
 
     String mName = user.getDisplayName();
+    String urlSource = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +138,7 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
                 post.put("booktitle",title);
                 post.put("author", author);
                 post.put("recount", 0);
+                post.put("bitmap", GetImageFromURL(urlSource));
 
                 // id로 필드이름이 같더라도 구별 가능하게 함
                 mStore.collection("board").document(id).set(post)
@@ -172,6 +183,7 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
             ArrayList<RecommendBookItem> newItems = new ArrayList<RecommendBookItem>();
 
             try {
+
                 urlSource = "http://book.interpark.com/api/search.api?key=" + myKey;
                 urlSource += "&query=" + image +iec +queryType+ "&output=" + outputStyle;
                 URL url = new URL(urlSource);
@@ -243,6 +255,24 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
             emptyItems.addAll(newItems);
             recyclerAdapter.notifyDataSetChanged();
         }
+    }
+    private Bitmap GetImageFromURL(String strImageURL) {
+        Bitmap imgBitmap = null;
+
+        try {
+            URL url = new URL(strImageURL);
+            URLConnection conn = url.openConnection();
+            conn.connect();
+
+            int nSize = conn.getContentLength();
+            BufferedInputStream bis = new BufferedInputStream(conn.getInputStream(), nSize);
+            imgBitmap = BitmapFactory.decodeStream(bis);
+
+            bis.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return imgBitmap;
     }
     @Override
     public void onBackPressed() {
