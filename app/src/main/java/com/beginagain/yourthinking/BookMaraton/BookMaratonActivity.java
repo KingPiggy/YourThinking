@@ -130,23 +130,50 @@ public class BookMaratonActivity extends AppCompatActivity {
 
                 if (dateFrom.equals("") || dateTo.equals("")) {
                     Toast.makeText(getApplicationContext(), "마라톤 기간을 입력해주세요", Toast.LENGTH_SHORT).show();
-                } else if (dateFrom.length() < 8 || dateTo.length() < 8) {
-                    Toast.makeText(getApplicationContext(), "형식을 지켜주세요(ex.YYYY.MM.DD)", Toast.LENGTH_SHORT).show();
                 } else {
-                    SharedPreferences settings = getSharedPreferences(PREFNAME, MODE_PRIVATE);
-                    String maratonDate = dateFrom + dateTo;
+                    if (dateFrom.length() < 8 || dateTo.length() < 8) {
+                        Toast.makeText(getApplicationContext(), "형식을 지켜주세요(ex.YYYY.MM.DD)", Toast.LENGTH_SHORT).show();
+                    }else if(Integer.parseInt(dateFrom)>=Integer.parseInt(dateTo)) {
+                        Toast.makeText(getApplicationContext(), "기간을 확인하세요", Toast.LENGTH_SHORT).show();
+                    } else {
+                        String fromYear = dateFrom.substring(0, 4);
+                        String fromMonth = dateFrom.substring(4, 6);
+                        String fromDay = dateFrom.substring(6, 8);
 
-                    editor = settings.edit();
-                    editor.putBoolean("isMaratonGoing", false);
-                    editor.putString("maratonDate", maratonDate);
+                        String toYear = dateTo.substring(0, 4);
+                        String toMonth = dateTo.substring(4, 6);
+                        String toDay = dateTo.substring(6, 8);
+                        int fy = Integer.parseInt(fromYear),fm = Integer.parseInt(fromMonth),fd = Integer.parseInt(fromDay);
+                        int ty = Integer.parseInt(toYear),tm = Integer.parseInt(toMonth), td = Integer.parseInt(toDay);
 
-                    editor.commit();
+                        if(fy<2019 || fy>2100 || ty<2019 || ty>2100){
+                            Toast.makeText(getApplicationContext(), "마라톤 기간(년)을 확인하세요", Toast.LENGTH_SHORT).show();
+                        } else if(fm<1 || fm>12|| tm<1|| tm>12){
+                            Toast.makeText(getApplicationContext(), "마라톤 기간(월)을 확인하세요", Toast.LENGTH_SHORT).show();
+                        } else if((fm==2 && (fd<1 || fd>29)) || (tm==2 && (td <1 || td>29)) ||
+                                ((fy==2019||fy==2021||fy==2022||fy==2023)&&fm==2&&(fd<1||fd>28)) ||((ty==2019||ty==2021||ty==2022||ty==2023)&&tm==2&&(td<1||td>28))||
+                                ((fm==1||fm==3||fm==5||fm==7||fm==8||fm==10||fm==12 )&&(fd<1 || fd>31)) ||
+                                ((tm==1||tm==3||tm==5||tm==7||tm==8||tm==10||tm==12 )&&(td<1 || td>31))||
+                                ((fm==4||fm==6||fm==9||fm==11)&&(fd<1 || fd>30)) || ((tm==4||tm==6||tm==9||tm==11)&&(td<1 || td>30))){
+                            Toast.makeText(getApplicationContext(), "마라톤 기간(일)을 확인하세요", Toast.LENGTH_SHORT).show();
+                        }else{
 
-                    sendBooksToDB();
+                            SharedPreferences settings = getSharedPreferences(PREFNAME, MODE_PRIVATE);
+                            String maratonDate = dateFrom + dateTo;
 
-                    Toast.makeText(getApplicationContext(), "독서 마라톤 시작!!", Toast.LENGTH_SHORT).show();
-                    finish();
+                            editor = settings.edit();
+                            editor.putBoolean("isMaratonGoing", false);
+                            editor.putString("maratonDate", maratonDate);
 
+                            editor.commit();
+
+                            sendBooksToDB();
+
+                            Toast.makeText(getApplicationContext(), "독서 마라톤 시작!!", Toast.LENGTH_SHORT).show();
+                            finish();
+
+                        }
+                    }
                 }
             }
         });

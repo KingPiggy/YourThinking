@@ -96,7 +96,8 @@
                 android:hint="시작 날짜 (ex20190101)"
                 android:inputType="date"
                 android:maxLength="8"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="15dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -112,7 +113,8 @@
                 android:hint="종료 날짜 (ex20200101)"
                 android:inputType="date"
                 android:maxLength="8"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="15dp"/>
         </LinearLayout>
 
         <ListView
