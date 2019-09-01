@@ -82,7 +82,6 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
     String mReName = user.getDisplayName();
     String mReplyImage;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
