@@ -1,31 +1,47 @@
 package com.beginagain.yourthinking;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
 
 public class UserInfoActivity extends AppCompatActivity {
     private Button mGoogleLogoutBtn, mGoogleRevokeBtn;
+    private ImageButton mChangeBtn;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
     SharedPreferences.Editor editor;
 
-    final String PREFNAME = "Preferences";
+    public static final String PREFNAME = "Preferences";
+    public static final int PICK_IMAGE = 1;
 
-    //사용자 정보 변경은 https://firebase.google.com/docs/auth/android/manage-users?hl=ko
+    Uri photoURI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +80,60 @@ public class UserInfoActivity extends AppCompatActivity {
                 revokeAccess();
             }
         });
+
+        mChangeBtn = (ImageButton) findViewById(R.id.btn_google_change_photo);
+        mChangeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                intent.setType("image/*");
+                startActivityForResult(intent, PICK_IMAGE);
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != RESULT_OK) {
+            Toast.makeText(getApplicationContext(), "실패하였습니다.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        switch (requestCode) {
+            case PICK_IMAGE:
+                if (data.getData() != null) {
+                    try {
+                        photoURI = data.getData();
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), photoURI);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    FirebaseStorage storage = FirebaseStorage.getInstance("gs://beginagains.appspot.com");
+
+                    String myUid = mAuth.getUid();
+                    String filename = myUid + "_" + "photo";
+                    StorageReference storageRef = storage.getReferenceFromUrl("gs://beginagains.appspot.com").child("ProfilePhotos/" + filename);
+                    UploadTask uploadTask;
+                    Uri file = null;
+                    file = photoURI;
+
+                    uploadTask = storageRef.putFile(file);
+                    uploadTask.addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            exception.printStackTrace();
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Toast.makeText(getApplicationContext(), "완료되었습니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+                break;
+        }
     }
 
     private void signOut() {

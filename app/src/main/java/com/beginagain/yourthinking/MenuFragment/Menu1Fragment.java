@@ -20,19 +20,18 @@ import android.widget.TextView;
 
 import com.beginagain.yourthinking.Board.MyBoardActivity;
 import com.beginagain.yourthinking.Board.RecommendBoardActivity;
-import com.beginagain.yourthinking.BookMaraton.BookMaratonActivity;
-import com.beginagain.yourthinking.BookMaraton.BookmartonAdapter;
 import com.beginagain.yourthinking.BookRecommendActivity;
 import com.beginagain.yourthinking.LoginActivity;
 import com.beginagain.yourthinking.MyChatActivity;
 import com.beginagain.yourthinking.R;
 import com.beginagain.yourthinking.UserInfoActivity;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -148,10 +147,19 @@ public class Menu1Fragment extends Fragment {
             name = user.getDisplayName();
             email = user.getEmail();
             profilePhotoUrl = user.getPhotoUrl();
-
+            String myUid = user.getUid();
             mUserName.setText(name);
             mUserEmail.setText(email);
-            Picasso.get().load(profilePhotoUrl).into(mUserImage);
+
+            FirebaseStorage storage = FirebaseStorage.getInstance("gs://beginagains.appspot.com");
+            StorageReference storageRef = storage.getReference();
+            StorageReference pathReference  = storageRef.child("ProfilePhotos/" + myUid + "_" + "photo");
+            Glide.with(getActivity())
+                    .using(new FirebaseImageLoader())
+                    .load(pathReference)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)// 디스크 캐시 저장 off
+                    .skipMemoryCache(true)// 메모리 캐시 저장 off
+                    .into(mUserImage);
         }
     }
 

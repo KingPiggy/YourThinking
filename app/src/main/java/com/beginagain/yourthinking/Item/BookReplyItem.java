@@ -7,17 +7,18 @@ public class BookReplyItem {
     private String contents;
     private String date;
     private String image;
+    private String uid;
 
     public BookReplyItem() {
     }
 
-    public BookReplyItem(String id, String name, String contents, String date, String image) {
+    public BookReplyItem(String id, String name, String contents, String date, String image, String uid) {
         this.id = id;
         this.name = name;
         this.contents = contents;
         this.date = date;
         this.image = image;
-
+        this.uid = uid;
     }
 
     public String getId(){return id;}
@@ -51,6 +52,18 @@ public class BookReplyItem {
     public String getImage(){return image;}
 
     public void setImage(){this.image = image;}
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 
     @Override
     public String toString() {

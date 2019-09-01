@@ -1,5 +1,6 @@
 package com.beginagain.yourthinking.Adapter;
 
+import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -11,15 +12,24 @@ import android.widget.TextView;
 
 import com.beginagain.yourthinking.Item.BookReplyItem;
 import com.beginagain.yourthinking.R;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.ReplyViewHolder> {
     private List<BookReplyItem> mReplyList;
+    private Context context;
 
-    public ReplyAdapter(List<BookReplyItem> mReplyList) {
+    public ReplyAdapter(List<BookReplyItem> mReplyList, Context context) {
         this.mReplyList = mReplyList;
+        this.context = context;
     }
 
     @NonNull
@@ -31,11 +41,24 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.ReplyViewHol
     @Override
     public void onBindViewHolder(@NonNull ReplyViewHolder holder, int position) {
         BookReplyItem data = mReplyList.get(position);
-        Uri uriReplyImage = Uri.parse(data.getImage());
         holder.replyNameTextView.setText(data.getName());
         holder.replyDateTextView.setText(data.getDate());
         holder.replyContentsTextView.setText(data.getContents());
-        Picasso.get().load(uriReplyImage).into(holder.replyImageView);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String myUid = data.getUid();
+
+        FirebaseStorage storage = FirebaseStorage.getInstance("gs://beginagains.appspot.com");
+        StorageReference storageRef = storage.getReference();
+        StorageReference pathReference  = storageRef.child("ProfilePhotos/" + myUid + "_" + "photo");
+        Glide.with(context)
+                .using(new FirebaseImageLoader())
+                .load(pathReference)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)// 디스크 캐시 저장 off
+                .skipMemoryCache(true)// 메모리 캐시 저장 off
+                .into(holder.replyImageView);
+
+        //Picasso.get().load(uriReplyImage).into(holder.replyImageView);
     }
 
     @Override

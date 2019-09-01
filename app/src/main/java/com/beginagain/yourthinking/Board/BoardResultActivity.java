@@ -139,12 +139,12 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
                             String contents = (String) dc.getData().get("contents");
                             String date = (String) dc.getData().get("date");
                             String image = (String) dc.getData().get("image");
-
-                            BookReplyItem data = new BookReplyItem(rid, name, contents, date, image);
+                            String uid = (String) dc.getData().get("uid");
+                            BookReplyItem data = new BookReplyItem(rid, name, contents, date, image, uid);
 
                             mReplyList.add(data);
                         }
-                        mAdapter = new ReplyAdapter(mReplyList);
+                        mAdapter = new ReplyAdapter(mReplyList, getApplicationContext());
                         mReplyRecyclerView.setAdapter(mAdapter);
                     }
                 });
@@ -170,6 +170,8 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.btn_reply:
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
                 rid = mStore.collection("board").document(id).collection("reply").document().getId();
                 Map<String, Object> post = new HashMap<>();
                 post.put("id", rid);
@@ -177,7 +179,7 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
                 post.put("contents", mReplyContentText.getText().toString());
                 post.put("date",formatDate);
                 post.put("image", mReplyImage);
-
+                post.put("uid", user.getUid());
                 mStore.collection("board").document(id)
                         .collection("reply").document(rid).set(post)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {

@@ -13,6 +13,13 @@ import android.widget.TextView;
 
 import com.beginagain.yourthinking.Item.ChatDTO;
 import com.beginagain.yourthinking.R;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -42,10 +49,21 @@ public class ChatItemAdapter extends RecyclerView.Adapter<ChatItemAdapter.MyView
         }
 
         ChatDTO item = items.get(myViewHolder.getAdapterPosition());
-        Uri myPhotoUri = Uri.parse(item.getImage());
+
+        //
+        String myUid = item.getUid();
+
+        FirebaseStorage storage = FirebaseStorage.getInstance("gs://beginagains.appspot.com");
+        StorageReference storageRef = storage.getReference();
+        StorageReference pathReference = storageRef.child("ProfilePhotos/" + myUid + "_" + "photo");
+
+        Glide.with(context).using(new FirebaseImageLoader())
+                .load(pathReference)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(myViewHolder.mProfilePhoto);
 
         myViewHolder.cardView.setTag(position);
-        Picasso.get().load(myPhotoUri).into(myViewHolder.mProfilePhoto);
         myViewHolder.mName.setText(item.getUserName());
         myViewHolder.mChat.setText(item.getMessage());
         myViewHolder.mTime.setText(item.getTime());
@@ -60,7 +78,7 @@ public class ChatItemAdapter extends RecyclerView.Adapter<ChatItemAdapter.MyView
         return this.items.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView mName, mChat, mTime;
         public ImageView mProfilePhoto;
         public CardView cardView;
@@ -69,7 +87,7 @@ public class ChatItemAdapter extends RecyclerView.Adapter<ChatItemAdapter.MyView
             super(itemView);
 
             cardView = (CardView) itemView.findViewById(R.id.cardview_chat);
-            mProfilePhoto = (ImageView)itemView.findViewById(R.id.image_chat_profile);
+            mProfilePhoto = (ImageView) itemView.findViewById(R.id.image_chat_profile);
             mName = (TextView) itemView.findViewById(R.id.text_view_chat_name);
             mChat = (TextView) itemView.findViewById(R.id.text_view_chat_chat);
             mTime = (TextView) itemView.findViewById(R.id.text_view_chat_time);
