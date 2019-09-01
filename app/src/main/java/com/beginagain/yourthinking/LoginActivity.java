@@ -176,6 +176,11 @@ public class LoginActivity extends AppCompatActivity {
             editor.putBoolean("isLogin", true);
             editor.apply();
 
+            String pageNull = "Recommend";
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("page", pageNull);
+            startActivity(intent);
+
             finish();
         }
     }

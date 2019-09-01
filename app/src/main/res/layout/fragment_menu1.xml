@@ -127,31 +127,37 @@
         android:layout_marginTop="20dp"
         android:layout_weight="1">
 
-        <Button
-            android:id="@+id/btn_menu1_recommend"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginRight="20dp"
-            android:layout_toLeftOf="@id/btn_menu1_my_board"
-            android:background="@drawable/ic_oval"
-            android:text="추천글" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btn_menu1_my_board"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/ic_oval"
-            android:text="내가 쓴 글" />
+            <Button
+                android:id="@+id/btn_menu1_recommend"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@id/btn_menu1_my_board"
+                android:background="@drawable/ic_oval"
+                android:text="추천글" />
 
-        <Button
-            android:id="@+id/btn_menu1_my_chat"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@id/btn_menu1_my_board"
-            android:background="@drawable/ic_oval"
-            android:text="참여한 채팅" />
+            <Button
+                android:id="@+id/btn_menu1_my_board"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/ic_oval"
+                android:text="내가 쓴 글" />
 
+            <Button
+                android:id="@+id/btn_menu1_my_chat"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/btn_menu1_my_board"
+                android:background="@drawable/ic_oval"
+                android:text="참여한 채팅" />
+
+        </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

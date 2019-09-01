@@ -141,7 +141,7 @@ public class Menu1Fragment extends Fragment {
         mProgressBar = (ProgressBar)view.findViewById(R.id.maratonProgressBar);
         mProgressText = (TextView) view.findViewById(R.id.maratonProgressText);
         mProgressNotText = (TextView) view.findViewById(R.id.maratonProgressNot);
-
+        
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             name = user.getDisplayName();

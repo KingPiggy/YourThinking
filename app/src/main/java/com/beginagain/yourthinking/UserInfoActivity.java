@@ -94,6 +94,17 @@ public class UserInfoActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+
+        String pageNull = "Recommend";
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("page", pageNull);
+        startActivity(intent);
+
+        finish();
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != RESULT_OK) {
             Toast.makeText(getApplicationContext(), "실패하였습니다.", Toast.LENGTH_SHORT).show();
