@@ -1,6 +1,7 @@
 package com.beginagain.yourthinking.Board;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -43,6 +44,10 @@ public class SearchBoardActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board_search);
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().setStatusBarColor(Color.parseColor("#82b3c9")); // deep
+        }
 
         searchRecyclerView=findViewById(R.id.recycler_search_user);
         editSearch = (EditText)findViewById(R.id.et_search);
