@@ -211,10 +211,6 @@ public class BookMaratonActivity extends AppCompatActivity {
                 new BookSearchAPI_Task().execute();
             }
         });
-
-
-
-
     }
 
     private boolean isAlreayInList(String bookTitle) {
@@ -372,6 +368,5 @@ public class BookMaratonActivity extends AppCompatActivity {
             recyclerAdapter.notifyDataSetChanged();
         }
     }
-
     /***************************************************************************************************/
 }

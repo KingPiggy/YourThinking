@@ -33,6 +33,9 @@
         <activity android:name=".BookMaraton.BookMaratonInfo" />
         <activity android:name=".UserInfoActivity" />
         <activity android:name=".LoginActivity" />
+        <activity android:name=".NoticeActivity" />
+        <activity android:name=".NoticeResultActivity" />
+        <activity android:name=".WriteNoticeActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

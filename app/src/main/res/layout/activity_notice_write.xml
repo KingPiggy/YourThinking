@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Board.WriteActivity">
+
+    <LinearLayout
+        android:id="@+id/ll_notice_write"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_view_notice_write_title"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/textview"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="제목"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/et_notice_write_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="제목을 입력하세요"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            tools:ignore="HardCodedText" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_notice_write2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_notice_write"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/text_view_notice_write_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="10dp"
+            android:text="0000-00-00 00:00"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/text_view_notice_write_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:gravity="center"
+            android:text="작성자"
+            android:textSize="15dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_notice_write3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/btn_notice_upload"
+        android:layout_below="@id/ll_notice_write2"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_view_notice_write_content"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/textview"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="내용"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/et_write_notice_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="내용을 입력하세요"
+            android:scrollbars="vertical"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            tools:ignore="HardCodedText" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_notice_upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/button"
+        android:text="작성"
+        tools:ignore="HardCodedText" />
+</RelativeLayout>

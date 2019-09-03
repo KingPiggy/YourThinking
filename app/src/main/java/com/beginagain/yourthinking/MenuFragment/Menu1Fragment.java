@@ -23,6 +23,7 @@ import com.beginagain.yourthinking.Board.RecommendBoardActivity;
 import com.beginagain.yourthinking.BookRecommendActivity;
 import com.beginagain.yourthinking.LoginActivity;
 import com.beginagain.yourthinking.MyChatActivity;
+import com.beginagain.yourthinking.NoticeActivity;
 import com.beginagain.yourthinking.R;
 import com.beginagain.yourthinking.UserInfoActivity;
 import com.bumptech.glide.Glide;
@@ -39,7 +40,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Menu1Fragment extends Fragment {
 
-    private Button mRankedBtn;
+    private Button mRankedBtn, mNoticeBtn;
     private Button mRecommendBtn, mMyBoardBtn, mMyChatBtn;
     private ImageButton mProfileSettingsBtn;
     private TextView mUserName, mUserEmail;
@@ -75,6 +76,13 @@ public class Menu1Fragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), BookRecommendActivity.class);
+                startActivity(intent);
+            }
+        });
+        mNoticeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), NoticeActivity.class);
                 startActivity(intent);
             }
         });
@@ -136,6 +144,7 @@ public class Menu1Fragment extends Fragment {
 
         mProfileSettingsBtn = (ImageButton) view.findViewById(R.id.image_btn_menu1_profile_settings);
         mRecommendBtn = (Button) view.findViewById(R.id.btn_menu1_recommend);
+        mNoticeBtn = (Button)view.findViewById(R.id.btn_menu1_notice);
         mMyChatBtn = (Button) view.findViewById(R.id.btn_menu1_my_chat);
         mMyBoardBtn = (Button) view.findViewById(R.id.btn_menu1_my_board);
         mProgressBar = (ProgressBar)view.findViewById(R.id.maratonProgressBar);
