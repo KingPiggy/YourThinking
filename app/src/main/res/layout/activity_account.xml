@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_info"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="#ffffff"
+            android:elevation="1dp"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+            <TextView
+                android:id="@+id/text_view_infoTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="내 정보"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+        </android.support.v7.widget.Toolbar>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/layoutborder">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/image_menu1_profile_image"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/ic_person"
+                app:civ_border_color="#FF000000" />
+
+            <TextView
+                android:id="@+id/text_view_menu1_profile_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/image_menu1_profile_image"
+                android:text="유저 이름"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/text_view_menu1_profile_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_view_menu1_profile_name"
+                android:layout_alignLeft="@id/text_view_menu1_profile_name"
+                android:text="유저 이메일"
+                android:textColor="@color/blackSoft"
+                android:textSize="12dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="68dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:background="@drawable/layoutborder"
+            android:text="독서마라톤 관련">
+
+            <TextView
+                android:id="@+id/text_view_maraton_Progress_Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="독서마라톤 진행률"
+                android:textColor="@color/blackSoft"
+                android:textSize="18dp"
+                android:visibility="invisible" />
+
+            <ProgressBar
+                android:id="@+id/progress_maraton"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:max="100"
+                android:progress="50"
+                android:progressTint="@color/primary"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/text_view_maraton_ProgressNot"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="독서 마라톤을 시작해보세요"
+                android:textColor="@color/blackSoft"
+                android:textSize="22dp"
+                android:visibility="visible" />
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/layoutborder">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="활동"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+            <Button
+                android:id="@+id/btn_account_myBoard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="left|center_vertical"
+                android:layout_marginLeft="10dp"
+                android:text="내가 쓴 글"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                style="?android:attr/borderlessButtonStyle"/>
+            <Button
+                android:id="@+id/btn_account_myChat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="left|center_vertical"
+                android:layout_marginLeft="10dp"
+                android:text="참여한 채팅방"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                style="?android:attr/borderlessButtonStyle"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/layoutborder">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="계정"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+            <Button
+                android:id="@+id/btn_account_photo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="left|center_vertical"
+                android:layout_marginLeft="10dp"
+                android:text="프로필 이미지 변경"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                style="?android:attr/borderlessButtonStyle"/>
+            <Button
+                android:id="@+id/btn_account_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="left|center_vertical"
+                android:layout_marginLeft="10dp"
+                android:text="로그아웃"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                style="?android:attr/borderlessButtonStyle"/>
+            <Button
+                android:id="@+id/btn_account_revoke"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="left|center_vertical"
+                android:layout_marginLeft="10dp"
+                android:text="회원탈퇴"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                style="?android:attr/borderlessButtonStyle"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

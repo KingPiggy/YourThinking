@@ -1,6 +1,8 @@
 package com.beginagain.yourthinking.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -13,8 +15,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beginagain.yourthinking.Board.WriteActivity;
+import com.beginagain.yourthinking.Board.WriteBookActivity;
 import com.beginagain.yourthinking.Item.RecommendBookItem;
+import com.beginagain.yourthinking.MainActivity;
 import com.beginagain.yourthinking.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -22,8 +31,10 @@ import java.util.ArrayList;
 public class BookApiAdapter extends RecyclerView.Adapter<BookApiAdapter.MyViewHolder> {
     Context context;
     ArrayList<RecommendBookItem> items;
-    String title, author, company, ISBN, thumbnail;
+    String title, author, company, ISBN, thumbnail, id;
     int itemLayout;
+    private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     public BookApiAdapter(Context context, ArrayList<RecommendBookItem> items, int itemLayout) {
         this.context = context;
@@ -84,23 +95,51 @@ public class BookApiAdapter extends RecyclerView.Adapter<BookApiAdapter.MyViewHo
                     int pos = getAdapterPosition() ;
                     RecommendBookItem data = items.get(pos);
 
-                    Intent intent = new Intent(view.getContext(), WriteActivity.class);
+                    //Intent intent = new Intent(view.getContext(), WriteBookActivity.class);
 
                     title = data.getTitle();
                     author = data.getAuthor();
                     company = data.getPublisher();
                     ISBN = data.getIsbn();
                     thumbnail = data.getImage();
+                    id = data.getId();
 
-                    intent.putExtra("Title", title);
-                    intent.putExtra("Author",author);
-                    intent.putExtra("Company", company);
-                    intent.putExtra("ISBN", ISBN);
-                    intent.putExtra("Thumbnail", thumbnail);
-                    view.getContext().startActivity(intent);
-                    Toast.makeText(view.getContext(), title, Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder alert_ex = new AlertDialog.Builder(context);
+                    alert_ex.setMessage("이 책을 등록하시겠습니까?");
+
+                    alert_ex.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            mStore.collection("board").document(id)
+                                    .update("author" , author, "booktitle",title, "image", thumbnail)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(context, "완료!", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(context, MainActivity.class);
+                                            intent.putExtra("page", "Board");
+                                            context.startActivity(intent);
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(context, "작성실패!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        }
+                    });
+                    alert_ex.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    alert_ex.setTitle("Your Thinking");
+                    AlertDialog alert = alert_ex.create();
+                    alert.show();
                 }
             });
+
         }
     }
 }

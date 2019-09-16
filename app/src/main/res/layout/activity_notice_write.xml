@@ -3,40 +3,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Board.WriteActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    tools:context=".WriteNoticeActivity">
 
-    <LinearLayout
-        android:id="@+id/ll_notice_write"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_notice_write"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="56dp"
+        android:background="#ffffff"
+        android:elevation="1dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
         <TextView
-            android:id="@+id/text_view_notice_write_title"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/textview"
-            android:gravity="center_vertical"
-            android:paddingLeft="10dp"
-            android:text="제목"
-            android:textSize="15sp" />
-
-        <EditText
-            android:id="@+id/et_notice_write_title"
-            android:layout_width="match_parent"
+            android:id="@+id/text_view_notice_write_pageTitle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="제목을 입력하세요"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            tools:ignore="HardCodedText" />
-    </LinearLayout>
+            android:text="글쓰기"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
 
-    <LinearLayout
-        android:id="@+id/ll_notice_write2"
+        <Button
+            android:id="@+id/btn_upload_notice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:background="@drawable/buttoncomplete"
+            android:text="작성"
+            android:textSize="17sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
+    </android.support.v7.widget.Toolbar>
+
+    <EditText
+        android:id="@+id/et_write_notice_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ll_notice_write"
-        android:gravity="right"
+        android:layout_below="@id/toolbar_notice_write"
+        android:layout_marginLeft="5dp"
+        android:hint="제목을 입력하세요"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        tools:ignore="HardCodedText" />
+
+    <LinearLayout
+        android:id="@+id/ll_write3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_write_notice_title"
+        android:gravity="right|center_vertical"
+        android:background="@drawable/layoutborder"
         android:orientation="horizontal">
 
         <TextView
@@ -44,7 +61,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:layout_marginBottom="10dp"
             android:text="0000-00-00 00:00"
             android:textSize="15dp" />
 
@@ -56,45 +72,25 @@
             android:gravity="center"
             android:text="작성자"
             android:textSize="15dp" />
-
     </LinearLayout>
-
     <LinearLayout
-        android:id="@+id/ll_notice_write3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/btn_notice_upload"
-        android:layout_below="@id/ll_notice_write2"
+        android:layout_below="@id/ll_write3"
         android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/text_view_notice_write_content"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/textview"
-            android:gravity="center_vertical"
-            android:paddingLeft="10dp"
-            android:text="내용"
-            android:textSize="15sp" />
 
         <EditText
             android:id="@+id/et_write_notice_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
             android:hint="내용을 입력하세요"
+            android:layout_below="@id/ll_write3"
+            android:layout_marginLeft="5dp"
+            android:gravity="top"
             android:scrollbars="vertical"
             android:textColor="@android:color/black"
             android:textSize="18sp"
             tools:ignore="HardCodedText" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/btn_notice_upload"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/button"
-        android:text="작성"
-        tools:ignore="HardCodedText" />
 </RelativeLayout>

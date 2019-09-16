@@ -40,11 +40,13 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "hoon";
     private static final int RC_SIGN_IN = 900;
     private GoogleSignInClient mGoogleSignInClient;
-    private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth = null;
 
     // 구글  로그인 버튼
     private SignInButton signInButton;
 
+
+    private Button mGusetButton;
     final String PREFNAME = "Preferences";
 
 
@@ -59,11 +61,30 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        if (mAuth.getCurrentUser() != null) {
+            Intent intent = new Intent(getApplication(), MainActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+
+        }
+
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
+
+
+        mGusetButton = findViewById(R.id.btn_guest);
+        mGusetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent2 = new Intent(view.getContext(), MainActivity.class);
+                startActivity(intent2);
+                finish();
+            }
+        });
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
@@ -82,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
-
+/**
     private void signOut() {
         // Firebase sign out
         mAuth.signOut();
@@ -94,8 +115,10 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         updateUI(null);
                     }
+
                 });
     }
+ **/
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

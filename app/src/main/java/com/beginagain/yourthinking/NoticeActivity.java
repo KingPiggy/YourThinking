@@ -1,17 +1,19 @@
 package com.beginagain.yourthinking;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
-import com.beginagain.yourthinking.Adapter.BoardRecommendAdapter;
 import com.beginagain.yourthinking.Adapter.NoticeAdapter;
 import com.beginagain.yourthinking.Item.BookBoardItem;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,21 +28,19 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NoticeActivity extends AppCompatActivity implements View.OnClickListener {
+public class NoticeActivity extends AppCompatActivity {
 
     private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
-    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private FirebaseUser user;
+    String mUser;
 
     public RecyclerView noticeRecyclerView;
-
     public List<BookBoardItem> mNoticeList;
     public NoticeAdapter mAdapter;
 
-    private Animation fab_open, fab_close;
-    private Boolean isFabOpen = false;
-    private FloatingActionButton fabAdd, fabWrite;
+    private FloatingActionButton fabWrite;
 
-    String mUid = user.getUid();
+    String mUid=null;
     String supervisor = "dkllRndBmVgPrJlrCl9WLIvqixN2";
 
     @Override
@@ -48,14 +48,28 @@ public class NoticeActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice);
 
-        noticeRecyclerView = findViewById(R.id.recycler_notice);
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().setStatusBarColor(Color.parseColor("#82b3c9")); // deep
+        }
 
-        mNoticeList= new ArrayList<>();
+        Intent intent = getIntent();
+        mUser = intent.getStringExtra("user");
+        // Toast.makeText(getApplicationContext(), mUser, Toast.LENGTH_SHORT).show();
+
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_notice);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        noticeRecyclerView = findViewById(R.id.recycler_notice);
+        noticeRecyclerView.clearOnChildAttachStateChangeListeners();
+        noticeRecyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), 1));
+
+        mNoticeList = new ArrayList<>();
         mStore.collection("notice").orderBy("date", Query.Direction.DESCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
-                        for(QueryDocumentSnapshot dc : queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot dc : queryDocumentSnapshots) {
                             String id = (String) dc.getData().get("id");
                             String title = (String) dc.getData().get("title");
                             String contents = (String) dc.getData().get("contents");
@@ -70,41 +84,39 @@ public class NoticeActivity extends AppCompatActivity implements View.OnClickLis
                         noticeRecyclerView.setAdapter(mAdapter);
                     }
                 });
-        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
-        fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
 
-        fabAdd = (FloatingActionButton) findViewById(R.id.fab_add);
-        fabWrite = (FloatingActionButton) findViewById(R.id.fab_write);
-        fabAdd.setOnClickListener(this);
-        fabWrite.setOnClickListener(this);
-    }
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        switch (id) {
-            case R.id.fab_add:
-                anim();
-                break;
-            case R.id.fab_write:
-                anim();
-                if(mUid.equals(supervisor)) {
+        if(mUser.equals("1")) {
+            user = FirebaseAuth.getInstance().getCurrentUser();
+            mUid = user.getUid();
+        }else{
+            mUid="0";
+        }
+      //  Toast.makeText(getApplicationContext(), mUid, Toast.LENGTH_SHORT).show();
+
+        fabWrite = (FloatingActionButton) findViewById(R.id.fab_notice_write);
+        fabWrite.setOnClickListener(new View.OnClickListener() {
+            @Override
+                public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), mUid, Toast.LENGTH_SHORT).show();
+                if (mUid.equals(supervisor)) {
                     Toast.makeText(getApplicationContext(), "글 쓰기", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getApplicationContext(), WriteNoticeActivity.class));
-                }else
+                } else
                     Toast.makeText(getApplicationContext(), "관리자가 아닙니다.", Toast.LENGTH_SHORT).show();
-                break;
-        }
+            }
+        });
     }
-    public void anim() {
-        if (isFabOpen) {
-            fabWrite.startAnimation(fab_close);
-            fabWrite.setClickable(false);
-            isFabOpen = false;
-        } else {
-            fabWrite.startAnimation(fab_open);
-            fabWrite.setClickable(true);
-            isFabOpen = true;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
+                finish();
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                return true;
+            }
         }
+        return super.onOptionsItemSelected(item);
     }
     @Override
     public void onBackPressed() {

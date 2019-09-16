@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_board_result"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#ffffff"
+        android:elevation="1dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+    </android.support.v7.widget.Toolbar>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/lightGray">
+        android:layout_below="@id/toolbar_board_result"
+        android:background="@color/white">
 
         <RelativeLayout
             android:id="@+id/layout_board_big1"
@@ -23,7 +34,7 @@
                 <ImageView
                     android:id="@+id/iv_result"
                     android:layout_width="65dp"
-                    android:layout_height="90dp"
+                    android:layout_height="80dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp" />
@@ -88,6 +99,17 @@
                     android:textColor="@color/blackSoft"
                     android:textSize="12dp" />
 
+                <ImageButton
+                    android:id="@+id/btn_board_recommend"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_above="@id/text_view_result_contents"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/ic_thumb_up" />
+
                 <TextView
                     android:id="@+id/text_view_result_recommend"
                     android:layout_width="wrap_content"
@@ -106,17 +128,17 @@
                     android:layout_below="@id/text_view_result_date"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
-
                     android:background="@color/deepGray" />
 
                 <TextView
                     android:id="@+id/text_view_result_contents"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="wrap_content"
                     android:layout_below="@id/view_result_border"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="20dp"
+                    android:scrollbars="vertical"
                     android:text="글 내용"
                     android:textColor="@color/blackSoft" />
 
@@ -131,28 +153,7 @@
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/btn_board_retouch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/button"
-                    android:text="수정" />
 
-                <Button
-                    android:id="@+id/btn_board_delete"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:background="@drawable/button"
-                    android:text="삭제" />
-
-                <Button
-                    android:id="@+id/btn_board_recommend"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:background="@drawable/button"
-                    android:text="추천" />
             </LinearLayout>
         </RelativeLayout>
 
@@ -161,6 +162,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/layout_board_big1"
             android:layout_marginLeft="10dp"
+            android:layout_above="@id/layout_reply"
             android:orientation="vertical">
 
             <View
@@ -171,7 +173,6 @@
                 android:layout_marginRight="10dp"
                 android:background="@color/deepGray" />
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -179,46 +180,51 @@
                 android:text="댓글"
                 android:textColor="@color/blackSoft" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
-
-                <TextView
-                    android:id="@+id/text_view_reply_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="닉네임"
-                    android:textColor="@color/blackSoft"
-                    android:textSize="15dp" />
-
-                <EditText
-                    android:id="@+id/et_reply_contents"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/text_view_reply_name"
-                    android:hint="댓글을 작성해주세요"
-                    android:textSize="15dp" />
-
-                <Button
-                    android:id="@+id/btn_reply"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:background="@drawable/button"
-                    android:text="작성" />
-
-            </RelativeLayout>
-
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_Reply"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:scrollbars="vertical"
                 app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
         </LinearLayout>
 
+        <RelativeLayout
+            android:id="@+id/layout_reply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/lightGray">
+
+            <TextView
+                android:id="@+id/text_view_reply_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="작성자"
+                android:textColor="@color/blackSoft"
+                android:layout_centerVertical="true"
+                android:textSize="15dp" />
+
+            <EditText
+                android:id="@+id/et_reply_contents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/text_view_reply_name"
+                android:layout_toLeftOf="@id/btn_reply"
+                android:hint="댓글을 작성해주세요"
+                android:textSize="15dp" />
+
+            <ImageButton
+                android:id="@+id/btn_reply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/ic_send"
+                android:backgroundTintMode="@color/white"
+                />
+
+        </RelativeLayout>
     </RelativeLayout>
-
-
-</ScrollView>
+</RelativeLayout>

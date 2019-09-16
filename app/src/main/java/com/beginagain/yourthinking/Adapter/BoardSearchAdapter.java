@@ -12,14 +12,14 @@ import android.widget.TextView;
 import com.beginagain.yourthinking.Board.BoardResultActivity;
 import com.beginagain.yourthinking.Item.BookBoardItem;
 import com.beginagain.yourthinking.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class BoardSearchAdapter extends RecyclerView.Adapter<BoardSearchAdapter.MainViewHolder> {
 
-    String mName, mTitle, mContents, mDate, mId, mImage, mAuthor, mBooktitle;
-
+    String mName, mTitle, mContents, mDate, mId, mImage, mAuthor, mBooktitle, mRecommend;
     List<BookBoardItem> mSearchList;
 
     public BoardSearchAdapter(List<BookBoardItem> mSearchList) {
@@ -39,6 +39,7 @@ public class BoardSearchAdapter extends RecyclerView.Adapter<BoardSearchAdapter.
         holder.boardNameTextView.setText(data.getName());
         holder.boardTitleTextView.setText(data.getTitle());
         holder.boardDateTextView.setText(data.getDate());
+        holder.boardRecommendTextView.setText(data.getRecommend());
         Picasso.get().load(data.getImage()).into(holder.boardImageView);
     }
 
@@ -56,12 +57,14 @@ public class BoardSearchAdapter extends RecyclerView.Adapter<BoardSearchAdapter.
         public TextView boardNameTextView;
         public TextView boardDateTextView;
         public ImageView boardImageView;
+        public TextView boardRecommendTextView;
 
         public MainViewHolder(View itemView) {
             super(itemView);
             boardNameTextView = itemView.findViewById(R.id.text_view_board_item_name);
             boardTitleTextView = itemView.findViewById(R.id.text_view_board_item_title);
             boardDateTextView = itemView.findViewById(R.id.text_view_board_item_time);
+            boardRecommendTextView = itemView.findViewById(R.id.text_view_board_item_recommend);
             boardImageView = itemView.findViewById(R.id.iv_board_item_thumbnail);
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +83,14 @@ public class BoardSearchAdapter extends RecyclerView.Adapter<BoardSearchAdapter.
                     mImage = data.getImage();
                     mAuthor = data.getAuthor();
                     mBooktitle = data.getBooktitle();
+                    mRecommend = data.getRecommend();
+
+                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+                    if(mAuth.getCurrentUser()!=null)
+                        intent.putExtra("user", "1");
+                    else
+                        intent.putExtra("user","0");
 
                     intent.putExtra("Id", mId);
                     intent.putExtra("Name",mName);
@@ -89,6 +100,7 @@ public class BoardSearchAdapter extends RecyclerView.Adapter<BoardSearchAdapter.
                     intent.putExtra("Image", mImage);
                     intent.putExtra("Author", mAuthor);
                     intent.putExtra("BookTitle", mBooktitle);
+                    intent.putExtra("Recommend", mRecommend);
                     intent.putExtra("Page","Search");
                     view.getContext().startActivity(intent);
                 }

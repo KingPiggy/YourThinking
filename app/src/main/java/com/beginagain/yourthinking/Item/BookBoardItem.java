@@ -10,6 +10,7 @@ public class BookBoardItem {
     private String image;
     private String author;
     private String booktitle;
+    private String recommend;
 
     public BookBoardItem() {
     }
@@ -20,6 +21,26 @@ public class BookBoardItem {
         this.contents = contents;
         this.name = name;
         this.date = date;
+    }
+
+    public BookBoardItem(String id, String title, String contents, String name, String date, String recommend ) {
+        this.id = id;
+        this.title = title;
+        this.contents = contents;
+        this.name = name;
+        this.date = date;
+        this.recommend = recommend;
+    }
+    public BookBoardItem(String id, String title, String contents, String name, String date, String image, String author, String booktitle, String recommend ){
+        this.id = id;
+        this.title = title;
+        this.contents = contents;
+        this.name = name;
+        this.date = date;
+        this.image = image;
+        this.author = author;
+        this.booktitle = booktitle;
+        this.recommend = recommend;
     }
     public BookBoardItem(String id, String title, String contents, String name, String date, String image, String author, String booktitle){
         this.id = id;
@@ -94,6 +115,14 @@ public class BookBoardItem {
 
     public void setBooktitle(String booktitle){
         this.booktitle = booktitle;
+    }
+
+    public String getRecommend(){
+        return recommend;
+    }
+
+    public void setRecommend(String recommend){
+        this.recommend = recommend;
     }
 
     @Override

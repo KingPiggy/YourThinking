@@ -1,12 +1,15 @@
 package com.beginagain.yourthinking.MenuFragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +22,14 @@ import com.beginagain.yourthinking.Adapter.BookBoardAdapter;
 import com.beginagain.yourthinking.Board.SearchBoardActivity;
 import com.beginagain.yourthinking.Board.WriteActivity;
 import com.beginagain.yourthinking.Item.BookBoardItem;
+import com.beginagain.yourthinking.LoginActivity;
 import com.beginagain.yourthinking.MainActivity;
 import com.beginagain.yourthinking.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -35,7 +44,7 @@ public class Menu3Fragment extends Fragment implements View.OnClickListener {
     View view;
 
     private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
-
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private RecyclerView mMainRecyclerView;
     private BookBoardAdapter mAdapter;
     private List<BookBoardItem> mBoardList = null;
@@ -84,16 +93,14 @@ public class Menu3Fragment extends Fragment implements View.OnClickListener {
         fabRec.setOnClickListener(this);
 
         return view;
-
     }
-
     void init(){
-
         mMainRecyclerView = view.findViewById(R.id.recycler_Board);
         mBoardList = new ArrayList<>();
         bbList = new ArrayList<>();
         // mBoardList.clear();
         mMainRecyclerView.clearOnChildAttachStateChangeListeners();
+        mMainRecyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), 1));
 
         mStore.collection("board")
                 .orderBy("date", Query.Direction.DESCENDING).limit(10000)
@@ -104,15 +111,16 @@ public class Menu3Fragment extends Fragment implements View.OnClickListener {
 
                         for (QueryDocumentSnapshot dc : queryDocumentSnapshots) {
                             String id = (String) dc.getData().get("id");
-                            String title = (String) dc.getData().get("title");
                             String contents = (String) dc.getData().get("contents");
+                            String title = (String) dc.getData().get("title");
                             String name = (String) dc.getData().get("name");
                             String date = (String) dc.getData().get("date");
                             String image = (String) dc.getData().get("image");
-                            String author = (String)dc.getData().get("author"); // 8.3
-                            String booktitle = (String)dc.getData().get("booktitle"); // 8.3
+                            String author = (String) dc.getData().get("author");
+                            String booktitle = (String) dc.getData().get("booktitle");
+                            String recommend = String.valueOf(dc.getData().get("recount"));
 
-                            BookBoardItem data = new BookBoardItem(id, title, contents, name, date, image, author, booktitle);
+                            BookBoardItem data = new BookBoardItem(id, title, contents, name, date, image, author, booktitle, recommend);
                             mBoardList.add(data);
                         }
                         mAdapter = new BookBoardAdapter(mBoardList);
@@ -139,9 +147,33 @@ public class Menu3Fragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.fab_write:
                 anim();
-                Toast.makeText(getActivity(), "글 쓰기", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getActivity(), WriteActivity.class));
-                getActivity().isDestroyed();
+
+                Intent intent = new Intent(getActivity(), WriteActivity.class);
+                if(mAuth.getCurrentUser()!=null) {
+                    Toast.makeText(getActivity(), "글 쓰기", Toast.LENGTH_SHORT).show();
+                    startActivity(intent);
+                    getActivity().isDestroyed();
+                }else {
+                    AlertDialog.Builder alert_ex = new AlertDialog.Builder(getActivity());
+                    alert_ex.setMessage("로그인 후 사용가능합니다. 로그인 하시겠습니까?");
+
+                    alert_ex.setPositiveButton("로그인", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent accountIntent = new Intent(getActivity(), LoginActivity.class);
+                            startActivity(accountIntent);
+                            getActivity().isDestroyed();
+                        }
+                    });
+                    alert_ex.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    alert_ex.setTitle("Your Thinking");
+                    AlertDialog alert = alert_ex.create();
+                    alert.show();
+                }
                 break;
             case R.id.fab_recommend:
                 anim();
@@ -160,8 +192,9 @@ public class Menu3Fragment extends Fragment implements View.OnClickListener {
                                     String image = (String) dc.getData().get("image");
                                     String author = (String) dc.getData().get("author");
                                     String booktitle = (String) dc.getData().get("booktitle");
+                                    String recommend = String.valueOf(dc.getData().get("recount"));
 
-                                    BookBoardItem data = new BookBoardItem(id, title, contents, name, date, image, author, booktitle);
+                                    BookBoardItem data = new BookBoardItem(id, title, contents, name, date, image, author, booktitle, recommend);
                                     mBoardList.add(data);
                                 }
                                 mAdapter = new BookBoardAdapter(mBoardList);

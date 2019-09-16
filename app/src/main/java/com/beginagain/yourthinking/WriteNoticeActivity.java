@@ -49,9 +49,9 @@ public class WriteNoticeActivity extends AppCompatActivity implements View.OnCli
 
         mWriteNameText = findViewById(R.id.text_view_notice_write_name);
         mWriteDateText = findViewById(R.id.text_view_notice_write_time);
-        mWriteTitleText = findViewById(R.id.et_notice_write_title);
+        mWriteTitleText = findViewById(R.id.et_write_notice_title);
         mWriteContentText = findViewById(R.id.et_write_notice_content);
-        mBtnUpload = findViewById(R.id.btn_notice_upload);
+        mBtnUpload = findViewById(R.id.btn_upload_notice);
 
         mWriteNameText.setText(mName);
         mWriteDateText.setText(formatDate);
@@ -62,7 +62,7 @@ public class WriteNoticeActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_notice_upload:
+            case R.id.btn_upload_notice:
                 // 생성
                 id = mStore.collection("notice").document().getId();
                 Map<String, Object> post = new HashMap<>();
@@ -71,7 +71,6 @@ public class WriteNoticeActivity extends AppCompatActivity implements View.OnCli
                 post.put("title", mWriteTitleText.getText().toString());
                 post.put("contents", mWriteContentText.getText().toString());
                 post.put("date", mWriteDateText.getText().toString());
-                post.put("recount", 0);
 
                 // id로 필드이름이 같더라도 구별 가능하게 함
                 mStore.collection("notice").document(id).set(post)

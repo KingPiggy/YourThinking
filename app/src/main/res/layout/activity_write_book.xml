@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    tools:context=".Board.WriteBookActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_bookWrite"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#ffffff"
+        android:elevation="1dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <TextView
+            android:id="@+id/text_view_write_pageTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="책검색"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+
+        <Button
+            android:id="@+id/btn_upload_bookWrite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:background="@drawable/buttoncomplete"
+            android:text="작성"
+            android:textSize="17sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/ll_layout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar_bookWrite"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="검색"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
+        <EditText
+            android:id="@+id/et_write_book"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_below="@id/toolbar_bookWrite"
+            android:ems="13"
+            android:hint="책 검색을 해주세요!" />
+        <ImageButton
+            android:id="@+id/btn_write_book"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/toolbar_bookWrite"
+            android:layout_alignEnd="@+id/ll_layout1"
+            android:layout_alignBottom="@+id/ll_layout1"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_search" />
+    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_write_book"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/ll_layout1"
+        android:scrollbars="vertical">
+    </android.support.v7.widget.RecyclerView>
+
+</RelativeLayout>

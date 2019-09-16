@@ -3,72 +3,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
     tools:context=".Board.WriteActivity">
 
-    <LinearLayout
-        android:id="@+id/ll_write1"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_write"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="56dp"
+        android:background="#ffffff"
+        android:elevation="1dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
         <TextView
-            android:id="@+id/text_view_board_write_book"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/textview"
-            android:gravity="center_vertical"
-            android:paddingLeft="10dp"
-            android:text="도서"
-            android:textSize="15sp" />
-
-        <EditText
-            android:id="@+id/et_write_image"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@id/text_view_board_write_title"
-            android:hint="책 검색을 가장 먼저 해주세요!" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_search_book"
-            android:layout_width="match_parent"
-            android:layout_height="110dp"
-            android:layout_below="@id/et_write_image"
-            android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_write2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ll_write1"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/text_view_board_write_title"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/textview"
-            android:gravity="center_vertical"
-            android:paddingLeft="10dp"
-            android:text="제목"
-            android:textSize="15sp" />
-
-        <EditText
-            android:id="@+id/et_write_title"
-            android:layout_width="match_parent"
+            android:id="@+id/text_view_write_pageTitle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="제목을 입력하세요"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            tools:ignore="HardCodedText" />
-    </LinearLayout>
+            android:text="글쓰기"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+
+        <Button
+            android:id="@+id/btn_upload_board"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:background="@drawable/buttoncomplete"
+            android:text="작성"
+            android:textSize="17sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
+    </android.support.v7.widget.Toolbar>
+
+    <EditText
+        android:id="@+id/et_write_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar_write"
+        android:layout_marginLeft="5dp"
+        android:hint="제목을 입력하세요"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        tools:ignore="HardCodedText" />
 
     <LinearLayout
         android:id="@+id/ll_write3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ll_write2"
-        android:gravity="right"
+        android:layout_below="@id/et_write_title"
+        android:gravity="right|center_vertical"
+        android:background="@drawable/layoutborder"
         android:orientation="horizontal">
 
         <TextView
@@ -76,7 +61,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:layout_marginBottom="10dp"
             android:text="0000-00-00 00:00"
             android:textSize="15dp" />
 
@@ -88,45 +72,40 @@
             android:gravity="center"
             android:text="작성자"
             android:textSize="15dp" />
-
     </LinearLayout>
-
     <LinearLayout
-        android:id="@+id/ll_write4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/btn_upload_board"
         android:layout_below="@id/ll_write3"
         android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/text_view_board_write_content"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/textview"
-            android:gravity="center_vertical"
-            android:paddingLeft="10dp"
-            android:text="내용"
-            android:textSize="15sp" />
 
         <EditText
             android:id="@+id/et_write_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
             android:hint="내용을 입력하세요"
+            android:layout_below="@id/ll_write3"
+            android:layout_marginLeft="5dp"
+            android:gravity="top"
             android:scrollbars="vertical"
             android:textColor="@android:color/black"
             android:textSize="18sp"
             tools:ignore="HardCodedText" />
-    </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_upload_board"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/button"
-        android:text="작성"
-        tools:ignore="HardCodedText" />
+        <ImageButton
+            android:id="@+id/image_button_camera"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/ic_change_photo"/>
+
+        <ImageView
+            android:id="@+id/iv_write_camera"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            />
+    </LinearLayout>
 </RelativeLayout>

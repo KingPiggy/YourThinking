@@ -1,5 +1,7 @@
 package com.beginagain.yourthinking.Board;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -8,7 +10,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,7 +25,9 @@ import android.widget.Toast;
 
 import com.beginagain.yourthinking.Adapter.ReplyAdapter;
 import com.beginagain.yourthinking.Item.BookReplyItem;
+import com.beginagain.yourthinking.LoginActivity;
 import com.beginagain.yourthinking.MainActivity;
+import com.beginagain.yourthinking.NoticeActivity;
 import com.beginagain.yourthinking.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -61,7 +71,7 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
 
     private TextView mName, mTitle, mContents, mDate, mAuthor, mBookTitle;
     private String name, title, contents, date, id, author, image, bookTitle;
-    private String rid, recommendid; // 8.4
+    private String rid, recommendid, mUser; // 8.4
     private ImageView mImage;
 
     private EditText mReplyContentText;
@@ -81,7 +91,8 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
     String formatDate = mFormat.format(mReDate);
 
-    String mReName = user.getDisplayName();
+    String mReName;
+    Toolbar mToolbar;
     String mReplyImage;
 
     @Override
@@ -89,29 +100,7 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board_result);
 
-        if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().setStatusBarColor(Color.parseColor("#82b3c9")); // deep
-        }
-
-        replyImage = user.getPhotoUrl();
-        mReplyImage = replyImage.toString();
-
-        mReplyRecyclerView = findViewById(R.id.recycler_Reply);
-        mReplyList = new ArrayList<>();
-
-        mReplyNameText = (TextView)findViewById(R.id.text_view_reply_name);
-        mReplyContentText = (EditText)findViewById(R.id.et_reply_contents);
-        mRecommnedCount = (TextView)findViewById(R.id.text_view_result_recommend);
-
-        mReplyNameText.setText(mReName);
-
-        mName = (TextView)findViewById(R.id.text_view_result_name);
-        mTitle = (TextView)findViewById(R.id.text_view_result_title);
-        mContents = (TextView)findViewById(R.id.text_view_result_contents);
-        mDate = (TextView)findViewById(R.id.text_view_result_date);
-        mBookTitle = (TextView)findViewById(R.id.text_view_result_book_title);
-        mAuthor = (TextView)findViewById(R.id.text_view_result_author);
-        mImage = (ImageView)findViewById(R.id.iv_result);
+        init();
 
         Intent intent = getIntent();
         id = intent.getStringExtra("Id");
@@ -123,7 +112,15 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
         image = intent.getStringExtra("Image");
         bookTitle = intent.getStringExtra("BookTitle");
         pageNull = intent.getStringExtra("Page");
-       // Toast.makeText(this, pageNull,Toast.LENGTH_SHORT).show();
+        mUser = intent.getStringExtra("user");
+        if(mUser.equals("1")){
+            mReName = user.getDisplayName();
+            replyImage = user.getPhotoUrl();
+            mReplyImage = replyImage.toString();
+            mReplyNameText.setText(mReName);
+        }else{
+            mReName = "0";
+        }
 
         mName.setText(name);
         mTitle.setText(title);
@@ -166,44 +163,59 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
                     }
                 });
         findViewById(R.id.btn_reply).setOnClickListener(this);
-        findViewById(R.id.btn_board_delete).setOnClickListener(this);
-        findViewById(R.id.btn_board_retouch).setOnClickListener(this);
         findViewById(R.id.btn_board_recommend).setOnClickListener(this);
     }
+    private void init(){
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().setStatusBarColor(Color.parseColor("#82b3c9")); // deep
+        }
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_board_result);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mReplyRecyclerView = findViewById(R.id.recycler_Reply);
+        mReplyRecyclerView.clearOnChildAttachStateChangeListeners();
+        mReplyRecyclerView.addItemDecoration(new DividerItemDecoration(getApplication(), 1));
+        mReplyList = new ArrayList<>();
+
+        mReplyNameText = (TextView)findViewById(R.id.text_view_reply_name);
+        mReplyContentText = (EditText)findViewById(R.id.et_reply_contents);
+        mRecommnedCount = (TextView)findViewById(R.id.text_view_result_recommend);
+        mName = (TextView)findViewById(R.id.text_view_result_name);
+        mTitle = (TextView)findViewById(R.id.text_view_result_title);
+        mContents = (TextView)findViewById(R.id.text_view_result_contents);
+        mContents.setMovementMethod(ScrollingMovementMethod.getInstance());
+        mDate = (TextView)findViewById(R.id.text_view_result_date);
+        mBookTitle = (TextView)findViewById(R.id.text_view_result_book_title);
+        mAuthor = (TextView)findViewById(R.id.text_view_result_author);
+        mImage = (ImageView)findViewById(R.id.iv_result);
+    }
     @Override
-    public void onClick(View v) {
-        switch(v.getId()){
-            case R.id.btn_reply:
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-                rid = mStore.collection("board").document(id).collection("reply").document().getId();
-                Map<String, Object> post = new HashMap<>();
-                post.put("id", rid);
-                post.put("name",mReplyNameText.getText().toString());
-                post.put("contents", mReplyContentText.getText().toString());
-                post.put("date",formatDate);
-                post.put("image", mReplyImage);
-                post.put("uid", user.getUid());
-                mStore.collection("board").document(id)
-                        .collection("reply").document(rid).set(post)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(BoardResultActivity.this, "댓글 성공!", Toast.LENGTH_SHORT).show();
-                               // Intent reintent = new Intent(BoardResultActivity.this, BoardResultActivity.class);
-                               // startActivity(reintent);
-                                finish();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(BoardResultActivity.this, "댓글 실패!", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_toolbar_result, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home: //toolbar의 back키 눌렀을 때 동작
+                onBackPressed();
+            break;
+            case R.id.retouch_icon :
+                Intent touchIntent = new Intent(BoardResultActivity.this, RetouchBoardActivity.class);
+                if(mReName.equals(name)) {
+                    touchIntent.putExtra("Id", id);
+                    touchIntent.putExtra("Name", name);
+                    touchIntent.putExtra("Title", title);
+                    touchIntent.putExtra("Contents", contents);
+                    touchIntent.putExtra("Date", date);
+                    startActivity(touchIntent);
+                }else{
+                    Toast.makeText(BoardResultActivity.this, "작성자가 아닙니다", Toast.LENGTH_SHORT).show();
+                }
                 break;
-            case R.id.btn_board_delete:
+            case R.id.delete_icon:
                 if(mReName.equals(name)) {
                     deleteCollection(mStore.collection("board").document(id).collection("reply"), 50, EXECUTOR);
                     deleteCollection(mStore.collection("board").document(id).collection("recommend"), 50, EXECUTOR);
@@ -228,18 +240,61 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
                     Toast.makeText(BoardResultActivity.this,"작성자가 아닙니다." , Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case R.id.btn_board_retouch:
-                Intent touchIntent = new Intent(BoardResultActivity.this, RetouchBoardActivity.class);
-                if(mReName.equals(name)) {
-                    touchIntent.putExtra("Id", id);
-                    touchIntent.putExtra("Name", name);
-                    touchIntent.putExtra("Title", title);
-                    touchIntent.putExtra("Contents", contents);
-                    touchIntent.putExtra("Date", date);
-                    startActivity(touchIntent);
+        }
+        return false;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.btn_reply:
+                if(mUser.equals("1")){
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    rid = mStore.collection("board").document(id).collection("reply").document().getId();
+                    Map<String, Object> post = new HashMap<>();
+                    post.put("id", rid);
+                    post.put("name",mReplyNameText.getText().toString());
+                    post.put("contents", mReplyContentText.getText().toString());
+                    post.put("date",formatDate);
+                    post.put("image", mReplyImage);
+                    post.put("uid", user.getUid());
+                    mStore.collection("board").document(id)
+                            .collection("reply").document(rid).set(post)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(BoardResultActivity.this, "댓글 성공!", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(BoardResultActivity.this, "댓글 실패!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                 }else{
-                    Toast.makeText(BoardResultActivity.this, "작성자가 아닙니다", Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder alert_ex = new AlertDialog.Builder(BoardResultActivity.this);
+                    alert_ex.setMessage("로그인 후 사용가능합니다. 로그인 하시겠습니까?");
+
+                    alert_ex.setPositiveButton("로그인", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent accountIntent = new Intent(getApplication(), LoginActivity.class);
+                            startActivity(accountIntent);
+                            finish();
+                        }
+                    });
+                    alert_ex.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    alert_ex.setTitle("Your Thinking");
+                    AlertDialog alert = alert_ex.create();
+                    alert.show();
                 }
+
                 break;
             case R.id.btn_board_recommend:
                 mStore.collection("board").document(id).collection("recommend")

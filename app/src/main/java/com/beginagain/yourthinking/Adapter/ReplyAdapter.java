@@ -45,7 +45,6 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.ReplyViewHol
         holder.replyDateTextView.setText(data.getDate());
         holder.replyContentsTextView.setText(data.getContents());
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String myUid = data.getUid();
 
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://beginagains.appspot.com");

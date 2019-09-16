@@ -2,24 +2,32 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
-    <TextView
-        android:id="@+id/text_view_search_user"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_search"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="@drawable/textview"
-        android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:text="글 검색"
-        android:textColor="@color/blackSoft"
-        android:textSize="16dp" />
+        android:background="#ffffff"
+        android:elevation="1dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <TextView
+            android:id="@+id/text_view_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="검색"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+    </android.support.v7.widget.Toolbar>
 
     <LinearLayout
         android:id="@+id/ll_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/text_view_search_user"
+        android:layout_below="@id/toolbar_search"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:orientation="horizontal">
@@ -51,12 +59,13 @@
             android:lines="1"
             android:singleLine="true" />/>
 
-        <Button
+        <ImageButton
             android:id="@+id/btn_search_data"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/button"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_search"
             android:text="검색" />
 
     </LinearLayout>

@@ -4,51 +4,41 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/text_view_notice_first"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_notice"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="@drawable/textview"
-        android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:text="공지사항"
-        android:textColor="@color/blackSoft"
-        android:textSize="16dp" />
+        android:background="#ffffff"
+        android:elevation="1dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <TextView
+            android:id="@+id/text_view_noticeTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="공지사항"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+    </android.support.v7.widget.Toolbar>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_notice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/text_view_notice_first"
+        android:layout_below="@id/toolbar_notice"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_write"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_marginRight="15sp"
-            android:layout_marginBottom="90dp"
-            android:backgroundTint="@color/primary"
-            android:src="@drawable/ic_write"
-            android:visibility="invisible"
-            app:borderWidth="0dp"
-            app:elevation="6dp"
-            app:pressedTranslationZ="12dp" />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="15sp"
-            android:backgroundTint="@color/primary"
-            android:src="@drawable/ic_add"
-            app:borderWidth="0dp" />
-
-    </FrameLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_notice_write"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="@color/primary"
+        android:src="@drawable/ic_write"
+        app:borderWidth="0dp"
+        />
 </RelativeLayout>

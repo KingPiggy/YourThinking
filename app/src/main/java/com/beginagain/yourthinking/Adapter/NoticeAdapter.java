@@ -1,24 +1,18 @@
 package com.beginagain.yourthinking.Adapter;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.beginagain.yourthinking.Item.BookBoardItem;
-import com.beginagain.yourthinking.NoticeResultActivity;
 import com.beginagain.yourthinking.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MainViewHolder> {
-
-    String mName, mTitle, mContents, mDate, mId;
 
     List<BookBoardItem> mNoticeList;
 
@@ -39,6 +33,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MainViewHo
         holder.boardNameTextView.setText(data.getName());
         holder.boardTitleTextView.setText(data.getTitle());
         holder.boardDateTextView.setText(data.getDate());
+        holder.boardContentsTextView.setText(data.getContents());
     }
 
     @Override
@@ -54,35 +49,15 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.MainViewHo
         public TextView boardTitleTextView;
         public TextView boardNameTextView;
         public TextView boardDateTextView;
+        public TextView boardContentsTextView;
 
         public MainViewHolder(View itemView) {
             super(itemView);
             boardNameTextView = itemView.findViewById(R.id.text_view_notice_item_name);
             boardTitleTextView = itemView.findViewById(R.id.text_view_notice_item_title);
             boardDateTextView = itemView.findViewById(R.id.text_view_notice_item_time);
+            boardContentsTextView = itemView.findViewById(R.id.text_view_notice_item_contents);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int pos = getAdapterPosition() ;
-                    BookBoardItem data = mNoticeList.get(pos);
-
-                    Intent intent = new Intent(view.getContext(), NoticeResultActivity.class);
-
-                    mId = data.getId();
-                    mName = data.getName();
-                    mTitle = data.getTitle();
-                    mContents = data.getContents();
-                    mDate = data.getDate();
-
-                    intent.putExtra("Id", mId);
-                    intent.putExtra("Name",mName);
-                    intent.putExtra("Title", mTitle);
-                    intent.putExtra("Contents", mContents);
-                    intent.putExtra("Date", mDate);
-                    view.getContext().startActivity(intent);
-                }
-            });
         }
     }
 }

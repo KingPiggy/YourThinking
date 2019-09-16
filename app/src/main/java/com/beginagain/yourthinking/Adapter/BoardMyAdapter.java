@@ -12,14 +12,14 @@ import android.widget.TextView;
 import com.beginagain.yourthinking.Board.BoardResultActivity;
 import com.beginagain.yourthinking.Item.BookBoardItem;
 import com.beginagain.yourthinking.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class BoardMyAdapter extends RecyclerView.Adapter<BoardMyAdapter.MainViewHolder> {
 
-    String mName, mTitle, mContents, mDate, mId, mImage, mAuthor, mBooktitle;
-
+    String mName, mTitle, mContents, mDate, mId, mImage, mAuthor, mBooktitle, mRecommend;
     List<BookBoardItem> mSearchList;
 
     public BoardMyAdapter(List<BookBoardItem> mSearchList) {
@@ -38,6 +38,7 @@ public class BoardMyAdapter extends RecyclerView.Adapter<BoardMyAdapter.MainView
         holder.boardNameTextView.setText(data.getName());
         holder.boardTitleTextView.setText(data.getTitle());
         holder.boardDateTextView.setText(data.getDate());
+        holder.boardRecommendTextView.setText(data.getRecommend());
         Picasso.get().load(data.getImage()).into(holder.boardImageView);
     }
 
@@ -54,6 +55,7 @@ public class BoardMyAdapter extends RecyclerView.Adapter<BoardMyAdapter.MainView
         public TextView boardTitleTextView;
         public TextView boardNameTextView;
         public TextView boardDateTextView;
+        public TextView boardRecommendTextView;
         public ImageView boardImageView;
 
         public MainViewHolder(View itemView) {
@@ -61,6 +63,7 @@ public class BoardMyAdapter extends RecyclerView.Adapter<BoardMyAdapter.MainView
             boardNameTextView = itemView.findViewById(R.id.text_view_board_item_name);
             boardTitleTextView = itemView.findViewById(R.id.text_view_board_item_title);
             boardDateTextView = itemView.findViewById(R.id.text_view_board_item_time);
+            boardRecommendTextView = itemView.findViewById(R.id.text_view_board_item_recommend);
             boardImageView = itemView.findViewById(R.id.iv_board_item_thumbnail);
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +82,13 @@ public class BoardMyAdapter extends RecyclerView.Adapter<BoardMyAdapter.MainView
                     mImage = data.getImage();
                     mAuthor = data.getAuthor();
                     mBooktitle = data.getBooktitle();
+                    mRecommend = data.getRecommend();
+                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
+                    if(mAuth.getCurrentUser()!=null)
+                        intent.putExtra("user", "1");
+                    else
+                        intent.putExtra("user","0");
                     intent.putExtra("Id", mId);
                     intent.putExtra("Name",mName);
                     intent.putExtra("Title", mTitle);
@@ -88,6 +97,7 @@ public class BoardMyAdapter extends RecyclerView.Adapter<BoardMyAdapter.MainView
                     intent.putExtra("Image", mImage);
                     intent.putExtra("Author", mAuthor);
                     intent.putExtra("BookTitle", mBooktitle);
+                    intent.putExtra("Recommend", mRecommend);
                     intent.putExtra("Page","My");
                     view.getContext().startActivity(intent);
                 }

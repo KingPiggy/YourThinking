@@ -69,7 +69,7 @@
             android:id="@+id/bookmaraton_search_book"
             android:layout_width="match_parent"
             android:layout_height="110dp"
-            android:layout_below="@id/et_write_image"
+            android:layout_below="@id/btn_maratonbook_add"
             android:layout_margin="5dp"
             android:background="@drawable/item_border"
             android:padding="1dp"
