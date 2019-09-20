@@ -20,6 +20,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <LinearLayout
+        android:id="@+id/History_Edit_LL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        <EditText
+            android:id="@+id/History_Edit"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            android:hint="히스토리 책 검색"/>
+        <Button
+            android:id="@+id/btn_History_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="검 색"/>
+        <Button
+            android:id="@+id/btn_History_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="목 록"/>
+    </LinearLayout>
+
+
     <ListView
         android:id="@+id/historyLV"
         android:layout_width="0dp"
@@ -28,7 +54,21 @@
         app:layout_constraintBottom_toTopOf="@+id/btn_History_Del"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/History_Edit_LL"
+        android:visibility="visible">
+
+    </ListView>
+    <ListView
+        android:id="@+id/historyLV_2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_History_Del"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/History_Edit_LL"
+        android:visibility="invisible"
+        >
 
     </ListView>
 

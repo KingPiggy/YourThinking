@@ -223,7 +223,7 @@ public class Menu4Fragment extends Fragment {
 
         historyDB = openDB(dbName_History);
         historyDB.execSQL("CREATE TABLE IF NOT EXISTS " + tableName_History
-                + " (date VARCHAR(20), booksTitle VARCHAR(500), totalBooksNum INTEGER);");
+                + " (id INTEGER primary key autoincrement, date VARCHAR(20), booksTitle VARCHAR(500), totalBooksNum INTEGER);");
 
         mDeleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override

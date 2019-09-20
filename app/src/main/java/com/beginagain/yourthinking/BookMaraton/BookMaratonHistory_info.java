@@ -1,6 +1,8 @@
 package com.beginagain.yourthinking.BookMaraton;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Color;
@@ -22,9 +24,12 @@ import java.util.List;
 public class BookMaratonHistory_info extends AppCompatActivity {
     private Intent intent;
     private String dbName_History = "HistoryDB";
+    private String tableName_history = "HistoryTable";
     private String tableName_History = "HistoryTable";  // 테이블 이름
     private HashMap<String, String> selectedHistory;
     private SQLiteDatabase historyDB;
+    private int HISTORY_ID;
+
     TextView historyDate;
     ListView historyInfoLV;
     ListAdapter adapter;
@@ -58,7 +63,43 @@ public class BookMaratonHistory_info extends AppCompatActivity {
         intent = getIntent();
         historyDate = findViewById(R.id.historyInfoDate_TV);
         historyInfoLV = findViewById(R.id.historyInfoList_LV);
-        selectedHistory = (HashMap)intent.getExtras().getSerializable("selectedHistory");
+        HISTORY_ID = Integer.parseInt(intent.getStringExtra("history_ID"));
+
+        Log.d("test", "전달받은 히스토리아이디 : " + HISTORY_ID);
+
+        selectedHistory = getHistory(HISTORY_ID);
+
+
+    }
+
+    private HashMap<String, String> getHistory(int history_id) {
+        Cursor c = null;
+        HashMap<String, String> item = null;
+
+        try {
+            c = historyDB.rawQuery("SELECT * FROM " + tableName_history + " WHERE ID = " + history_id + ";", null);
+
+            if (c != null & c.moveToFirst()) {
+                do {
+                    String date = c.getString(c.getColumnIndex("date"));
+                    String booksTitle = c.getString(c.getColumnIndex("booksTitle"));
+
+                    Log.d("test", "현재 히스토리의 책 제목 : " + booksTitle);
+                    item = new HashMap<>();
+
+                    item.put("date", date);
+                    item.put("booksTitle", booksTitle);
+
+                } while (c.moveToNext());
+            }
+        } catch (SQLException e) {
+            Log.d("test", "readHistoryData() 에러 : " + e.getMessage());
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+        }
+        return item;
     }
 
     private void showHistoryInfo() {
