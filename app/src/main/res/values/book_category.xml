@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="카테고리">
-        <item>국내도서</item>
-        <item>해외도서</item>
-        <item>음반</item>
-        <item>DVD</item>
+        <item>경영/경제</item>
+        <item>과학</item>
+        <item>만화</item>
+        <item>소설</item>
+        <item>시</item>
+        <item>아동</item>
+        <item>여행</item>
+        <item>인문</item>
+        <item>자기계발</item>
+        <item>종교</item>
+        <item>청소년</item>
     </string-array>
 </resources>

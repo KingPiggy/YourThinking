@@ -18,7 +18,7 @@
 
         <TextView
             android:id="@+id/text_view_write_pageTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:text="책검색"
             android:textStyle="bold"

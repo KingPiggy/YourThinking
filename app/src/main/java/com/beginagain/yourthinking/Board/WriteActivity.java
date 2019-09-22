@@ -1,105 +1,76 @@
 package com.beginagain.yourthinking.Board;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.beginagain.yourthinking.Adapter.BookApiAdapter;
-import com.beginagain.yourthinking.Item.RecommendBookItem;
-import com.beginagain.yourthinking.LoginActivity;
 import com.beginagain.yourthinking.MainActivity;
 import com.beginagain.yourthinking.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLConnection;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.Nullable;
-
 public class WriteActivity extends AppCompatActivity implements View.OnClickListener {
-
     private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     private EditText mWriteTitleText, mWriteContentText;
-    private String id;
-    private Button mBtnUpload;
     private TextView mWriteDateText, mWriteNameText;
+    private ImageButton mImageButton;
+    private Button mBtnUpload;
+    private ImageView imageView;
+
+    private String id, mCurrentPhotoPath;
+    private Uri photoURI, albumURI;
+
+    private static final int FROM_ALBUM = 1;
 
     long mNow = System.currentTimeMillis();
     Date mDate = new Date(mNow);
     SimpleDateFormat mFormat = new SimpleDateFormat("MM-dd hh:mm");
     String formatDate = mFormat.format(mDate);
 
-    // 사진등록을 위한
-
     String mName = user.getDisplayName();
-
-    // private static final int PICK_FROM_ALBUM = 1;
-    // private Boolean isPermission = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write);
 
-       // tedPermission();
+        id = mStore.collection("board").document().getId();
 
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(Color.parseColor("#82b3c9")); // deep
@@ -117,17 +88,15 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
         mWriteDateText.setText(formatDate);
 
         mBtnUpload.setOnClickListener(this);
-/**
-        findViewById(R.id.image_button_camera).setOnClickListener(new View.OnClickListener() {
 
+        imageView = findViewById(R.id.iv_write_camera);
+        mImageButton = findViewById(R.id.image_button_camera);
+        mImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isPermission) goToAlbum();
-                else
-                    Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
+                makeDialog();
             }
         });
-        final ImageView imageView = findViewById(R.id.iv_write_camera);
         imageView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View arg0, MotionEvent arg1) {
@@ -156,181 +125,186 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
                 return true;
             }
         });
-**/
+    }
+    private void makeDialog(){
+        AlertDialog.Builder alt_bld = new AlertDialog.Builder(WriteActivity.this);
+        alt_bld.setTitle("사진 업로드").setCancelable(
+                false).setPositiveButton("앨범선택",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogInterface, int id) {
+                        Log.v("알림", "다이얼로그 > 앨범선택 선택");
+                        //앨범에서 선택
+                        selectAlbum();
+                    }
+                }).setNegativeButton("취소   ",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Log.v("알림", "다이얼로그 > 취소 선택");
+                        // 취소 클릭. dialog 닫기.
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = alt_bld.create();
+        alert.show();
+    }
+    public File createImageFile() throws IOException{
+        String imgFileName = id + ".jpg";
+        File imageFile= null;
+        File storageDir = new File(Environment.getExternalStorageDirectory() + "/Pictures");
+        if(!storageDir.exists()){
+            Log.v("알림","storageDir 존재 x " + storageDir.toString());
+            storageDir.mkdirs();
+        }
+        Log.v("알림","storageDir 존재함 " + storageDir.toString());
+        imageFile = new File(storageDir,imgFileName);
+        mCurrentPhotoPath = imageFile.getAbsolutePath();
+        return imageFile;
+    }
+    //앨범 선택 클릭
+    public void selectAlbum(){
+        //앨범에서 이미지 가져옴
+        //앨범 열기
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        intent.setType("image/*");
+        startActivityForResult(intent, FROM_ALBUM);
+    }
+
+    public void galleryAddPic(){
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(mCurrentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        sendBroadcast(mediaScanIntent);
+        Toast.makeText(this,"사진이 저장되었습니다",Toast.LENGTH_SHORT).show();
     }
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_upload_board :
-                // 생성
-                id = mStore.collection("board").document().getId();
-                final Map<String, Object> post = new HashMap<>();
-                post.put("id", id);
-                post.put("name", mWriteNameText.getText().toString());
-                post.put("title", mWriteTitleText.getText().toString());
-                post.put("contents", mWriteContentText.getText().toString());
-                post.put("date", mWriteDateText.getText().toString());
-                post.put("recount", 0);
-                /**
-                post.put("image", thumnail);
-                post.put("booktitle",title);
-                post.put("author", author);
-                 **/
-                AlertDialog.Builder alert_ex = new AlertDialog.Builder(WriteActivity.this);
-                alert_ex.setMessage("책을 등록하시겠습니까?");
-
-                alert_ex.setPositiveButton("등록", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mStore.collection("board").document(id).set(post)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Intent intent = new Intent(WriteActivity.this, WriteBookActivity.class);
-                                        intent.putExtra("id", id);
-                                        startActivity(intent);
-                                        finish();
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(WriteActivity.this, "업로드 실패!", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode != RESULT_OK){
+            return;
+        }
+        switch (requestCode){
+            case FROM_ALBUM : {
+                //앨범에서 가져오기
+                if(data.getData()!=null){
+                    try{
+                        File albumFile = null;
+                        albumFile = createImageFile();
+                        photoURI = data.getData();
+                        albumURI = Uri.fromFile(albumFile);
+                        galleryAddPic();
+                        imageView.setImageURI(photoURI);
+                        // setPic();
+                        //cropImage();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        Log.v("알림","앨범에서 가져오기 에러");
                     }
-                });
-                /**
-                alert_ex.setNeutralButton("아니요", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mStore.collection("board").document(id).set(post)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Intent intent = new Intent(WriteActivity.this, MainActivity.class);
-                                        intent.putExtra("page", "Board");
-                                        startActivity(intent);
-                                        finish();
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(WriteActivity.this, "업로드 실패!", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                    }
-                });
-                 **/
-                alert_ex.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(WriteActivity.this, MainActivity.class);
-                        intent.putExtra("page", "Board");
-                        startActivity(intent);
-                        finish();
-                    }
-                });
-                alert_ex.setTitle("Your Thinking");
-                AlertDialog alert = alert_ex.create();
-                alert.show();
+                }
                 break;
+            }
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_upload_board:
+                if(mWriteContentText.getText().toString().equals("")||mWriteTitleText.getText().toString().equals("")){
+                    Toast.makeText(this,"글 또는 내용을 입력해주세요",Toast.LENGTH_SHORT).show();
+                }else{
+                    final Map<String, Object> post = new HashMap<>();
+                    post.put("id", id);
+                    post.put("name", mWriteNameText.getText().toString());
+                    post.put("title", mWriteTitleText.getText().toString());
+                    post.put("contents", mWriteContentText.getText().toString());
+                    post.put("date", mWriteDateText.getText().toString());
+                    post.put("recount", 0);
+
+                    final AlertDialog.Builder alert_ex = new AlertDialog.Builder(WriteActivity.this);
+                    alert_ex.setMessage("책을 등록하시겠습니까?");
+
+                    alert_ex.setPositiveButton("등록", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            mStore.collection("board").document(id).set(post)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Intent intent = new Intent(WriteActivity.this, WriteBookActivity.class);
+                                            intent.putExtra("id", id);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(WriteActivity.this, "업로드 실패!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        }
+                    });
+                    alert_ex.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            mStore.collection("board").document(id).set(post)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Intent intent = new Intent(WriteActivity.this, MainActivity.class);
+                                            intent.putExtra("page", "Board");
+                                            startActivity(intent);
+
+                                            finish();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(WriteActivity.this, "업로드 실패!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
+                        }
+                    });
+                    alert_ex.setTitle("Your Thinking");
+                    AlertDialog alert = alert_ex.create();
+                    alert.dismiss();
+                    alert.show();
+
+                    String filename = id + "_" + "photo";
+                    FirebaseStorage storage = FirebaseStorage.getInstance("gs://beginagains.appspot.com");
+                    StorageReference storageRef = storage.getReferenceFromUrl("gs://beginagains.appspot.com").child("BoardPhotos/" + filename);
+                    UploadTask uploadTask;
+
+                    Bitmap bitmap = null;
+                    if (imageView.getDrawable() != null) {
+                        bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 65, baos);
+                        byte[] data = baos.toByteArray();
+
+                        uploadTask = storageRef.putBytes(data);
+                        uploadTask.addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                // Handle unsuccessful uploads
+                                Log.v("알림", "사진 업로드 실패");
+                                exception.printStackTrace();
+                            }
+                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            }
+                        });
+                    }
+                }
+        }
+    }
     @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-    private void tedPermission() {
-        PermissionListener permissionListener = new PermissionListener() {
-            @Override
-            public void onPermissionGranted() {
-                // 권한 요청 성공
-            }
-
-            @Override
-            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-                // 권한 요청 실패
-            }
-        };
-        TedPermission.with(this)
-                .setPermissionListener(permissionListener)
-                .setRationaleMessage(getResources().getString(R.string.permission_2))
-                .setDeniedMessage(getResources().getString(R.string.permission_1))
-                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
-                .check();
-
-    }
-    private void goToAlbum() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-        startActivityForResult(intent, PICK_FROM_ALBUM);
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != Activity.RESULT_OK) {
-            Toast.makeText(this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
-            if(tempFile != null) {
-                if (tempFile.exists()) {
-                    if (tempFile.delete()) {
-                        tempFile = null;
-                    }
-                }
-            }
-            return;
-        }
-
-        if (requestCode == PICK_FROM_ALBUM) {
-            Uri photoUri = data.getData();
-            Cursor cursor = null;
-            try {
-                String[] proj = { MediaStore.Images.Media.DATA };
-
-                assert photoUri != null;
-                cursor = getContentResolver().query(photoUri, proj, null, null, null);
-
-                assert cursor != null;
-                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-
-                cursor.moveToFirst();
-
-                tempFile = new File(cursor.getString(column_index));
-            } finally {
-                if (cursor != null) {
-                    cursor.close();
-                }
-            }
-            setImage();
-        }
-    }
-    private void setImage() {
-        ImageView imageView = findViewById(R.id.iv_write_camera);
-
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
-
-        imageView.setImageBitmap(originalBm);
-        tempFile = null;
-    }
-**/

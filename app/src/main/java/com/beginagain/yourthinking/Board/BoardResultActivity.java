@@ -29,6 +29,9 @@ import com.beginagain.yourthinking.LoginActivity;
 import com.beginagain.yourthinking.MainActivity;
 import com.beginagain.yourthinking.NoticeActivity;
 import com.beginagain.yourthinking.R;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -45,7 +48,11 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -69,10 +76,11 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
     private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-    private TextView mName, mTitle, mContents, mDate, mAuthor, mBookTitle;
-    private String name, title, contents, date, id, author, image, bookTitle;
+    private TextView mName, mTitle, mContents, mDate, mAuthor, mBookTitle, mPageTitle;
+    private String name, title, contents, date, id, image, bookTitle;
     private String rid, recommendid, mUser; // 8.4
-    private ImageView mImage;
+    private String author="";
+    private ImageView mImage, resultImage;
 
     private EditText mReplyContentText;
     private TextView mReplyNameText, mRecommnedCount;
@@ -113,6 +121,19 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
         bookTitle = intent.getStringExtra("BookTitle");
         pageNull = intent.getStringExtra("Page");
         mUser = intent.getStringExtra("user");
+
+
+        FirebaseStorage storage = FirebaseStorage.getInstance("gs://beginagains.appspot.com");
+        StorageReference storageRef = storage.getReference();
+        StorageReference pathReference  = storageRef.child("BoardPhotos/" + id + "_" + "photo");
+        Glide.with(getApplication())
+                .using(new FirebaseImageLoader())
+                .load(pathReference)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)// 디스크 캐시 저장 off
+                .override(400, 500)
+                .skipMemoryCache(true)// 메모리 캐시 저장 off
+                .into(resultImage);
+
         if(mUser.equals("1")){
             mReName = user.getDisplayName();
             replyImage = user.getPhotoUrl();
@@ -127,9 +148,16 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
         mContents.setText(contents);
         mDate.setText(date);
         mAuthor.setText(author);
-        mBookTitle.setText(bookTitle);
-        Picasso.get().load(image).into(mImage);
-
+        if(mAuthor.getText().toString().equals("")){
+            mBookTitle.setText("");
+            mAuthor.setText("책을 등록하시지 않았습니다.");
+            mAuthor.setTextSize(20);
+            mImage.setImageResource(R.drawable.logo);
+        }else {
+            mAuthor.setText(author);
+            mBookTitle.setText(bookTitle);
+            Picasso.get().load(image).into(mImage);
+        }
         mStore.collection("board").document(id)
                 .collection("reply").orderBy("date").limit(100)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -184,11 +212,12 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
         mName = (TextView)findViewById(R.id.text_view_result_name);
         mTitle = (TextView)findViewById(R.id.text_view_result_title);
         mContents = (TextView)findViewById(R.id.text_view_result_contents);
-        mContents.setMovementMethod(ScrollingMovementMethod.getInstance());
+       // mContents.setMovementMethod(ScrollingMovementMethod.getInstance());
         mDate = (TextView)findViewById(R.id.text_view_result_date);
         mBookTitle = (TextView)findViewById(R.id.text_view_result_book_title);
         mAuthor = (TextView)findViewById(R.id.text_view_result_author);
         mImage = (ImageView)findViewById(R.id.iv_result);
+        resultImage = (ImageView)findViewById(R.id.iv_result_photos);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

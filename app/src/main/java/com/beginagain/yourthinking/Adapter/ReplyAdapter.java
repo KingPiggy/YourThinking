@@ -55,6 +55,7 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.ReplyViewHol
                 .load(pathReference)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)// 디스크 캐시 저장 off
                 .skipMemoryCache(true)// 메모리 캐시 저장 off
+                .centerCrop (). crossFade ()
                 .into(holder.replyImageView);
 
         //Picasso.get().load(uriReplyImage).into(holder.replyImageView);

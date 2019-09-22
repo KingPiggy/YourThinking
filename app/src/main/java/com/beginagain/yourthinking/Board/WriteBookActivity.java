@@ -3,34 +3,28 @@ package com.beginagain.yourthinking.Board;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beginagain.yourthinking.Adapter.BookApiAdapter;
 import com.beginagain.yourthinking.Item.RecommendBookItem;
 import com.beginagain.yourthinking.MainActivity;
 import com.beginagain.yourthinking.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -39,14 +33,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 
 public class WriteBookActivity extends AppCompatActivity {
@@ -57,6 +49,7 @@ public class WriteBookActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private EditText mBookTitle;
     private ImageButton mBtnSearch;
+    private Button mBtnWrite;
 
     private RecyclerView mWriteRecyclerView;
     RecyclerView.LayoutManager layoutManager;
@@ -83,6 +76,31 @@ public class WriteBookActivity extends AppCompatActivity {
                 new BookRecoAsyncTask().execute();
             }
         });
+        mBtnWrite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder alert_ex = new AlertDialog.Builder(WriteBookActivity.this);
+                alert_ex.setMessage("책 등록이 되지 않았습니다. 완료하시겠습니까?");
+
+                alert_ex.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.putExtra("page", "Board");
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+                alert_ex.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                alert_ex.setTitle("Your Thinking");
+                AlertDialog alert = alert_ex.create();
+                alert.show();
+            }
+        });
     }
     private void init(){
         if (Build.VERSION.SDK_INT >= 21) {
@@ -92,6 +110,7 @@ public class WriteBookActivity extends AppCompatActivity {
 
         mBookTitle = findViewById(R.id.et_write_book);
         mBtnSearch = findViewById(R.id.btn_write_book);
+        mBtnWrite = findViewById(R.id.btn_upload_bookWrite);
 
         mToolbar= findViewById(R.id.toolbar_bookWrite);
         setSupportActionBar(mToolbar);
@@ -201,24 +220,6 @@ public class WriteBookActivity extends AppCompatActivity {
             recyclerAdapter.notifyDataSetChanged();
         }
     }
-    private Bitmap GetImageFromURL(String strImageURL) {
-        Bitmap imgBitmap = null;
-
-        try {
-            URL url = new URL(strImageURL);
-            URLConnection conn = url.openConnection();
-            conn.connect();
-
-            int nSize = conn.getContentLength();
-            BufferedInputStream bis = new BufferedInputStream(conn.getInputStream(), nSize);
-            imgBitmap = BitmapFactory.decodeStream(bis);
-
-            bis.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return imgBitmap;
-    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
@@ -232,7 +233,7 @@ public class WriteBookActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         AlertDialog.Builder alert_ex = new AlertDialog.Builder(WriteBookActivity.this);
-        alert_ex.setMessage("뒤로 나가시면 데이터가 사라질 수 있습니다. 나가시겠습니까?");
+        alert_ex.setMessage("뒤로 나가시면 데이터가 사라질 수 있습니다. 책 등록이 되지 않습니다. 나가시겠습니까?");
 
         alert_ex.setPositiveButton("예", new DialogInterface.OnClickListener() {
             @Override
@@ -240,6 +241,7 @@ public class WriteBookActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.putExtra("page", "Board");
                 startActivity(intent);
+                finish();
             }
         });
         alert_ex.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
@@ -250,6 +252,5 @@ public class WriteBookActivity extends AppCompatActivity {
         alert_ex.setTitle("Your Thinking");
         AlertDialog alert = alert_ex.create();
         alert.show();
-        finish();
     }
 }

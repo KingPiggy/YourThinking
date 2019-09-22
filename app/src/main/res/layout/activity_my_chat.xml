@@ -6,22 +6,29 @@
     android:layout_height="match_parent"
     tools:context=".MyChatActivity">
 
-    <TextView
-        android:id="@+id/text_view_my_chat_temp"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_myChat"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="@drawable/textview"
-        android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:text="내가 참여한 채팅방"
-        android:textColor="@color/blackSoft"
-        android:textSize="16dp" />
+        android:background="#ffffff"
+        android:elevation="1dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <TextView
+            android:id="@+id/text_view_myBoard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="내 정보"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+    </android.support.v7.widget.Toolbar>
 
     <ListView
         android:id="@+id/listview_my_chat_chatlist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/text_view_my_chat_temp"
+        android:layout_below="@id/toolbar_myChat"
         android:layout_marginTop="10dp" />
 
 

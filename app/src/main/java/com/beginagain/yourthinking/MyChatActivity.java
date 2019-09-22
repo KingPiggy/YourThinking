@@ -11,7 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -43,6 +45,8 @@ public class MyChatActivity extends AppCompatActivity {
     private ListView mListView;
     private ArrayList<String> list = new ArrayList<>();
     private ArrayAdapter<String> arrayAdapter;
+
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +86,9 @@ public class MyChatActivity extends AppCompatActivity {
 
     public void init() {
         mListView = (ListView) findViewById(R.id.listview_my_chat_chatlist);
+        mToolbar = (Toolbar)findViewById(R.id.toolbar_myChat);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
@@ -116,5 +123,21 @@ public class MyChatActivity extends AppCompatActivity {
 
             }
         });
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
+                onBackPressed();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public void onBackPressed() {
+        finish();
+        Intent intent  = new Intent(this, AccountActivity.class);
+        startActivity(intent);
     }
 }
