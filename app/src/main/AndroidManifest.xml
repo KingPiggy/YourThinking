@@ -33,6 +33,7 @@
         <activity android:name=".BookMaraton.BookMaratonActivity" />
         <activity android:name=".BookMaraton.BookMaratonInfo" />
         <activity android:name=".Board.WriteBookActivity" />
+        <activity android:name=".BookInfoActivity"/>
         <activity android:name=".NoticeActivity" />
         <activity android:name=".WriteNoticeActivity" />
         <activity android:name=".AccountActivity" />

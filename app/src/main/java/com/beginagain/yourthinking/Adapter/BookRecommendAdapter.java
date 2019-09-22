@@ -1,6 +1,7 @@
 package com.beginagain.yourthinking.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.beginagain.yourthinking.BookInfoActivity;
 import com.beginagain.yourthinking.Item.RecommendBookItem;
 import com.beginagain.yourthinking.R;
 import com.squareup.picasso.Picasso;
@@ -20,6 +22,7 @@ public class BookRecommendAdapter extends RecyclerView.Adapter<BookRecommendAdap
     Context context;
     ArrayList<RecommendBookItem> items;
     int itemLayout;
+    String title, desc, author, publisher, date, isbn, image;
 
     public BookRecommendAdapter(Context context, ArrayList<RecommendBookItem> items, int itemLayout) {
         this.context = context;
@@ -74,7 +77,33 @@ public class BookRecommendAdapter extends RecyclerView.Adapter<BookRecommendAdap
             mISBN = (TextView) itemView.findViewById(R.id.text_view_recommend_item_isbn);
             mThumbnail = (ImageView)itemView.findViewById(R.id.iv_recommend_item_thumbnail);
 
-            cardView.setOnClickListener(this);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int pos = getAdapterPosition();
+
+                    RecommendBookItem data = items.get(pos);
+
+                    Intent intent = new Intent(view.getContext(), BookInfoActivity.class);
+                    title = data.getTitle();
+                    author = data.getAuthor();
+                    publisher = data.getPublisher();
+                    image = data.getImage();
+                    isbn =data.getIsbn();
+                    date = data.getDate();
+                    desc = data.getDesc();
+                    intent.putExtra("Title", title);
+                    intent.putExtra("Publisher", publisher);
+                    intent.putExtra("Author", author);
+                    intent.putExtra("Image", image);
+                    intent.putExtra("Isbn", isbn);
+                    intent.putExtra("Date", date);
+                    intent.putExtra("Desc", desc);
+                    view.getContext().startActivity(intent);
+
+
+                }
+            });
         }
 
         @Override

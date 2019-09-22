@@ -200,12 +200,14 @@ public class Menu1Fragment extends Fragment {
                         JSONObject bookItem = jarray.getJSONObject(i);
 
                         String title = bookItem.getString("title");
-                        String author = bookItem.getString("author");
-                        String publisher = bookItem.getString("publisher");
+                        String author = "저자 : " + bookItem.getString("author");
+                        String publisher = "출판사 : " + bookItem.getString("publisher");
                         String isbn = "ISBN : " + bookItem.getString("isbn");
                         String image = bookItem.getString("coverLargeUrl");
+                        String date= "출판일 : " + bookItem.getString("pubDate");
+                        String desc = bookItem.getString("description");
 
-                        RecommendBookItem recommendBookItem = new RecommendBookItem(title, author, publisher, isbn, image);
+                        RecommendBookItem recommendBookItem = new RecommendBookItem(title, author, publisher, isbn, image,date, desc);
                         newItems.add(recommendBookItem);
                     }
                 } catch (JSONException e) {
