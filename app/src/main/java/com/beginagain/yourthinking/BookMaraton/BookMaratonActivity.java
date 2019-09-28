@@ -1,5 +1,8 @@
 package com.beginagain.yourthinking.BookMaraton;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,23 +12,28 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beginagain.yourthinking.Adapter.BookApiAdapter;
+import com.beginagain.yourthinking.Adapter.BookMaratonAdapter;
 import com.beginagain.yourthinking.Item.MaratonBookItem;
 import com.beginagain.yourthinking.Item.RecommendBookItem;
 import com.beginagain.yourthinking.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,243 +45,61 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class BookMaratonActivity extends AppCompatActivity {
-    SharedPreferences.Editor editor;
-    final String PREFNAME = "Preferences";
-    Button mDoneBtn, mBookAddBtn,mBookAddSearchBtn;
+    private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
 
-    //  '****' 표시 한 곳이 내가 한 부분
-    /************************************/
-    SQLiteDatabase maratonDB = null;       // 데이터 베이스 객체
-    public static ListView listView;                  // 리스트 뷰
-    private ListAdapter adapter;                // 리스트 뷰 어댑터
-    public static ArrayList<HashMap<String, String>> books;   // 책 객체를 담고 있는 해쉬 맵을 담은 어레이 리스트
-    private String dbName = "maratonDB";       // 디비 이름(너가 임의로 지정)
-    private String tableName = "BookTable";  // 테이블 이름 (너가 임의로 지정)
-    public static final String TAG_Title = "title";    // 테이블에서 검색 할때 태그 이름
-    public static final String TAG_PageNum = "pageNum";    // 테이블에서 검색 할때 태그 이름
-    public static final String TAG_imgURL = "img_URL";
-    public static final String TAG_currentPageNum = "currentPageNum";
-    Button btnDelete;
-
-
-    public static EditText bookTitle_ET;
-    private EditText bookPageNum_ET;
-    RecyclerView mRecyclerView;
+    private RecyclerView mMaratonRecyclerView;
     RecyclerView.LayoutManager layoutManager;
-    private ArrayList<RecommendBookItem> searchResults = new ArrayList<RecommendBookItem>();
-    private BookApiAdapter_for_maraton recyclerAdapter = new BookApiAdapter_for_maraton(this, searchResults, R.layout.activity_book_recommend);
-    /**********************************/
+    private ArrayList<MaratonBookItem> emptyItems = new ArrayList<MaratonBookItem>();
+    private BookMaratonAdapter recyclerAdapter;
+
+    private ImageButton mBtnSearch;
+    private EditText mBookTitle;
+
+    private String title, ISBN, company, author, thumnail, id, categoryId, totalPage, readPage, pubdate, date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_book_maraton);
+        setContentView(R.layout.activity_book_maraton_add);
 
+
+        id = mStore.collection("maraton").document().getId();
+        recyclerAdapter = new BookMaratonAdapter(this, emptyItems, R.layout.activity_book_maraton_add);
+        Init();
+        mBtnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new BookSearchAsyncTask().execute();
+            }
+        });
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(Color.parseColor("#82b3c9")); // deep
         }
-
-        /*************************************************/
-        books = new ArrayList<>();      // 책 리스트 생성
-        listView = (ListView) findViewById(R.id.book_maraton_ListView);
-
-        init();
-        showList();
-        /**********************************************************/
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        maratonDB = openDB(dbName);
-    }
+    public void Init() {
+        mBookTitle = findViewById(R.id.et_maraton_search);
+        mBtnSearch = findViewById(R.id.btn_maraton_search);
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if(maratonDB != null) {
-            maratonDB.close();
-        }
-    }
-
-    private void init() {
-        maratonDB = openDB(dbName);
-        bookTitle_ET =  findViewById(R.id.book_maraton_name);
-        bookPageNum_ET =  findViewById(R.id.book_maraton_page);
-        mRecyclerView = findViewById(R.id.bookmaraton_search_book);
-        mDoneBtn = findViewById(R.id.btn_make_maraton_done);
-        btnDelete = findViewById(R.id.btn_delete_maratonList);
-
-        // 리싸이클 뷰 설정
-        mRecyclerView.setHasFixedSize(true);
+        mMaratonRecyclerView = findViewById(R.id.recycler_maraton_search);
+        mMaratonRecyclerView.clearOnChildAttachStateChangeListeners();
+        mMaratonRecyclerView.addItemDecoration(new DividerItemDecoration(getApplication(), 1));
         layoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.setAdapter(recyclerAdapter);
-        mRecyclerView.setNestedScrollingEnabled(false);
-
-
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                books.clear();
-                adapter = new BookmartonAdapter(books);
-                listView.setAdapter(adapter);
-            }
-        });
-
-        // 생성하기 버튼 클릭시 db에 마라톤 데이터를 전송
-        mDoneBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // 마라톤 기간
-                String dateFrom = ((TextView) findViewById(R.id.book_maraton_from)).getText().toString();
-                String dateTo = ((TextView) findViewById(R.id.book_maraton_to)).getText().toString();
-
-                if (dateFrom.equals("") || dateTo.equals("")) {
-                    Toast.makeText(getApplicationContext(), "마라톤 기간을 입력해주세요", Toast.LENGTH_SHORT).show();
-                } else {
-                    if (dateFrom.length() < 8 || dateTo.length() < 8) {
-                        Toast.makeText(getApplicationContext(), "형식을 지켜주세요(ex.YYYY.MM.DD)", Toast.LENGTH_SHORT).show();
-                    }else if(Integer.parseInt(dateFrom)>=Integer.parseInt(dateTo)) {
-                        Toast.makeText(getApplicationContext(), "기간을 확인하세요", Toast.LENGTH_SHORT).show();
-                    } else {
-                        String fromYear = dateFrom.substring(0, 4);
-                        String fromMonth = dateFrom.substring(4, 6);
-                        String fromDay = dateFrom.substring(6, 8);
-
-                        String toYear = dateTo.substring(0, 4);
-                        String toMonth = dateTo.substring(4, 6);
-                        String toDay = dateTo.substring(6, 8);
-                        int fy = Integer.parseInt(fromYear),fm = Integer.parseInt(fromMonth),fd = Integer.parseInt(fromDay);
-                        int ty = Integer.parseInt(toYear),tm = Integer.parseInt(toMonth), td = Integer.parseInt(toDay);
-
-                        if(fy<2019 || fy>2100 || ty<2019 || ty>2100){
-                            Toast.makeText(getApplicationContext(), "마라톤 기간(년)을 확인하세요", Toast.LENGTH_SHORT).show();
-                        } else if(fm<1 || fm>12|| tm<1|| tm>12){
-                            Toast.makeText(getApplicationContext(), "마라톤 기간(월)을 확인하세요", Toast.LENGTH_SHORT).show();
-                        } else if((fm==2 && (fd<1 || fd>29)) || (tm==2 && (td <1 || td>29)) ||
-                                ((fy==2019||fy==2021||fy==2022||fy==2023)&&fm==2&&(fd<1||fd>28)) ||((ty==2019||ty==2021||ty==2022||ty==2023)&&tm==2&&(td<1||td>28))||
-                                ((fm==1||fm==3||fm==5||fm==7||fm==8||fm==10||fm==12 )&&(fd<1 || fd>31)) ||
-                                ((tm==1||tm==3||tm==5||tm==7||tm==8||tm==10||tm==12 )&&(td<1 || td>31))||
-                                ((fm==4||fm==6||fm==9||fm==11)&&(fd<1 || fd>30)) || ((tm==4||tm==6||tm==9||tm==11)&&(td<1 || td>30))){
-                            Toast.makeText(getApplicationContext(), "마라톤 기간(일)을 확인하세요", Toast.LENGTH_SHORT).show();
-                        }else{
-
-                            SharedPreferences settings = getSharedPreferences(PREFNAME, MODE_PRIVATE);
-                            String maratonDate = dateFrom + dateTo;
-
-                            editor = settings.edit();
-                            editor.putBoolean("isMaratonGoing", false);
-                            editor.putString("maratonDate", maratonDate);
-
-                            editor.commit();
-
-                            sendBooksToDB();
-
-                            Toast.makeText(getApplicationContext(), "독서 마라톤 시작!!", Toast.LENGTH_SHORT).show();
-                            finish();
-
-                        }
-                    }
-                }
-            }
-        });
-
-        mBookAddBtn = (Button) findViewById(R.id.btn_maratonbook_add);
-
-        // 책 추가 버튼 클릭시 list에 책 정보 담아서 어댑터에 전달 & 리스트 뷰에 출력
-        mBookAddBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String bookTitle = bookTitle_ET.getText().toString();
-                String bookPageNum = bookPageNum_ET.getText().toString();
-
-                if (bookTitle.equals("") || bookPageNum.equals("")) {
-                    Toast.makeText(getApplicationContext(), "책 이름과 쪽수를 입력해주세요.", Toast.LENGTH_SHORT).show();
-                } else if(isAlreayInList(bookTitle)) {
-                    Toast.makeText(getApplicationContext(), "이미 등록된 도서입니다.", Toast.LENGTH_SHORT).show();
-                }   else {
-                    addBookToList(bookTitle, bookPageNum);
-                    showList();
-                    new BookSearchAPI_Task().execute();
-                }
-            }
-        });
-        mBookAddSearchBtn = (Button) findViewById(R.id.btn_maratonbook_add_search);
-        mBookAddSearchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new BookSearchAPI_Task().execute();
-            }
-        });
+        mMaratonRecyclerView.setLayoutManager(layoutManager);
+        mMaratonRecyclerView.setAdapter(recyclerAdapter);
+        mMaratonRecyclerView.setNestedScrollingEnabled(false);
     }
 
-    private boolean isAlreayInList(String bookTitle) {
-        for(HashMap book : books) {
-            String addedBookTitle = book.get(TAG_Title).toString();
-
-            if(bookTitle.equals(addedBookTitle))
-                return true;
-        }
-        return false;
-    }
-
-    private void sendBooksToDB() {
-        try {
-            maratonDB = this.openOrCreateDatabase(dbName, MODE_PRIVATE, null);
-
-            for (int i = 0; i < books.size(); i++) {
-                HashMap<String, String> book = books.get(i);
-                String bookTitle = book.get(TAG_Title);
-                String bookPageNum = book.get(TAG_PageNum);
-                String url = book.get(TAG_imgURL);
-
-                maratonDB.execSQL("INSERT INTO " + tableName
-                        + " (title, pageNum, currentPageNum, img_URL)  Values ('" + bookTitle + "', '" + bookPageNum + "', '0', '" + url + "');");
-
-                Log.d("Test", "DB에 데이터 삽입 : (" + bookTitle + ", " + bookPageNum + ", url : " + url + ")");
-            }
-        } catch (SQLiteException e) {
-            Log.d("Test", "데이터 삽입 실패 : " + e.getMessage());
-        } finally {
-            if (maratonDB != null)
-                maratonDB.close();
-        }
-    }
-
-    /************************************************************************************************/
-    private void addBookToList(String bookTitle, String bookPageNum) {
-
-        HashMap<String, String> item = new HashMap<>();
-        item.put(TAG_Title, bookTitle);
-        item.put(TAG_PageNum, bookPageNum);
-        item.put(TAG_imgURL, null);
-        item.put(TAG_currentPageNum, "0");
-
-        books.add(item);
-    }
-
-    private SQLiteDatabase openDB(String dbName) {
-        try {
-            return this.openOrCreateDatabase(dbName, MODE_PRIVATE, null);
-        } catch (SQLiteException e) {
-            Log.d("Test", "DB 오픈 실패 : " + e.getMessage());
-            return null;
-        }
-    }
-
-    private void showList() {
-        adapter = new BookmartonAdapter(books);
-        listView.setAdapter(adapter);
-    }
-
-
-    private class BookSearchAPI_Task extends AsyncTask<Void, Void, ArrayList<RecommendBookItem>> {
+    private class BookSearchAsyncTask extends AsyncTask<Void, Void, ArrayList<MaratonBookItem>> {
 
         @Override
         protected void onPreExecute() {
@@ -281,23 +107,23 @@ public class BookMaratonActivity extends AppCompatActivity {
         }
 
         @Override
-        protected ArrayList<RecommendBookItem> doInBackground(Void... params) {
+        protected ArrayList<MaratonBookItem> doInBackground(Void... params) {
 
-            //String myKey = "2824AAAF9F8FBF00CAD4BD88F5C3FB4B45E4DD6DBFD7EDD8332E57AFA7A6708C";
-            //String myKey = "88137ABBC6F43E258E287321232C8A33FF52C15F971D8B66FA5B42B4FBC74016";
-            String myKey = "C4F75A31D86FE91CC363353F5CE11F556024DD100757BB6BEE5CD90FEBF6A332";
+            String myKey = "2824AAAF9F8FBF00CAD4BD88F5C3FB4B45E4DD6DBFD7EDD8332E57AFA7A6708C";
             String urlSource = "";
             String queryType = "&queryType=title";
             String iec = "&inputEncoding=utf-8";
-            String outputStyle = "json"; // 혹은 json
+            String outputStyle = "json";
+            String image = mBookTitle.getText().toString();
 
-            String search_target = bookTitle_ET.getText().toString();
             String str, receiveMsg = "";
-            ArrayList<RecommendBookItem> newItems = new ArrayList<RecommendBookItem>();
+            // Toast.makeText(WriteActivity.this, image, Toast.LENGTH_SHORT).show();
+            ArrayList<MaratonBookItem> newItems = new ArrayList<MaratonBookItem>();
 
             try {
+
                 urlSource = "http://book.interpark.com/api/search.api?key=" + myKey;
-                urlSource += "&query=" + search_target +iec +queryType+ "&output=" + outputStyle;
+                urlSource += "&query=" + image +iec +queryType+ "&output=" + outputStyle;
                 URL url = new URL(urlSource);
 
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -324,18 +150,23 @@ public class BookMaratonActivity extends AppCompatActivity {
             }
             try {
                 Intent intent = getIntent();
-                if(search_target==null) {
-                    String title = intent.getStringExtra("Title");
-                    String author = intent.getStringExtra("Author");
-                    String ISBN = intent.getStringExtra("ISBN");
-                    String thumnail = intent.getStringExtra("Thumbnail");
-                    String company = intent.getStringExtra("Company");
+                if(image==null) {
+                    title = intent.getStringExtra("Title");
+                    author = intent.getStringExtra("Author");
+                    ISBN = intent.getStringExtra("ISBN");
+                    date = intent.getStringExtra("");
+                    thumnail = intent.getStringExtra("Thumbnail");
+                    company = intent.getStringExtra("Company");
+                    categoryId = intent.getStringExtra("Category");
+                    totalPage = intent.getStringExtra("TotalPage");
+                    readPage = intent.getStringExtra("ReadPage");
+                    pubdate = intent.getStringExtra("pubDate");
 
-                    RecommendBookItem recommendBookItem1 = new RecommendBookItem(title, author, company, ISBN, thumnail);
-                    newItems.add(recommendBookItem1);
+                    MaratonBookItem maratonBookItem= new MaratonBookItem(title, author, company, ISBN, thumnail, categoryId, totalPage, readPage, pubdate);
+                    newItems.add(maratonBookItem);
 
                 }
-                if(search_target!=null) {
+                if(image!=null) {
                     JSONArray jarray = new JSONObject(receiveMsg).getJSONArray("item");
 
                     for (int i = 0; i < jarray.length(); i++) {
@@ -345,11 +176,15 @@ public class BookMaratonActivity extends AppCompatActivity {
                         String author = bookItem.getString("author");
                         String publisher = bookItem.getString("publisher");
                         String isbn = bookItem.getString("isbn");
-                        String image = bookItem.getString("coverLargeUrl");
+                        String pubData = bookItem.getString("pubDate");
+                        String cover = bookItem.getString("coverLargeUrl");
+                        String category = bookItem.getString("categoryId");
+                        String TotalPage = "총page";
+                        String readPage = "읽은page";
                         // 쓸만한거 : description : 설명, "priceStandard":가격, "translator":"",
 
-                        RecommendBookItem recommendBookItem = new RecommendBookItem(title, author, publisher, isbn, image);
-                        newItems.add(recommendBookItem);
+                        MaratonBookItem maratonBookItem= new MaratonBookItem(title, author, publisher, isbn, cover, category,TotalPage, readPage, pubData);
+                        newItems.add(maratonBookItem);
                     }
                 }
             } catch (JSONException e) {
@@ -359,14 +194,14 @@ public class BookMaratonActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<RecommendBookItem> newItems) {
+        protected void onPostExecute(ArrayList<MaratonBookItem> newItems) {
             if (newItems.isEmpty()) {
-                Toast.makeText(getApplicationContext(), "검색 결과가 없습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "아이템이 없습니다.", Toast.LENGTH_SHORT).show();
             }
-            searchResults.clear();
-            searchResults.addAll(newItems);
+            emptyItems.clear();
+            emptyItems.addAll(newItems);
             recyclerAdapter.notifyDataSetChanged();
         }
     }
-    /***************************************************************************************************/
+
 }

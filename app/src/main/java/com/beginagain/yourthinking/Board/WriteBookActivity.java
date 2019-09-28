@@ -66,7 +66,7 @@ public class WriteBookActivity extends AppCompatActivity {
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
 
-        recyclerAdapter = new BookApiAdapter(this, emptyItems, R.layout.activity_book_recommend);
+        recyclerAdapter = new BookApiAdapter(this, emptyItems, R.layout.activity_write_book);
 
         init();
 
@@ -123,6 +123,8 @@ public class WriteBookActivity extends AppCompatActivity {
         mWriteRecyclerView.setLayoutManager(layoutManager);
         mWriteRecyclerView.setAdapter(recyclerAdapter);
         mWriteRecyclerView.setNestedScrollingEnabled(false);
+
+
     }
 
     private class BookRecoAsyncTask extends AsyncTask<Void, Void, ArrayList<RecommendBookItem>> {

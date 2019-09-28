@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardview_maraton_item"
@@ -13,13 +13,12 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-
             android:layout_height="wrap_content"
             android:background="@color/lightGray">
 
             <ImageView
                 android:id="@+id/iv_maraton_item_thumbnail"
-                android:layout_width="100dp"
+                android:layout_width="75dp"
                 android:layout_height="100dp"
                 android:scaleType="fitXY" />
 
@@ -34,7 +33,7 @@
                 android:textSize="14dp" />
 
             <TextView
-                android:id="@+id/text_view_maraton_item_total"
+                android:id="@+id/text_view_maraton_item_total_page"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/text_view_maraton_item_title"
@@ -44,23 +43,25 @@
                 android:textSize="12dp" />
 
             <TextView
-                android:id="@+id/text_view_maraton_item_read"
+                android:id="@+id/text_view_maraton_item_read_page"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@id/text_view_maraton_item_total"
+                android:layout_below="@id/text_view_maraton_item_title"
+                android:layout_toRightOf="@id/text_view_maraton_item_total_page"
+                android:layout_marginTop="5dp"
                 android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@id/text_view_maraton_item_total"
                 android:text="읽은 페이지"
                 android:textSize="12dp" />
 
             <TextView
-                android:id="@+id/text_view_maraton_item_state"
+                android:id="@+id/text_view_maraton_item_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/text_view_maraton_item_total"
-                android:layout_alignLeft="@id/text_view_maraton_item_total"
+                android:layout_below="@id/text_view_maraton_item_read_page"
+                android:layout_toRightOf="@id/iv_maraton_item_thumbnail"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:text="진행 상태"
+                android:text="독서시작일"
                 android:textSize="12dp" />
         </RelativeLayout>
 

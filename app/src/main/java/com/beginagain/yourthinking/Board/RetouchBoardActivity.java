@@ -6,10 +6,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.beginagain.yourthinking.MainActivity;
 import com.beginagain.yourthinking.MenuFragment.Menu3Fragment;
 import com.beginagain.yourthinking.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -21,10 +24,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class RetouchBoardActivity extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
-    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     private String name, title, contents, date, id ;
     private EditText mTitle, mContents;
+    Toolbar toolbarRetouch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,9 @@ public class RetouchBoardActivity extends AppCompatActivity implements View.OnCl
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(Color.parseColor("#82b3c9")); // deep
         }
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        toolbarRetouch = (Toolbar) findViewById(R.id.toolbar_board_retouch);
 
         mTitle = findViewById(R.id.et_retouch_title);
         mContents = findViewById(R.id.et_retouch_content);
@@ -59,7 +65,8 @@ public class RetouchBoardActivity extends AppCompatActivity implements View.OnCl
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(RetouchBoardActivity.this, "수정완료!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(RetouchBoardActivity.this, Menu3Fragment.class);
+                        Intent intent = new Intent(RetouchBoardActivity.this, MainActivity.class);
+                        intent.putExtra("page", "Board");
                         startActivity(intent);
                     }
                 })

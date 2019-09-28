@@ -1,90 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/text_view_menu4_guide"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/btn_menu4_make"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:text="진행중인 독서 마라톤이 없습니다.\n 시작해보세요!"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        android:visibility="invisible" />
-
-    <Button
-        android:id="@+id/btn_menu4_make"
-        android:layout_width="200dp"
-        android:layout_height="80dp"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="20dp"
-        android:text="독서마라톤 시작하기"
-        android:background="@drawable/textview"
-        android:visibility="invisible" />
-
-
-    <Button
-        android:id="@+id/btn_history"
-        android:layout_width="200dp"
-        android:layout_height="80dp"
-        android:layout_below="@id/btn_menu4_make"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="20dp"
-        android:text="독서마라톤 히스토리"
-        android:background="@drawable/textview"
-        android:visibility="invisible" />
-
-    <Button
-        android:id="@+id/btn_menu4_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/textview"
-        android:text="마라톤 삭제" />
-
-    <ListView
-        android:id="@+id/bookMaratonLV"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/btn_finish"
-        android:layout_below="@id/maratonDate"
-        android:layout_margin="3dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp">
+        android:scrollbars="vertical"
+        android:layout_weight="1"
+        android:layout_marginTop="50dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-    </ListView>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="현재 진행중인 독서마라톤"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
 
-    <TextView
-        android:id="@+id/maratonDate"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_maraton_doing"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:paddingLeft="7dp"
-        android:text="기간 : 2018.09.05 ~ 2019.05.02"
-        android:textAlignment="viewStart"
-        android:textSize="25dp" />
+        android:orientation="horizontal"
+        android:layout_gravity="bottom">
 
-    <Button
-        android:id="@+id/btn_finish"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="20dp"
-        android:text="도서 마라톤 완료"
-        android:background="@drawable/textview"/>
-
-
-</RelativeLayout>
+        <Button
+            android:id="@+id/btn_maraton_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="독서마라톤 추가"/>
+    </LinearLayout>
+</LinearLayout>

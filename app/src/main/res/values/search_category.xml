@@ -5,4 +5,9 @@
         <item >제목</item>
         <item >내용</item>
     </string-array>>
+    <string-array name="bookSearch">
+        <item >제목</item>
+        <item >저자</item>
+        <item >출판사</item>
+    </string-array>>
 </resources>

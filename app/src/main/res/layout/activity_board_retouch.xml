@@ -3,53 +3,107 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightGray"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".Board.RetouchBoardActivity">
 
-    <TextView
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_board_retouch"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="@drawable/textview"
-        android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:text="글 수정"
-        android:textColor="@color/blackSoft"
-        android:textSize="16dp" />
-
-
-    <EditText
-        android:id="@+id/et_retouch_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:hint="제목을 입력하세요"
-        android:textColor="@color/blackSoft"
-        android:textSize="20sp"
-        tools:ignore="HardCodedText" />
-
-    <EditText
-        android:id="@+id/et_retouch_content"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:gravity="top"
-        android:hint="내용을 입력하세요"
-        android:textColor="@color/blackSoft"
-        android:textSize="18sp"
-        tools:ignore="HardCodedText" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:background="#ffffff"
+        android:elevation="1dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        <TextView
+            android:id="@+id/text_view_retouch_pageTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="게시글 수정"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
 
         <Button
             android:id="@+id/btn_retouch_board"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"
-            android:background="@drawable/button"
+            android:layout_gravity="right"
+            android:background="@drawable/buttoncomplete"
             android:text="변경"
+            android:textSize="17sp"
+            android:textColor="@color/white"
             tools:ignore="HardCodedText" />
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar_write"
+        android:scrollbars="vertical">
+        <EditText
+            android:id="@+id/et_retouch_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:hint="제목을 입력하세요"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            tools:ignore="HardCodedText" />
+
+        <LinearLayout
+            android:id="@+id/ll_retouch_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_retouch_title"
+            android:gravity="right|center_vertical"
+            android:background="@drawable/layoutborder"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_view_write_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="0000-00-00 00:00"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/text_view_write_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:gravity="center"
+                android:text="작성자"
+                android:textSize="15dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_retouch_layout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_retouch_layout"
+            android:orientation="vertical">
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/username_text_input_retouch_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:counterEnabled="true"
+                app:counterMaxLength="500">
+                <EditText
+                    android:id="@+id/et_retouch_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="top"
+                    android:hint="내용을 입력하세요"
+                    android:lines="2"
+                    android:inputType="textMultiLine"
+                    android:background="@color/white"
+                    android:scrollbars="vertical"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    tools:ignore="HardCodedText" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

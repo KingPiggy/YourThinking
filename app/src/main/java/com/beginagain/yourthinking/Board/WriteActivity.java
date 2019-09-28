@@ -54,6 +54,8 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
     private ImageView imageView;
 
     private String id, mCurrentPhotoPath;
+    private String flag, title, Date, image, author, category, company, isbn, pubDate;
+
     private Uri photoURI, albumURI;
 
     private static final int FROM_ALBUM = 1;
@@ -125,6 +127,10 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
                 return true;
             }
         });
+
+
+
+
     }
     private void makeDialog(){
         AlertDialog.Builder alt_bld = new AlertDialog.Builder(WriteActivity.this);
@@ -221,59 +227,88 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
                     post.put("contents", mWriteContentText.getText().toString());
                     post.put("date", mWriteDateText.getText().toString());
                     post.put("recount", 0);
+                    // BookMaratonHistoryInfoActivity 에서 받아오는것
+                    Intent intent = getIntent();
+                    flag =intent.getStringExtra("Flag");
+                    if(flag.equals("1")) {
+                        title = intent.getStringExtra("Title");
+                        image = intent.getStringExtra("Image");
+                        author = intent.getStringExtra("Author");
+                        company = intent.getStringExtra("Company");
+                        isbn = intent.getStringExtra("Isbn");
+                        pubDate = intent.getStringExtra("pubDate");
 
-                    final AlertDialog.Builder alert_ex = new AlertDialog.Builder(WriteActivity.this);
-                    alert_ex.setMessage("책을 등록하시겠습니까?");
+                        post.put("author", author);
+                        post.put("booktitle", title);
+                        post.put("image", image);
+                        mStore.collection("board").document(id).set(post)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Intent intent = new Intent(WriteActivity.this, MainActivity.class);
+                                        intent.putExtra("page", "Board");
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(WriteActivity.this, "업로드 실패!", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
+                    else {
+                        final AlertDialog.Builder alert_ex = new AlertDialog.Builder(WriteActivity.this);
+                        alert_ex.setMessage("책을 등록하시겠습니까?");
 
-                    alert_ex.setPositiveButton("등록", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            mStore.collection("board").document(id).set(post)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Intent intent = new Intent(WriteActivity.this, WriteBookActivity.class);
-                                            intent.putExtra("id", id);
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(WriteActivity.this, "업로드 실패!", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                        }
-                    });
-                    alert_ex.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            mStore.collection("board").document(id).set(post)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Intent intent = new Intent(WriteActivity.this, MainActivity.class);
-                                            intent.putExtra("page", "Board");
-                                            startActivity(intent);
-
-                                            finish();
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(WriteActivity.this, "업로드 실패!", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-
-                        }
-                    });
-                    alert_ex.setTitle("Your Thinking");
-                    AlertDialog alert = alert_ex.create();
-                    alert.dismiss();
-                    alert.show();
-
+                        alert_ex.setPositiveButton("등록", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mStore.collection("board").document(id).set(post)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Intent intent = new Intent(WriteActivity.this, WriteBookActivity.class);
+                                                intent.putExtra("id", id);
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(WriteActivity.this, "업로드 실패!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                            }
+                        });
+                        alert_ex.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mStore.collection("board").document(id).set(post)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Intent intent = new Intent(WriteActivity.this, MainActivity.class);
+                                                intent.putExtra("page", "Board");
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(WriteActivity.this, "업로드 실패!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                            }
+                        });
+                        alert_ex.setTitle("Your Thinking");
+                        AlertDialog alert = alert_ex.create();
+                        alert.dismiss();
+                        alert.show();
+                    }
                     String filename = id + "_" + "photo";
                     FirebaseStorage storage = FirebaseStorage.getInstance("gs://beginagains.appspot.com");
                     StorageReference storageRef = storage.getReferenceFromUrl("gs://beginagains.appspot.com").child("BoardPhotos/" + filename);

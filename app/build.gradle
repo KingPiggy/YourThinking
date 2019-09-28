@@ -52,6 +52,7 @@ dependencies {
     // 이미지 가져오기
     implementation "gun0912.ted:tedpermission:2.1.0"
 
+
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -14,5 +14,6 @@
 
     <color name="deepGray">#e1e2e1</color>
     <color name="lightGray">#f5f5f6</color>
-    
+    <color name="palletePink">#eea990</color>
+
 </resources>

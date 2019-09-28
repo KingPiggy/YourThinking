@@ -1,7 +1,7 @@
 package com.beginagain.yourthinking.Item;
 
 public class RecommendBookItem {
-    String title, author, publisher, isbn, image, id, date, desc;
+    String title, author, publisher, isbn, image, id, date, desc, category;
 
     public RecommendBookItem(){}
 
@@ -29,6 +29,12 @@ public class RecommendBookItem {
         this.id = id;
         this.date = date;
         this.desc = desc;
+    }
+    public RecommendBookItem(String title, String author, String image, String category) {
+        this.title = title;
+        this.author = author;
+        this.image = image;
+        this.category = category;
     }
 
     public String getTitle() {
@@ -93,5 +99,13 @@ public class RecommendBookItem {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

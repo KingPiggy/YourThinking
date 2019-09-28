@@ -227,7 +227,7 @@ public class AccountActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-
+/**
         Log.d("test", "마라톤 진행 여부 : " + isBookMaratonOnGoing());
 
         if(isBookMaratonOnGoing()) {
@@ -236,6 +236,7 @@ public class AccountActivity extends AppCompatActivity {
         } else {
             hide_ProgressBar();
         }
+ **/
     }
     private void init() {
         mUserImage = (CircleImageView) findViewById(R.id.image_menu1_profile_image);
@@ -274,6 +275,7 @@ public class AccountActivity extends AppCompatActivity {
         mProgressBar.setVisibility(View.INVISIBLE);
         mProgressNotText.setVisibility(View.VISIBLE);
     }
+    /**
     private void updateProgressBar() {
         float max = 0;
         float current = 0;
@@ -337,6 +339,7 @@ public class AccountActivity extends AppCompatActivity {
         }
         return false;
     }
+     **/
     @Override
     public void onBackPressed() {
         finish();

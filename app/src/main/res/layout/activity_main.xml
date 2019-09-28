@@ -24,12 +24,21 @@
             android:textStyle="bold"
             android:textSize="20sp"/>
     </android.support.v7.widget.Toolbar>
-
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/top_navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="56dp"
+        android:background="@color/white"
+        app:itemIconTint="@color/primaryDeep"
+        app:itemTextColor="@color/primaryDeep"
+        app:menu="@menu/menu_top"
+        android:visibility="invisible"/>
     <FrameLayout
         android:id="@+id/layout_main_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="56dp"
         android:layout_marginBottom="?attr/actionBarSize" />
 
     <android.support.design.widget.BottomNavigationView

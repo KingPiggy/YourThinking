@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import com.beginagain.yourthinking.MenuFragment.Menu1Fragment;
 import com.beginagain.yourthinking.MenuFragment.Menu2Fragment;
 import com.beginagain.yourthinking.MenuFragment.Menu3Fragment;
 import com.beginagain.yourthinking.MenuFragment.Menu4Fragment;
+import com.beginagain.yourthinking.MenuFragment.MenuTop1Fragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,15 +33,17 @@ public class MainActivity extends AppCompatActivity {
     private Menu2Fragment menu2Fragment = new Menu2Fragment();
     private Menu3Fragment menu3Fragment = new Menu3Fragment();
     private Menu4Fragment menu4Fragment = new Menu4Fragment();
+    private MenuTop1Fragment menuTop1Fragment = new MenuTop1Fragment();
 
     Toolbar up_toolbar;
+
 
     TextView mToolbarText;
     String page = null;
 
     private FirebaseAuth mAuth;
 
-    public BottomNavigationView bottomNavigationView;
+    public BottomNavigationView bottomNavigationView, topNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         // 첫 화면 지정
+        topNavigationView = findViewById(R.id.top_navigation_view);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
         Intent intent = getIntent();
@@ -70,12 +75,34 @@ public class MainActivity extends AppCompatActivity {
                 onFragmentChange(2);
             } else if (page.equals("Board")) {
                 onFragmentChange(3);
-            } else if(page.equals("Recommend")){
+            } else if (page.equals("Recommend")) {
                 onFragmentChange(1);
-            }
-        } else {
+            } else if (page.equals("MaratonPage"))
+                onFragmentChange(4);
+        }
+            else {
             transaction.replace(R.id.layout_main_frame, menu1Fragment).commitAllowingStateLoss();
         }
+        topNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                switch (menuItem.getItemId()) {
+                    case R.id.navigation_top_menu1: {
+                        transaction.replace(R.id.layout_main_frame,menu4Fragment).commitAllowingStateLoss();
+                        mToolbarText.setText("독서마라톤");
+                        topNavigationView.setVisibility(View.VISIBLE);
+                        break;
+                    }
+                    case R.id.navigation_top_menu2:{
+                        transaction.replace(R.id.layout_main_frame,menuTop1Fragment).commitAllowingStateLoss();
+                        mToolbarText.setText("독서마라톤");
+                        topNavigationView.setVisibility(View.VISIBLE);
+                    }
+                }
+                return true;
+            }
+        });
         // bottomNavigationView의 아이템이 선택될 때 호출될 리스너 등록
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -85,22 +112,26 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.navigation_menu1: {
                         transaction.replace(R.id.layout_main_frame, menu1Fragment).commitAllowingStateLoss();
                         mToolbarText.setText("도서추천");
+                        topNavigationView.setVisibility(View.INVISIBLE);
                         break;
                     }
                     case R.id.navigation_menu2: {
                         transaction.replace(R.id.layout_main_frame, menu2Fragment).commitAllowingStateLoss();
                         mToolbarText.setText("채팅방");
+                        topNavigationView.setVisibility(View.INVISIBLE);
                         break;
                     }
                     case R.id.navigation_menu3: {
                         transaction.replace(R.id.layout_main_frame, menu3Fragment).commitAllowingStateLoss();
                         mToolbarText.setText("게시판");
+                        topNavigationView.setVisibility(View.INVISIBLE);
                         break;
                     }
                     case R.id.navigation_menu4: {
                         if(mAuth.getCurrentUser()!=null) {
                             transaction.replace(R.id.layout_main_frame, menu4Fragment).commitAllowingStateLoss();
-                            mToolbarText.setText("도서마라톤");
+                            mToolbarText.setText("독서마라톤");
+                            topNavigationView.setVisibility(View.VISIBLE);
                         }else{
                             AlertDialog.Builder alert_ex = new AlertDialog.Builder(MainActivity.this);
                             alert_ex.setMessage("로그인 후 사용가능합니다. 로그인 하시겠습니까?");
@@ -151,6 +182,11 @@ public class MainActivity extends AppCompatActivity {
         if (index == 4) {
             getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu4Fragment).commit();
             bottomNavigationView.setSelectedItemId(R.id.navigation_menu4);
+            topNavigationView.setVisibility(View.VISIBLE);
+        } if (index == 5) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menuTop1Fragment).commit();
+            bottomNavigationView.setSelectedItemId(R.id.navigation_menu4);
+            topNavigationView.setVisibility(View.VISIBLE);
         }
     }
     @Override

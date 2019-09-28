@@ -32,6 +32,20 @@
             android:textSize="17sp"
             android:textStyle="bold"
             android:background="@color/white"/>
+        <View
+            android:layout_width="2dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:background="@color/black"/>
+        <Button
+            android:id="@+id/btn_lib"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="도서관 대출"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:background="@color/white"/>
 
     </LinearLayout>
     <View
@@ -75,7 +89,8 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="50dp"
-            android:entries="@array/카테고리" />
+            android:entries="@array/도서관카테고리"
+            android:visibility="visible"/>
 
     </LinearLayout>
     <View
@@ -83,6 +98,48 @@
         android:layout_height="2dp"
         android:layout_centerInParent="true"
         android:background="@color/black" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:gravity="center_vertical"
+            android:text="검색"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="15dp" />
+
+        <Spinner
+            android:id="@+id/spinner_book_search"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:entries="@array/bookSearch">
+
+        </Spinner>
+
+        <EditText
+            android:id="@+id/et_book_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:ems="6"
+            android:imeOptions="actionSearch"
+            android:lines="1"
+            android:singleLine="true" />/>
+
+        <ImageButton
+            android:id="@+id/btn_book_search_data"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_search"
+            android:text="검색" />
+
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_recommend"

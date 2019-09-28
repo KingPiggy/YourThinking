@@ -13,4 +13,15 @@
         <item>종교</item>
         <item>청소년</item>
     </string-array>
+    <string-array name="도서관카테고리">
+        <item>철학</item>
+        <item>종교</item>
+        <item>사회과학</item>
+        <item>자연과학</item>
+        <item>기술과학</item>
+        <item>예술</item>
+        <item>언어</item>
+        <item>문학</item>
+        <item>역사</item>
+    </string-array>
 </resources>
