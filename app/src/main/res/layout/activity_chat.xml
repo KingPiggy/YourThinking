@@ -19,9 +19,18 @@
             android:layout_height="56dp"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
-            android:text="하하하하하"
+            android:text=""
             android:textColor="@color/blackSoft"
             android:textSize="16dp" />
+
+        <ImageButton
+            android:id="@+id/btn_chat_peoples"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_toLeftOf="@id/btn_chat_exit"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ic_person"
+            android:layout_marginRight="5dp"/>
 
         <ImageButton
             android:id="@+id/btn_chat_exit"

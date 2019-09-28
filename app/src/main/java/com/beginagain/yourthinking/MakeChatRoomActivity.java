@@ -14,6 +14,8 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beginagain.yourthinking.Item.ChatRoomItem;
@@ -29,14 +31,18 @@ import java.util.Map;
 
 public class MakeChatRoomActivity extends AppCompatActivity {
 
-    EditText mRoomTitleEditText, mBookTitleEditText, mRoomDescEditText; // DESC 만들기
-    Button mOkayBtn, mCancelBtn;
+    private Button mOkayBtn;
+    private ImageButton mCancelBtn;
+    private TextView mTitleText;
+    private EditText mEditText;
 
-    String roomTitle, bookTitle, desc;
+    private String roomTitle, bookTitle, desc;
+    private int roomPeopleSetting;
 
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
 
+    private int makeSeq = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,46 +55,50 @@ public class MakeChatRoomActivity extends AppCompatActivity {
 
         init();
 
+        makeSeq = 1;
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-        mRoomTitleEditText.setOnKeyListener(new View.OnKeyListener() {
+        mEditText.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 //Enter key Action
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    mBookTitleEditText.requestFocus();
+
+                    switch (makeSeq) {
+                        case 1:
+                            roomTitle = mEditText.getText().toString();
+                            mTitleText.setText("이야기 나눌 책 제목을 입력해주세요.");
+                            mEditText.setText("");
+                            makeSeq++;
+                            break;
+                        case 2:
+                            bookTitle = mEditText.getText().toString();
+                            mTitleText.setText("채팅방 소개를 해주세요.");
+                            mEditText.setText("");
+                            makeSeq++;
+                            break;
+                        case 3:
+                            desc = mEditText.getText().toString();
+                            mTitleText.setText("채팅방 인원을 지정해주세요.");
+                            mEditText.setText("");
+                            makeSeq++;
+                            break;
+                        case 4:
+                            roomPeopleSetting = Integer.parseInt(mEditText.getText().toString());
+                            mEditText.setText("");
+                            mOkayBtn.setText("완료");
+                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
+                            makeChatRoom();
+                            break;
+                    }
+
                     return true;
                 }
                 return false;
             }
         });
-
-        mBookTitleEditText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                //Enter key Action
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    mRoomDescEditText.requestFocus();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        mRoomDescEditText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                //Enter key Action
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(mRoomDescEditText.getWindowToken(), 0);
-
-                    return true;
-                }
-                return false;
-            }
-        });
-
 
 
         mCancelBtn.setOnClickListener(new View.OnClickListener() {
@@ -101,50 +111,102 @@ public class MakeChatRoomActivity extends AppCompatActivity {
         mOkayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                roomTitle = mRoomTitleEditText.getText().toString();
-                bookTitle = mBookTitleEditText.getText().toString();
-                desc = mRoomDescEditText.getText().toString();
-
-                final Query myQuery2 = databaseReference.child("chat").child(roomTitle);
-                myQuery2.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.getValue() != null) {
-                            Toast.makeText(getApplicationContext(), "중복된 채팅방 이름을 사용할 수 없습니다.", Toast.LENGTH_SHORT).show();
-                            return;
-                        } else {
-                            Map<String, Object> map = new HashMap<String, Object>();
-                            map.put("roomTitle", roomTitle);
-                            map.put("bookTitle", bookTitle);
-                            map.put("desc", desc);
-                            databaseReference.child("chat").child(roomTitle).child("info").updateChildren(map);
-
-                            Toast.makeText(getApplicationContext(), "목록이 갱신 되었습니다.", Toast.LENGTH_SHORT).show();
-                            String pageNull = "Chat";
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            intent.putExtra("page", pageNull);
-                            startActivity(intent);
-
-                            finish();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.e("hoon", "onCancelled", databaseError.toException());
-                    }
-                });
-
-
+                switch (makeSeq) {
+                    case 1:
+                        roomTitle = mEditText.getText().toString();
+                        mTitleText.setText("이야기 나눌 책 제목을 입력해주세요.");
+                        mEditText.setText("");
+                        makeSeq++;
+                        break;
+                    case 2:
+                        bookTitle = mEditText.getText().toString();
+                        mTitleText.setText("채팅방 소개를 해주세요.");
+                        mEditText.setText("");
+                        makeSeq++;
+                        break;
+                    case 3:
+                        desc = mEditText.getText().toString();
+                        mTitleText.setText("채팅방 인원을 지정해주세요.");
+                        mEditText.setText("");
+                        makeSeq++;
+                        break;
+                    case 4:
+                        roomPeopleSetting = Integer.parseInt(mEditText.getText().toString());
+                        mEditText.setText("");
+                        mOkayBtn.setText("완료");
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
+                        makeChatRoom();
+                        break;
+                }
             }
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        switch (makeSeq) {
+            case 1:
+                // 제목 입력 화면에서 Back
+                finish();
+                break;
+            case 2:
+                // 주제(책) 입력 화면에서 Back
+                mTitleText.setText("채팅방 제목을 입력해주세요.");
+                mEditText.setText("");
+                makeSeq--;
+                break;
+            case 3: //소개 화면에서 Back
+                mTitleText.setText("이야기 나눌 책 제목을 입력해주세요.");
+                mEditText.setText("");
+                makeSeq--;
+                break;
+            case 4:
+                mTitleText.setText("채팅방 소개를 해주세요.");
+                mEditText.setText("");
+                makeSeq--;
+                break;
+        }
+    }
+
     private void init() {
-        mRoomTitleEditText = (EditText) findViewById(R.id.edittext_make_chatroom_roomtitle);
-        mBookTitleEditText = (EditText) findViewById(R.id.edittext_make_chatroom_booktitle);
-        mRoomDescEditText = (EditText) findViewById(R.id.edittext_make_chatroom_desc);
-        mCancelBtn = (Button) findViewById(R.id.btn_make_chatroom_cancel);
-        mOkayBtn = (Button) findViewById(R.id.btn_make_chatroom_okay);
+        mTitleText = (TextView) findViewById(R.id.text_view_make_chat_room_q);
+        mEditText = (EditText) findViewById(R.id.edit_text_make_chat_room_a);
+        mCancelBtn = (ImageButton) findViewById(R.id.btn_make_chat_room_close);
+        mOkayBtn = (Button) findViewById(R.id.btn_make_chat_room_exec);
+    }
+
+    private void makeChatRoom() {
+
+        final Query myQuery2 = databaseReference.child("chat").child(roomTitle);
+        myQuery2.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    Toast.makeText(getApplicationContext(), "중복된 채팅방 이름을 사용할 수 없습니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    Map<String, Object> map = new HashMap<String, Object>();
+                    map.put("roomTitle", roomTitle);
+                    map.put("bookTitle", bookTitle);
+                    map.put("desc", desc);
+                    databaseReference.child("chat").child(roomTitle).child("info").updateChildren(map);
+
+                    Toast.makeText(getApplicationContext(), "목록이 갱신 되었습니다.", Toast.LENGTH_SHORT).show();
+                    String pageNull = "Chat";
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.putExtra("page", pageNull);
+                    startActivity(intent);
+
+                    finish();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("hoon", "onCancelled", databaseError.toException());
+            }
+        });
+
     }
 }

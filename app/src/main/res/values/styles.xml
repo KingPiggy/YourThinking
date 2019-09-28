@@ -9,11 +9,13 @@
         <!--  <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item> -->
     </style>
-    <style name="CustomTheme" parent="ThemeOverlay.AppCompat.ActionBar">
 
-
-
+    <style name="Theme.MyDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
     </style>
+
+    <style name="CustomTheme" parent="ThemeOverlay.AppCompat.ActionBar"></style>
 
 
 </resources>

@@ -24,6 +24,7 @@
             android:textStyle="bold"
             android:textSize="20sp"/>
     </android.support.v7.widget.Toolbar>
+
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/top_navigation_view"
         android:layout_width="match_parent"
@@ -32,8 +33,9 @@
         android:background="@color/white"
         app:itemIconTint="@color/primaryDeep"
         app:itemTextColor="@color/primaryDeep"
-        app:menu="@menu/menu_top"
+        app:menu="@menu/menu_toolbar"
         android:visibility="invisible"/>
+
     <FrameLayout
         android:id="@+id/layout_main_frame"
         android:layout_width="match_parent"

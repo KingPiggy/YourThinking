@@ -1,7 +1,6 @@
 package com.beginagain.yourthinking;
 
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -21,10 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beginagain.yourthinking.Adapter.ChatItemAdapter;
-import com.beginagain.yourthinking.Board.BoardResultActivity;
-import com.beginagain.yourthinking.Board.MyBoardActivity;
-import com.beginagain.yourthinking.Board.SearchBoardActivity;
 import com.beginagain.yourthinking.Item.ChatDTO;
+import com.beginagain.yourthinking.Item.ChatPeople;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -55,7 +52,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private EditText mChatEdit;
     private Button mSendBtn;
-    private ImageButton mExitBtn;
+    private ImageButton mExitBtn, mPeoplesBtn;
     private TextView mRoomTitleTextView;
 
     private RecyclerView mRecyclerView;
@@ -120,9 +117,13 @@ public class ChatActivity extends AppCompatActivity {
                 databaseReference.child("chat").child(chatRoomName).child("message").push().setValue(chat);
                 mChatEdit.setText("");
 
-                Map<String, Object> map = new HashMap<String, Object>();
-                map.put(uid, uid);
-                databaseReference.child("chat").child(chatRoomName).child("people").updateChildren(map);
+
+                ChatPeople chatPeople = new ChatPeople( userName, uid, strPhotoUri);
+
+//                Map<String, Object> map = new HashMap<String, Object>();
+//                map.put(uid, uid);
+
+                databaseReference.child("chat").child(chatRoomName).child("people").child(uid).updateChildren(chatPeople.toMap());
 
                 Map<String, Object> map2 = new HashMap<String, Object>();
                 map2.put(chatRoomName, chatRoomName);
@@ -239,6 +240,16 @@ public class ChatActivity extends AppCompatActivity {
                 mRecyclerView.scrollToPosition(mRecyclerView.getAdapter().getItemCount() - 1);
             }
         });
+
+        mPeoplesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ChatRoomPeoples.class);
+                intent.putExtra("chatRoomName",chatRoomName);
+                intent.putExtra("count", count);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -259,6 +270,7 @@ public class ChatActivity extends AppCompatActivity {
         mSendBtn = (Button) findViewById(R.id.btn_chat_send);
         mExitBtn = (ImageButton) findViewById(R.id.btn_chat_exit);
         mRoomTitleTextView = (TextView) findViewById(R.id.text_view_chat_room_title);
+        mPeoplesBtn = (ImageButton)findViewById(R.id.btn_chat_peoples);
     }
 
     private int checkPeopleCount() {

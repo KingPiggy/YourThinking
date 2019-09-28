@@ -18,30 +18,36 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".MyChatActivity"></activity>
+        <activity
+            android:name=".ChatRoomPeoples"
+            android:theme="@style/Theme.MyDialog" />
+        <activity android:name=".MyChatActivity" />
         <activity android:name=".ChatActivity" />
         <activity android:name=".BookMaraton.BookMaratonHistoryInfoActivity" />
         <activity android:name=".MakeChatRoomActivity" />
         <activity android:name=".BookRecommendActivity" />
-        <activity android:name=".Board.WriteActivity" android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity
+            android:name=".Board.WriteActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".Board.RetouchBoardActivity" />
         <activity android:name=".Board.SearchBoardActivity" />
-        <activity android:name=".Board.RecommendBoardActivity"/>
-        <activity android:name=".Board.BoardResultActivity" android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity android:name=".Board.RecommendBoardActivity" />
+        <activity
+            android:name=".Board.BoardResultActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".Board.MyBoardActivity" />
         <activity android:name=".Board.RetouchBoardActivity" />
         <activity android:name=".BookMaraton.BookMaratonActivity" />
 
         <activity android:name=".Board.WriteBookActivity" />
-        <activity android:name=".BookInfoActivity"/>
+        <activity android:name=".BookInfoActivity" />
         <activity android:name=".NoticeActivity" />
         <activity android:name=".WriteNoticeActivity" />
         <activity android:name=".AccountActivity" />
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".LoginActivity" >
+        <activity android:name=".MainActivity" />
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

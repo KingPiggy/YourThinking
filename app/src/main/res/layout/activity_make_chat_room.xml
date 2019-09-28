@@ -4,119 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightGray"
+    android:background="@color/white"
     tools:context=".MakeChatRoomActivity">
 
-    <LinearLayout
-        android:id="@+id/layout_make_chat_1"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/btn_make_chat_room_exec"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/buttoncomplete"
+        android:text="다음" />
+
+    <ImageButton
+        android:id="@+id/btn_make_chat_room_close"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/ic_x"
+        android:padding="10dp" />
+
+    <TextView
+        android:id="@+id/text_view_make_chat_room_q"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_below="@id/btn_make_chat_room_close"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:text="채팅방 제목을 입력해주세요."
+        android:textColor="@color/blackSoft"
+        android:textSize="25dp" />
 
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="56dp"
-            android:background="@drawable/textview"
-            android:gravity="center"
-            android:text="제목"
-            android:textColor="@color/blackSoft"
-            android:textSize="16dp" />
-
-        <EditText
-            android:id="@+id/edittext_make_chatroom_roomtitle"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:hint="채팅방 제목을 입력하세요. (최대 20자)"
-            android:maxLength="20"
-            android:textSize="15dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layout_make_chat_2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/layout_make_chat_1"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="56dp"
-            android:background="@drawable/textview"
-            android:gravity="center"
-            android:text="도서"
-            android:textColor="@color/blackSoft"
-            android:textSize="16dp" />
-
-        <EditText
-            android:id="@+id/edittext_make_chatroom_booktitle"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:hint="이야기 나눌 책 제목을 입력하세요"
-            android:textSize="15dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layout_make_chat_3"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/layout_make_chat_4"
-        android:layout_below="@id/layout_make_chat_2"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="56dp"
-            android:background="@drawable/textview"
-            android:gravity="center"
-            android:text="소개"
-            android:textColor="@color/blackSoft"
-            android:textSize="16dp" />
-
-        <EditText
-            android:id="@+id/edittext_make_chatroom_desc"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="top"
-            android:hint="채팅방을 소개해주세요. (최대 50자)"
-            android:maxLength="50"
-            android:textSize="15dp" />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/layout_make_chat_4"
+    <EditText
+        android:id="@+id/edit_text_make_chat_room_a"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btn_make_chatroom_okay"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/button"
-            android:shadowColor="#A8A8A8"
-            android:shadowDx="0"
-            android:shadowDy="0"
-            android:shadowRadius="5"
-            android:text="확인"
-            android:textColor="@color/blackSoft" />
-
-        <Button
-            android:id="@+id/btn_make_chatroom_cancel"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/button"
-            android:shadowColor="#A8A8A8"
-            android:shadowDx="0"
-            android:shadowDy="0"
-            android:shadowRadius="5"
-            android:text="취소"
-            android:textColor="@color/blackSoft" />
-
-    </LinearLayout>
+        android:layout_below="@id/text_view_make_chat_room_q"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:maxLength="20"
+        android:textSize="20dp" />
 
 </RelativeLayout>
