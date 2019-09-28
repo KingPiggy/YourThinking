@@ -33,7 +33,7 @@
         android:background="@color/white"
         app:itemIconTint="@color/primaryDeep"
         app:itemTextColor="@color/primaryDeep"
-        app:menu="@menu/menu_toolbar"
+        app:menu="@menu/menu_top"
         android:visibility="invisible"/>
 
     <FrameLayout

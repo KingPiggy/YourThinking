@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.beginagain.yourthinking.ChatActivity;
 import com.beginagain.yourthinking.Item.ChatRoomItem;
@@ -54,12 +55,16 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.MyView
         myViewHolder.mRoomName.setText(item.getRoomTitle());
         myViewHolder.mBookName.setText(item.getBookTitle());
         myViewHolder.mDesc.setText(item.getDesc());
-        myViewHolder.mPeopleCount.setText("참여인원 " + uidCounts.get(position));
+        myViewHolder.mPeopleCount.setText("참여인원 " + uidCounts.get(position) + "/" + item.getRoomPeopleSetting());
         myViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int pos = (int) view.getTag();
                 String chatRoomName = items.get(pos).getRoomTitle();
+
+                if(peopleCount >= items.get(pos).getRoomPeopleSetting()){
+                    Toast.makeText(context, "채팅방 인원이 다 찼습니다.", Toast.LENGTH_SHORT).show();
+                }
 
                 Intent intent = new Intent(context, ChatActivity.class);
                 intent.putExtra("chatRoomName", chatRoomName);

@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -82,6 +83,7 @@ public class MakeChatRoomActivity extends AppCompatActivity {
                             desc = mEditText.getText().toString();
                             mTitleText.setText("채팅방 인원을 지정해주세요.");
                             mEditText.setText("");
+                            mEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
                             makeSeq++;
                             break;
                         case 4:
@@ -128,6 +130,7 @@ public class MakeChatRoomActivity extends AppCompatActivity {
                         desc = mEditText.getText().toString();
                         mTitleText.setText("채팅방 인원을 지정해주세요.");
                         mEditText.setText("");
+                        mEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
                         makeSeq++;
                         break;
                     case 4:
@@ -190,6 +193,7 @@ public class MakeChatRoomActivity extends AppCompatActivity {
                     map.put("roomTitle", roomTitle);
                     map.put("bookTitle", bookTitle);
                     map.put("desc", desc);
+                    map.put("roomPeopleSetting", roomPeopleSetting);
                     databaseReference.child("chat").child(roomTitle).child("info").updateChildren(map);
 
                     Toast.makeText(getApplicationContext(), "목록이 갱신 되었습니다.", Toast.LENGTH_SHORT).show();
