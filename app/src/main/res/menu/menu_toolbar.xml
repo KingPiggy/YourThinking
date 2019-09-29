@@ -5,13 +5,15 @@
     tools:context=".MainActivity">
 
     <item
-        android:id="@+id/account_icon"
-        android:title="사용자"
-        android:icon="@drawable/ic_person"
-        app:showAsAction="ifRoom"/>
-    <item
         android:id="@+id/notice_icon"
-        android:title="공지사항"
         android:icon="@drawable/ic_notice"
-        app:showAsAction="ifRoom"/>
+        android:title="공지사항"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/account_icon"
+        android:icon="@drawable/ic_person"
+        android:title="사용자"
+        app:showAsAction="ifRoom" />
+
 </menu>

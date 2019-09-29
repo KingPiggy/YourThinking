@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="siteCategory">
+        <item>인터파크</item>
+        <item>알라딘</item>
+        <item>공공도서관</item>
+    </string-array>
+</resources>

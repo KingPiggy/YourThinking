@@ -7,30 +7,40 @@
     android:background="@color/white"
     tools:context=".MakeChatRoomActivity">
 
-    <Button
-        android:id="@+id/btn_make_chat_room_exec"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/buttoncomplete"
-        android:text="다음" />
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_make_chat_room"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/white"
+        android:elevation="1dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-    <ImageButton
-        android:id="@+id/btn_make_chat_room_close"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:background="@drawable/ic_x"
-        android:padding="10dp" />
+        <TextView
+            android:id="@+id/text_view_make_chat_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="채팅방 생성"
+            android:textColor="@color/blackSoft"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_make_chat_room_exec"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="right"
+            android:background="@drawable/button_clip_style"
+            android:text="다음" />
+
+    </android.support.v7.widget.Toolbar>
+
 
     <TextView
         android:id="@+id/text_view_make_chat_room_q"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btn_make_chat_room_close"
+        android:layout_below="@id/toolbar_make_chat_room"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
         android:text="채팅방 제목을 입력해주세요."

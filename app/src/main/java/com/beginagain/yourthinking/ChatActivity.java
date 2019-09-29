@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -137,6 +138,10 @@ public class ChatActivity extends AppCompatActivity {
                 });
             }
         });
+
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_chat);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mExitBtn.setOnClickListener(new View.OnClickListener() {
             @Override

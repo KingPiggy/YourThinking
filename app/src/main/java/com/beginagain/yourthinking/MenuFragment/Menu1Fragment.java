@@ -47,15 +47,15 @@ public class Menu1Fragment extends Fragment {
 
     MainActivity activity;
 
-    Spinner mCategorySpinner;
-    Button mBestSellerBtn, mNewBooksBtn, mInterpark, mAladin, mLibrary;
+    Spinner mCategorySpinner, mSiteSpinner;
+    Button mBestSellerBtn, mNewBooksBtn;
 
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager layoutManager;
     private ArrayList<RecommendBookItem> emptyItems = new ArrayList<RecommendBookItem>();
     private BookRecommendAdapter recyclerAdapter = new BookRecommendAdapter(activity, emptyItems, R.layout.fragment_menu1);
 
-    int intetpark_CategoryNo[] = {119 ,120, 104, 116, 111, 103 ,115, 101, 105};
+    int intetpark_CategoryNo[] = {119, 120, 104, 116, 111, 103, 115, 101, 105};
     int aladin_CategoryNo[] = {8516, 1237, 798, 987, 51095, 517, 1322, 1, 74};
     int lib_CategoryNo[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
     int interparkCategory = 119;
@@ -63,7 +63,7 @@ public class Menu1Fragment extends Fragment {
     int libCategory = 1;
 
     int flag = 0;
-    int searchFlag =0;
+    int searchFlag = 0;
 
     int isBestSeller = 0, isNewBooks = 0;
 
@@ -71,7 +71,7 @@ public class Menu1Fragment extends Fragment {
 
     EditText editBookSearch;
     private ImageButton btnBookSearch;
-    String spinnercount ="0";
+    String spinnercount = "0";
     String text;
 
     long mNow = System.currentTimeMillis();
@@ -88,6 +88,36 @@ public class Menu1Fragment extends Fragment {
 
         isBestSeller = 1; // 초기 시작은 베스트셀러 아이템 보여줌
 
+
+        mSiteSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
+                if (pos == 0) { // 인터파크
+                    flag = 0;
+                    isBestSeller = 1;
+                    isNewBooks = 0;
+                    mCategorySpinner.setSelection(0);
+                    mNewBooksBtn.setText("새로나온 책");
+                    new BookRecoAsyncTask().execute();
+                } else if (pos == 1) { // 알라딘
+                    flag = 1;
+                    mCategorySpinner.setSelection(0);
+                    mNewBooksBtn.setText("새로나온 책");
+                    new BookRecoAsyncTask().execute();
+                } else if (pos == 2) { // 공공도서관
+                    flag = 2;
+                    mCategorySpinner.setSelection(0);
+                    mNewBooksBtn.setText("스테디 셀러");
+                    new BookRecoAsyncTask().execute();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         mCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -97,7 +127,7 @@ public class Menu1Fragment extends Fragment {
                     interparkCategory = intetpark_CategoryNo[position];
                 } else if (flag == 1) {
                     aladinCategory = aladin_CategoryNo[position];
-                } else if (flag == 2){
+                } else if (flag == 2) {
                     libCategory = lib_CategoryNo[position];
                 }
                 new BookRecoAsyncTask().execute();
@@ -118,42 +148,6 @@ public class Menu1Fragment extends Fragment {
 
         return view;
     }
-    View.OnClickListener btnListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.btn_interpark:
-                    flag = 0;
-                    isBestSeller = 1;
-                    isNewBooks = 0;
-                    mCategorySpinner.setSelection(0);
-                    mInterpark.setTextColor(Color.BLACK);
-                    mLibrary.setTextColor(Color.GRAY);
-                    mAladin.setTextColor(Color.GRAY);
-                    mNewBooksBtn.setText("새로나온 책");
-                    new BookRecoAsyncTask().execute();
-                    break;
-                case R.id.btn_aladin:
-                    flag = 1;
-                    mCategorySpinner.setSelection(0);
-                    mInterpark.setTextColor(Color.GRAY);
-                    mLibrary.setTextColor(Color.GRAY);
-                    mAladin.setTextColor(Color.BLACK);
-                    mNewBooksBtn.setText("새로나온 책");
-                    new BookRecoAsyncTask().execute();
-                    break;
-                case R.id.btn_lib:
-                    flag = 2;
-                    mLibrary.setTextColor(Color.BLACK);
-                    mAladin.setTextColor(Color.GRAY);
-                    mInterpark.setTextColor(Color.GRAY);
-                    mCategorySpinner.setSelection(0);
-                    mNewBooksBtn.setText("스테디 셀러");
-                    new BookRecoAsyncTask().execute();
-                    break;
-            }
-        }
-    };
 
     View.OnClickListener menuBtnListener = new View.OnClickListener() {
         @Override
@@ -162,6 +156,8 @@ public class Menu1Fragment extends Fragment {
                 case R.id.btn_recommend_bestseller:
                     isBestSeller = 1;
                     isNewBooks = 0;
+                    mBestSellerBtn.setSelected(true);
+                    mNewBooksBtn.setSelected(false);
                     mBestSellerBtn.setTextColor(Color.BLACK);
                     mNewBooksBtn.setTextColor(Color.GRAY);
                     new BookRecoAsyncTask().execute();
@@ -169,6 +165,8 @@ public class Menu1Fragment extends Fragment {
                 case R.id.btn_recommend_new:
                     isBestSeller = 0;
                     isNewBooks = 1;
+                    mBestSellerBtn.setSelected(false);
+                    mNewBooksBtn.setSelected(true);
                     mBestSellerBtn.setTextColor(Color.GRAY);
                     mNewBooksBtn.setTextColor(Color.BLACK);
                     new BookRecoAsyncTask().execute();
@@ -182,33 +180,34 @@ public class Menu1Fragment extends Fragment {
         mNewBooksBtn = (Button) view.findViewById(R.id.btn_recommend_new);
         mCategorySpinner = (Spinner) view.findViewById(R.id.spinner_recommend_category);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_recommend);
-        mAladin = (Button)view.findViewById(R.id.btn_aladin);
-        mInterpark=(Button)view.findViewById(R.id.btn_interpark);
-        mLibrary = (Button)view.findViewById(R.id.btn_lib);
-        editBookSearch = (EditText)view.findViewById(R.id.et_book_search);
-        btnBookSearch = (ImageButton)view.findViewById(R.id.btn_book_search_data);
+        mSiteSpinner = (Spinner) view.findViewById(R.id.spinner_site_category);
+        editBookSearch = (EditText) view.findViewById(R.id.et_book_search);
+        btnBookSearch = (ImageButton) view.findViewById(R.id.btn_book_search_data);
+
+        mBestSellerBtn.setSelected(true);
+
         btnBookSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 text = editBookSearch.getText().toString();
-                if(editBookSearch.getText().toString().length()==0){
-                    Toast.makeText(getActivity(),"아무것도 없어요",Toast.LENGTH_SHORT).show();
-                }else{
+                if (editBookSearch.getText().toString().length() == 0) {
+                    Toast.makeText(getActivity(), "데이터가 없습니다.", Toast.LENGTH_SHORT).show();
+                } else {
                     switch (spinnercount) {
                         case "0":
-                            searchFlag =0;
-                            isBestSeller=2;
-                            isNewBooks =2;
+                            searchFlag = 0;
+                            isBestSeller = 2;
+                            isNewBooks = 2;
                             new BookRecoAsyncTask().execute();
 
                             break;
                         case "1":
-                            searchFlag =1;
+                            searchFlag = 1;
                             new BookRecoAsyncTask().execute();
 
                             break;
                         case "2":
-                            searchFlag =2;
+                            searchFlag = 2;
                             new BookRecoAsyncTask().execute();
 
                             break;
@@ -217,12 +216,8 @@ public class Menu1Fragment extends Fragment {
             }
         });
 
-        mInterpark.setTextColor(Color.BLACK);
-        mBestSellerBtn.setTextColor(Color.BLACK);
+
         mCategorySpinner.setSelection(0);
-        mInterpark.setOnClickListener(btnListener);
-        mAladin.setOnClickListener(btnListener);
-        mLibrary.setOnClickListener(btnListener);
         mBestSellerBtn.setOnClickListener(menuBtnListener);
         mNewBooksBtn.setOnClickListener(menuBtnListener);
 
@@ -237,7 +232,7 @@ public class Menu1Fragment extends Fragment {
         @Override
         protected ArrayList<RecommendBookItem> doInBackground(Void... params) {
             ArrayList<RecommendBookItem> newItems = new ArrayList<RecommendBookItem>();
-            if(flag==0) { // 인터파크 도서 검색
+            if (flag == 0) { // 인터파크 도서 검색
                 String myKey = "2824AAAF9F8FBF00CAD4BD88F5C3FB4B45E4DD6DBFD7EDD8332E57AFA7A6708C";
                 String urlSource = "";
                 String outputStyle = "json";
@@ -250,9 +245,9 @@ public class Menu1Fragment extends Fragment {
                     } else if (isNewBooks == 1) {
                         urlSource = "http://book.interpark.com/api/newBook.api?key=" + myKey;
                         urlSource += "&categoryId=" + Integer.toString(interparkCategory) + "&output=" + outputStyle;
-                    }else if(searchFlag==0){
-                        urlSource += "http://book.interpark.com/api/search.api?key="+ myKey+"&query="+text;
-                        urlSource +="&output=" + outputStyle;
+                    } else if (searchFlag == 0) {
+                        urlSource += "http://book.interpark.com/api/search.api?key=" + myKey + "&query=" + text;
+                        urlSource += "&output=" + outputStyle;
 
                     }
 
@@ -269,7 +264,7 @@ public class Menu1Fragment extends Fragment {
                         receiveMsg = buffer.toString();
                         Log.i("receiveMsg : ", receiveMsg);
                         reader.close();
-                    }else {
+                    } else {
                         Toast.makeText(activity, "네트워크 환경이 좋지 않습니다. 잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                     }
                 } catch (MalformedURLException e) {
@@ -288,17 +283,16 @@ public class Menu1Fragment extends Fragment {
                         String publisher = "출판사 : " + bookItem.getString("publisher");
                         String isbn = "ISBN : " + bookItem.getString("isbn");
                         String image = bookItem.getString("coverLargeUrl");
-                        String date= "출판일 : " + bookItem.getString("pubDate");
+                        String date = "출판일 : " + bookItem.getString("pubDate");
                         String desc = bookItem.getString("description");
 
-                        RecommendBookItem recommendBookItem = new RecommendBookItem(title, author, publisher, isbn, image,date, desc);
+                        RecommendBookItem recommendBookItem = new RecommendBookItem(title, author, publisher, isbn, image, date, desc);
                         newItems.add(recommendBookItem);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }
-            else if(flag==1) { // 알라딘 도서검색
+            } else if (flag == 1) { // 알라딘 도서검색
                 String AladinMyKey = "ttbsmallman08101505001";
                 String urlSource = "";
                 String outputStyle = "&Output=JS";
@@ -306,13 +300,13 @@ public class Menu1Fragment extends Fragment {
                 String str, receiveMsg = "";
 
                 try {
-                    urlSource =  "http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=" + AladinMyKey+query;
+                    urlSource = "http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=" + AladinMyKey + query;
                     if (isBestSeller == 1) {
-                        urlSource +="Bestseller";
+                        urlSource += "Bestseller";
                     } else if (isNewBooks == 1) {
                         urlSource += "ItemNewAll";
                     }
-                    urlSource += "&MaxResults=30&start=1"+"&SearchTarget=Book"+outputStyle +"&CategoryId=" + Integer.toString(aladinCategory)+"&Version=20131101"  ;
+                    urlSource += "&MaxResults=30&start=1" + "&SearchTarget=Book" + outputStyle + "&CategoryId=" + Integer.toString(aladinCategory) + "&Version=20131101";
 
                     URL url = new URL(urlSource);
 
@@ -348,7 +342,7 @@ public class Menu1Fragment extends Fragment {
                         String publisher = "출판사 : " + bookItem.getString("publisher");
                         String isbn = "ISBN : " + bookItem.getString("isbn");
                         String image = bookItem.getString("cover");
-                        String date= "출판일 : " + bookItem.getString("pubDate");
+                        String date = "출판일 : " + bookItem.getString("pubDate");
                         String desc = bookItem.getString("description");
                         if (publisher.equals("알라딘 이벤트")) {
 
@@ -361,7 +355,7 @@ public class Menu1Fragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }else if(flag==2){
+            } else if (flag == 2) {
                 String LibMyKey = "cc993dfdb2bc12abfdad42caf1f79c39b8d59925ec7d53f2f49230cd81e39574";
                 String urlSource = "";
                 String outputStyle = "&format=json";
@@ -373,13 +367,13 @@ public class Menu1Fragment extends Fragment {
                 try {
 
                     if (isBestSeller == 1) {
-                        urlSource =  "http://www.data4library.kr/api/loanItemSrch?authKey=" + LibMyKey+query+formatDate+top30;
-                        urlSource += "&kdc=" + Integer.toString(libCategory)+outputStyle  ;
+                        urlSource = "http://www.data4library.kr/api/loanItemSrch?authKey=" + LibMyKey + query + formatDate + top30;
+                        urlSource += "&kdc=" + Integer.toString(libCategory) + outputStyle;
                     } else if (isNewBooks == 1) {
                         //   urlSource =  "http://data4library.kr/api/hotTrend?authKey=" + LibMyKey+"&searchDt="+formatDate;
                         //  urlSource+=outputStyle;
-                        urlSource =  "http://www.data4library.kr/api/loanItemSrch?authKey=" + LibMyKey+query_steady+formatDate+top30;
-                        urlSource += "&kdc=" + Integer.toString(libCategory)+outputStyle  ;
+                        urlSource = "http://www.data4library.kr/api/loanItemSrch?authKey=" + LibMyKey + query_steady + formatDate + top30;
+                        urlSource += "&kdc=" + Integer.toString(libCategory) + outputStyle;
                     }
 
 
@@ -418,12 +412,12 @@ public class Menu1Fragment extends Fragment {
                         String author = "저자 : " + bookItem.getString("authors");
                         String publisher = "출판사 : " + bookItem.getString("publisher");
                         String isbn = "ISBN13 : " + bookItem.getString("isbn13");
-                        if(bookItem.get("bookImageURL").equals("")){
+                        if (bookItem.get("bookImageURL").equals("")) {
                             image = "0";
-                        }else{
+                        } else {
                             image = bookItem.getString("bookImageURL");
                         }
-                        String date= "출판일 : " + bookItem.getString("publication_year");
+                        String date = "출판일 : " + bookItem.getString("publication_year");
                         String desc = "도서관에서 제공을 하지 않습니다.";
 
                         RecommendBookItem recommendBookItem = new RecommendBookItem(title, author, publisher, isbn, image, date, desc);
@@ -433,12 +427,11 @@ public class Menu1Fragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }
-            else if(searchFlag==0){
+            } else if (searchFlag == 0) {
 
-            }else if(searchFlag==1){
+            } else if (searchFlag == 1) {
 
-            }else if(searchFlag==2){
+            } else if (searchFlag == 2) {
 
             }
 

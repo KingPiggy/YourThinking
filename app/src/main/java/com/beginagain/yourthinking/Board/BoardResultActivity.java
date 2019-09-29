@@ -14,11 +14,14 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,7 +71,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nullable;
 
-public class BoardResultActivity extends AppCompatActivity implements View.OnClickListener{
+public class BoardResultActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final ThreadPoolExecutor EXECUTOR = new ThreadPoolExecutor(2, 4,
             60, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
@@ -79,7 +82,7 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
     private TextView mName, mTitle, mContents, mDate, mAuthor, mBookTitle, mPageTitle;
     private String name, title, contents, date, id, image, bookTitle;
     private String rid, recommendid, mUser; // 8.4
-    private String author="";
+    private String author = "";
     private ImageView mImage, resultImage;
 
     private EditText mReplyContentText;
@@ -93,8 +96,8 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
     private List<BookReplyItem> mReplyList; // private static 기존
 
     long mNow = System.currentTimeMillis();
-    public int count =0;
-    String pageNull=null;
+    public int count = 0;
+    String pageNull = null;
     Date mReDate = new Date(mNow);
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
     String formatDate = mFormat.format(mReDate);
@@ -125,7 +128,7 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
 
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://beginagains.appspot.com");
         StorageReference storageRef = storage.getReference();
-        StorageReference pathReference  = storageRef.child("BoardPhotos/" + id + "_" + "photo");
+        StorageReference pathReference = storageRef.child("BoardPhotos/" + id + "_" + "photo");
         Glide.with(getApplication())
                 .using(new FirebaseImageLoader())
                 .load(pathReference)
@@ -134,12 +137,12 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
                 .skipMemoryCache(true)// 메모리 캐시 저장 off
                 .into(resultImage);
 
-        if(mUser.equals("1")){
+        if (mUser.equals("1")) {
             mReName = user.getDisplayName();
             replyImage = user.getPhotoUrl();
             mReplyImage = replyImage.toString();
             mReplyNameText.setText(mReName);
-        }else{
+        } else {
             mReName = "0";
         }
 
@@ -148,12 +151,12 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
         mContents.setText(contents);
         mDate.setText(date);
         mAuthor.setText(author);
-        if(mAuthor.getText().toString().equals("")){
+        if (mAuthor.getText().toString().equals("")) {
             mBookTitle.setText("");
             mAuthor.setText("책을 등록하시지 않았습니다.");
             mAuthor.setTextSize(20);
             mImage.setImageResource(R.drawable.logo);
-        }else {
+        } else {
             mAuthor.setText(author);
             mBookTitle.setText(bookTitle);
             Picasso.get().load(image).into(mImage);
@@ -163,7 +166,7 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                        for(QueryDocumentSnapshot dc : queryDocumentSnapshots){
+                        for (QueryDocumentSnapshot dc : queryDocumentSnapshots) {
                             String rid = (String) dc.getData().get("rid");
                             String name = (String) dc.getData().get("name");
                             String contents = (String) dc.getData().get("contents");
@@ -183,17 +186,28 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                         int recount = 0;
-                        for(QueryDocumentSnapshot dc : queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot dc : queryDocumentSnapshots) {
                             recount++;
                         }
-                        mRecommnedCount.setText("추천 "+recount);
-                        mStore.collection("board").document(id).update("recount",recount);
+                        mRecommnedCount.setText("추천 " + recount);
+                        mStore.collection("board").document(id).update("recount", recount);
                     }
                 });
         findViewById(R.id.btn_reply).setOnClickListener(this);
         findViewById(R.id.btn_board_recommend).setOnClickListener(this);
+        mReplyContentText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    ImageButton tmp = (ImageButton) findViewById(R.id.btn_reply);
+                    onClick(tmp);
+                }
+                return false;
+            }
+        });
     }
-    private void init(){
+
+    private void init() {
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(Color.parseColor("#82b3c9")); // deep
         }
@@ -206,46 +220,48 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
         mReplyRecyclerView.addItemDecoration(new DividerItemDecoration(getApplication(), 1));
         mReplyList = new ArrayList<>();
 
-        mReplyNameText = (TextView)findViewById(R.id.text_view_reply_name);
-        mReplyContentText = (EditText)findViewById(R.id.et_reply_contents);
-        mRecommnedCount = (TextView)findViewById(R.id.text_view_result_recommend);
-        mName = (TextView)findViewById(R.id.text_view_result_name);
-        mTitle = (TextView)findViewById(R.id.text_view_result_title);
-        mContents = (TextView)findViewById(R.id.text_view_result_contents);
-       // mContents.setMovementMethod(ScrollingMovementMethod.getInstance());
-        mDate = (TextView)findViewById(R.id.text_view_result_date);
-        mBookTitle = (TextView)findViewById(R.id.text_view_result_book_title);
-        mAuthor = (TextView)findViewById(R.id.text_view_result_author);
-        mImage = (ImageView)findViewById(R.id.iv_result);
-        resultImage = (ImageView)findViewById(R.id.iv_result_photos);
+        mReplyNameText = (TextView) findViewById(R.id.text_view_reply_name);
+        mReplyContentText = (EditText) findViewById(R.id.et_reply_contents);
+        mRecommnedCount = (TextView) findViewById(R.id.text_view_result_recommend);
+        mName = (TextView) findViewById(R.id.text_view_result_name);
+        mTitle = (TextView) findViewById(R.id.text_view_result_title);
+        mContents = (TextView) findViewById(R.id.text_view_result_contents);
+        // mContents.setMovementMethod(ScrollingMovementMethod.getInstance());
+        mDate = (TextView) findViewById(R.id.text_view_result_date);
+        mBookTitle = (TextView) findViewById(R.id.text_view_result_book_title);
+        mAuthor = (TextView) findViewById(R.id.text_view_result_author);
+        mImage = (ImageView) findViewById(R.id.iv_result);
+        resultImage = (ImageView) findViewById(R.id.iv_result_photos);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_toolbar_result, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home: //toolbar의 back키 눌렀을 때 동작
                 onBackPressed();
-            break;
-            case R.id.retouch_icon :
+                break;
+            case R.id.retouch_icon:
                 Intent touchIntent = new Intent(BoardResultActivity.this, RetouchBoardActivity.class);
-                if(mReName.equals(name)) {
+                if (mReName.equals(name)) {
                     touchIntent.putExtra("Id", id);
                     touchIntent.putExtra("Name", name);
                     touchIntent.putExtra("Title", title);
                     touchIntent.putExtra("Contents", contents);
                     touchIntent.putExtra("Date", date);
                     startActivity(touchIntent);
-                }else{
+                } else {
                     Toast.makeText(BoardResultActivity.this, "작성자가 아닙니다", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.delete_icon:
-                if(mReName.equals(name)) {
+                if (mReName.equals(name)) {
                     deleteCollection(mStore.collection("board").document(id).collection("reply"), 50, EXECUTOR);
                     deleteCollection(mStore.collection("board").document(id).collection("recommend"), 50, EXECUTOR);
                     mStore.collection("board").document(id)
@@ -265,8 +281,8 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
                                 public void onFailure(@NonNull Exception e) {
                                 }
                             });
-                }else{
-                    Toast.makeText(BoardResultActivity.this,"작성자가 아닙니다." , Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(BoardResultActivity.this, "작성자가 아닙니다.", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -275,16 +291,16 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.btn_reply:
-                if(mUser.equals("1")){
+                if (mUser.equals("1")) {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     rid = mStore.collection("board").document(id).collection("reply").document().getId();
                     Map<String, Object> post = new HashMap<>();
                     post.put("id", rid);
-                    post.put("name",mReplyNameText.getText().toString());
+                    post.put("name", mReplyNameText.getText().toString());
                     post.put("contents", mReplyContentText.getText().toString());
-                    post.put("date",formatDate);
+                    post.put("date", formatDate);
                     post.put("image", mReplyImage);
                     post.put("uid", user.getUid());
                     mStore.collection("board").document(id)
@@ -292,17 +308,17 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    Toast.makeText(BoardResultActivity.this, "댓글 성공!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(BoardResultActivity.this, "댓글이 작성되었습니다.", Toast.LENGTH_SHORT).show();
                                     finish();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(BoardResultActivity.this, "댓글 실패!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(BoardResultActivity.this, "댓글이 작성되지 않았습니다.", Toast.LENGTH_SHORT).show();
                                 }
                             });
-                }else{
+                } else {
                     AlertDialog.Builder alert_ex = new AlertDialog.Builder(BoardResultActivity.this);
                     alert_ex.setMessage("로그인 후 사용가능합니다. 로그인 하시겠습니까?");
 
@@ -330,30 +346,32 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
                         .addSnapshotListener(new EventListener<QuerySnapshot>() {
                             @Override
                             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                                for(QueryDocumentSnapshot dc : queryDocumentSnapshots) {
+                                for (QueryDocumentSnapshot dc : queryDocumentSnapshots) {
                                     String name = (String) dc.getData().get("name");
-                                    if(mReName.equals(name)){
+                                    if (mReName.equals(name)) {
                                         count = 1;
                                         break;
                                     }
                                 }
-                                if(count ==0){
+                                if (count == 0) {
                                     recommendid = mStore.collection("board").document(id).collection("recommend").document().getId();
                                     Map<String, Object> recommendPost = new HashMap<>();
                                     recommendPost.put("id", recommendid);
                                     recommendPost.put("name", mReName);
-                                    recommendPost.put("date",formatDate);
+                                    recommendPost.put("date", formatDate);
                                     mStore.collection("board").document(id)
-                                        .collection("recommend").document().set(recommendPost);
+                                            .collection("recommend").document().set(recommendPost);
                                     Toast.makeText(BoardResultActivity.this, "추천!", Toast.LENGTH_SHORT).show();
                                 }
-                            }});
-                if(count==1){
+                            }
+                        });
+                if (count == 1) {
                     Toast.makeText(BoardResultActivity.this, "이미추천!", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
     }
+
     // 컬렉션 삭제위해서 쓰는것, doc 참고
     private Task<Void> deleteCollection(final CollectionReference collection, final int batchSize, Executor executor) {
         return Tasks.call(executor, new Callable<Void>() {
@@ -373,6 +391,7 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
             }
         });
     }
+
     @WorkerThread
     private List<DocumentSnapshot> deleteQueryBatch(final Query query) throws Exception {
         QuerySnapshot querySnapshot = Tasks.await(query.get());
@@ -388,21 +407,18 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onBackPressed() {
-        if(pageNull.equals("My")){
+        if (pageNull.equals("My")) {
             Intent intent = new Intent(this, MyBoardActivity.class);
             startActivity(intent);
-        }
-        else if(pageNull.equals("Board")){
+        } else if (pageNull.equals("Board")) {
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("page", pageNull);
             startActivity(intent);
-        }
-         else if(pageNull.equals("Search")){
+        } else if (pageNull.equals("Search")) {
             super.onBackPressed();
             Intent intent = new Intent(this, SearchBoardActivity.class);
             startActivity(intent);
-        }
-         else if(pageNull.equals("Recommend")){
+        } else if (pageNull.equals("Recommend")) {
             Intent intent = new Intent(this, RecommendBoardActivity.class);
             startActivity(intent);
         }

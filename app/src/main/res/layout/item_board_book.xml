@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -26,12 +26,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:text="반갑습니다하이요강찬종입니다"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:textColor="@color/blackSoft"
                 android:layout_toRightOf="@id/iv_board_item_thumbnail"
-                android:textSize="18sp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="반갑습니다하이요강찬종입니다"
+                android:textColor="@color/blackSoft"
+                android:textSize="17dp"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
 
@@ -49,25 +49,26 @@
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:drawableStart="@drawable/ic_person"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:text="Name"
                     android:textColor="@color/blackSoft"
-                    android:maxLines ="1"
-                    android:ellipsize="end"
-                    android:textSize="12sp"
+                    android:textSize="12dp"
                     tools:ignore="HardCodedText" />
 
                 <TextView
                     android:id="@+id/text_view_board_item_time"
                     android:layout_width="110dp"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_time"
                     android:gravity="center"
                     android:text=" 00-00 00:00 "
-                    android:textSize="12sp" />
+                    android:textColor="@color/blackSoft"
+                    android:textSize="12dp" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <TextView
                         android:id="@+id/text_view_board_item_recommend"
                         android:layout_width="60dp"
@@ -76,7 +77,8 @@
                         android:drawableStart="@drawable/ic_thumb_up"
                         android:gravity="center"
                         android:text="0"
-                        android:textSize="12sp" />
+                        android:textColor="@color/blackSoft"
+                        android:textSize="12dp" />
                 </RelativeLayout>
             </LinearLayout>
         </RelativeLayout>

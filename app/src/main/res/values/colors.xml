@@ -16,5 +16,6 @@
     <color name="lightGray">#f5f5f6</color>
     <color name="gray">#808080</color>
     <color name="palletePink">#eea990</color>
+    <color name="layoutBorder">#CCCCCC</color>
 
 </resources>

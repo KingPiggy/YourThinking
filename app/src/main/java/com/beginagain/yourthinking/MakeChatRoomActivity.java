@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -33,7 +34,6 @@ import java.util.Map;
 public class MakeChatRoomActivity extends AppCompatActivity {
 
     private Button mOkayBtn;
-    private ImageButton mCancelBtn;
     private TextView mTitleText;
     private EditText mEditText;
 
@@ -58,6 +58,10 @@ public class MakeChatRoomActivity extends AppCompatActivity {
         makeSeq = 1;
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_make_chat_room);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mEditText.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -84,12 +88,12 @@ public class MakeChatRoomActivity extends AppCompatActivity {
                             bookTitle = mEditText.getText().toString();
                             mTitleText.setText("채팅방 소개를 해주세요.");
                             mEditText.setText("");
+                            mOkayBtn.setText("완료");
                             makeSeq++;
                             break;
                         case 3:
                             desc = mEditText.getText().toString();
                             mEditText.setText("");
-                            mOkayBtn.setText("완료");
                             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                             imm.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
                             makeChatRoom();
@@ -99,14 +103,6 @@ public class MakeChatRoomActivity extends AppCompatActivity {
                     return true;
                 }
                 return false;
-            }
-        });
-
-
-        mCancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
             }
         });
 
@@ -163,6 +159,7 @@ public class MakeChatRoomActivity extends AppCompatActivity {
             case 3: //소개 화면에서 Back
                 mTitleText.setText("책 제목을 입력해주세요.");
                 mEditText.setText("");
+                mOkayBtn.setText("다음");
                 makeSeq--;
                 break;
         }
@@ -171,7 +168,6 @@ public class MakeChatRoomActivity extends AppCompatActivity {
     private void init() {
         mTitleText = (TextView) findViewById(R.id.text_view_make_chat_room_q);
         mEditText = (EditText) findViewById(R.id.edit_text_make_chat_room_a);
-        mCancelBtn = (ImageButton) findViewById(R.id.btn_make_chat_room_close);
         mOkayBtn = (Button) findViewById(R.id.btn_make_chat_room_exec);
     }
 

@@ -17,6 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:layout_weight="3"
+        android:background="@drawable/button_clip_style_selected"
         app:cardElevation="2dp">
 
         <RelativeLayout
@@ -32,52 +33,46 @@
                 android:maxLines="1"
                 android:text="채팅방 제목"
                 android:textColor="@color/black"
-                android:textSize="15dp" />
-
-            <TextView
-                android:id="@+id/text_view_chat_room_item_book_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/text_view_chat_room_item_room_title"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:text="이야기 나눌 책"
-                android:textColor="@color/blackSoft"
-                android:textSize="12dp" />
-
-            <ImageView
-                android:id="@+id/image_chat_room_item_person"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_below="@id/text_view_chat_room_item_book_title"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/ic_person" />
+                android:textSize="15dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/text_view_chat_room_item_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/image_chat_room_item_person"
+                android:layout_below="@id/text_view_chat_room_item_room_title"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
                 android:text="참여인원"
                 android:textColor="@color/blackSoft"
                 android:textSize="10dp" />
 
             <TextView
+                android:id="@+id/text_view_chat_room_item_book_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_view_chat_room_item_count"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:text="이야기 나눌 책"
+                android:textColor="@color/blackSoft"
+                android:textSize="15dp" />
+
+
+            <TextView
                 android:id="@+id/text_view_chat_room_item_room_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/text_view_chat_room_item_count"
+                android:layout_below="@id/text_view_chat_room_item_book_title"
                 android:layout_marginLeft="50dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginRight="50dp"
                 android:layout_marginBottom="30dp"
                 android:gravity="center"
                 android:maxLength="50"
-                android:text="채팅방 설명 20자"
+                android:text="채팅방 설명 50자"
                 android:textColor="@color/blackSoft"
-                android:textSize="12dp" />
+                android:textSize="10dp" />
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
