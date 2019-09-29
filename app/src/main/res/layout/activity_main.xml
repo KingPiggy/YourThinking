@@ -21,8 +21,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="도서추천"
-            android:textStyle="bold"
-            android:textSize="20sp"/>
+            android:textColor="@color/blackSoft"
+            android:textSize="20dp"
+            android:textStyle="bold" />
     </android.support.v7.widget.Toolbar>
 
     <android.support.design.widget.BottomNavigationView
@@ -31,10 +32,10 @@
         android:layout_height="50dp"
         android:layout_marginTop="56dp"
         android:background="@color/white"
+        android:visibility="invisible"
         app:itemIconTint="@color/primaryDeep"
         app:itemTextColor="@color/primaryDeep"
-        app:menu="@menu/menu_top"
-        android:visibility="invisible"/>
+        app:menu="@menu/menu_top" />
 
     <FrameLayout
         android:id="@+id/layout_main_frame"

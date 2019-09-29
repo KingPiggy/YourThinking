@@ -3,8 +3,8 @@
 
     <item
         android:id="@+id/navigation_menu1"
-        android:icon="@drawable/ic_home"
-        android:title="Home" />
+        android:icon="@drawable/ic_trophy"
+        android:title="Ranking" />
 
     <item
         android:id="@+id/navigation_menu2"

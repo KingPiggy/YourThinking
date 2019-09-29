@@ -38,7 +38,6 @@ public class MakeChatRoomActivity extends AppCompatActivity {
     private EditText mEditText;
 
     private String roomTitle, bookTitle, desc;
-    private int roomPeopleSetting;
 
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
@@ -68,12 +67,20 @@ public class MakeChatRoomActivity extends AppCompatActivity {
 
                     switch (makeSeq) {
                         case 1:
+                            if (mEditText.getText().toString().equals("")) {
+                                Toast.makeText(getApplicationContext(), "다시 확인해주세요.", Toast.LENGTH_SHORT).show();
+                                break;
+                            }
                             roomTitle = mEditText.getText().toString();
-                            mTitleText.setText("이야기 나눌 책 제목을 입력해주세요.");
+                            mTitleText.setText("책 제목을 입력해주세요.");
                             mEditText.setText("");
                             makeSeq++;
                             break;
                         case 2:
+                            if (mEditText.getText().toString().equals("")) {
+                                Toast.makeText(getApplicationContext(), "다시 확인해주세요.", Toast.LENGTH_SHORT).show();
+                                break;
+                            }
                             bookTitle = mEditText.getText().toString();
                             mTitleText.setText("채팅방 소개를 해주세요.");
                             mEditText.setText("");
@@ -108,12 +115,20 @@ public class MakeChatRoomActivity extends AppCompatActivity {
             public void onClick(View view) {
                 switch (makeSeq) {
                     case 1:
+                        if (mEditText.getText().toString().equals("")) {
+                            Toast.makeText(getApplicationContext(), "다시 확인해주세요.", Toast.LENGTH_SHORT).show();
+                            break;
+                        }
                         roomTitle = mEditText.getText().toString();
-                        mTitleText.setText("이야기 나눌 책 제목을 입력해주세요.");
+                        mTitleText.setText("책 제목을 입력해주세요.");
                         mEditText.setText("");
                         makeSeq++;
                         break;
                     case 2:
+                        if (mEditText.getText().toString().equals("")) {
+                            Toast.makeText(getApplicationContext(), "다시 확인해주세요.", Toast.LENGTH_SHORT).show();
+                            break;
+                        }
                         bookTitle = mEditText.getText().toString();
                         mTitleText.setText("채팅방 소개를 해주세요.");
                         mEditText.setText("");
@@ -146,7 +161,7 @@ public class MakeChatRoomActivity extends AppCompatActivity {
                 makeSeq--;
                 break;
             case 3: //소개 화면에서 Back
-                mTitleText.setText("이야기 나눌 책 제목을 입력해주세요.");
+                mTitleText.setText("책 제목을 입력해주세요.");
                 mEditText.setText("");
                 makeSeq--;
                 break;
@@ -174,7 +189,6 @@ public class MakeChatRoomActivity extends AppCompatActivity {
                     map.put("roomTitle", roomTitle);
                     map.put("bookTitle", bookTitle);
                     map.put("desc", desc);
-                    map.put("roomPeopleSetting", roomPeopleSetting);
                     databaseReference.child("chat").child(roomTitle).child("info").updateChildren(map);
 
                     Toast.makeText(getApplicationContext(), "목록이 갱신 되었습니다.", Toast.LENGTH_SHORT).show();

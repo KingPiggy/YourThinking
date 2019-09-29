@@ -2,16 +2,14 @@ package com.beginagain.yourthinking.Item;
 
 public class ChatRoomItem {
     private String roomTitle, bookTitle, desc;
-    private int roomPeopleSetting;
     public  ChatRoomItem(){
 
     }
 
-    public ChatRoomItem(String roomTitle, String bookTitle, String desc, int roomPeopleSetting) {
+    public ChatRoomItem(String roomTitle, String bookTitle, String desc) {
         this.roomTitle = roomTitle;
         this.bookTitle = bookTitle;
         this.desc = desc;
-        this.roomPeopleSetting = roomPeopleSetting;
     }
 
     public String getRoomTitle() {
@@ -36,13 +34,5 @@ public class ChatRoomItem {
 
     public void setDesc(String desc) {
         this.desc = desc;
-    }
-
-    public int getRoomPeopleSetting() {
-        return roomPeopleSetting;
-    }
-
-    public void setRoomPeopleSetting(int roomPeopleSetting) {
-        this.roomPeopleSetting = roomPeopleSetting;
     }
 }

@@ -376,8 +376,8 @@ public class Menu1Fragment extends Fragment {
                         urlSource =  "http://www.data4library.kr/api/loanItemSrch?authKey=" + LibMyKey+query+formatDate+top30;
                         urlSource += "&kdc=" + Integer.toString(libCategory)+outputStyle  ;
                     } else if (isNewBooks == 1) {
-                     //   urlSource =  "http://data4library.kr/api/hotTrend?authKey=" + LibMyKey+"&searchDt="+formatDate;
-                      //  urlSource+=outputStyle;
+                        //   urlSource =  "http://data4library.kr/api/hotTrend?authKey=" + LibMyKey+"&searchDt="+formatDate;
+                        //  urlSource+=outputStyle;
                         urlSource =  "http://www.data4library.kr/api/loanItemSrch?authKey=" + LibMyKey+query_steady+formatDate+top30;
                         urlSource += "&kdc=" + Integer.toString(libCategory)+outputStyle  ;
                     }
