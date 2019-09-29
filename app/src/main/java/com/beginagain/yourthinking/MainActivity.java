@@ -3,6 +3,7 @@ package com.beginagain.yourthinking;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -37,10 +38,10 @@ public class MainActivity extends AppCompatActivity {
 
     Toolbar up_toolbar;
 
-
     TextView mToolbarText;
     String page = null;
 
+    String mPage = null;
     private FirebaseAuth mAuth;
 
     public BottomNavigationView bottomNavigationView, topNavigationView;
@@ -77,8 +78,11 @@ public class MainActivity extends AppCompatActivity {
                 onFragmentChange(3);
             } else if (page.equals("Recommend")) {
                 onFragmentChange(1);
-            } else if (page.equals("MaratonPage"))
+            } else if (page.equals("MaratonPage")) {
                 onFragmentChange(4);
+            }else if(page.equals("MaratonStatics")){
+                onFragmentChange(5);
+            }
         }
             else {
             transaction.replace(R.id.layout_main_frame, menu1Fragment).commitAllowingStateLoss();
@@ -91,12 +95,14 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.navigation_top_menu1: {
                         transaction.replace(R.id.layout_main_frame,menu4Fragment).commitAllowingStateLoss();
                         mToolbarText.setText("독서마라톤");
+                        mPage = "MaratonPage";
                         topNavigationView.setVisibility(View.VISIBLE);
                         break;
                     }
                     case R.id.navigation_top_menu2:{
                         transaction.replace(R.id.layout_main_frame,menuTop1Fragment).commitAllowingStateLoss();
                         mToolbarText.setText("독서마라톤");
+                        mPage = "MaratonStatics";
                         topNavigationView.setVisibility(View.VISIBLE);
                     }
                 }
@@ -112,18 +118,20 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.navigation_menu1: {
                         transaction.replace(R.id.layout_main_frame, menu1Fragment).commitAllowingStateLoss();
                         mToolbarText.setText("도서추천");
-                        topNavigationView.setVisibility(View.INVISIBLE);
+                        mPage = "Recommend";
                         break;
                     }
                     case R.id.navigation_menu2: {
                         transaction.replace(R.id.layout_main_frame, menu2Fragment).commitAllowingStateLoss();
                         mToolbarText.setText("채팅방");
+                        mPage = "Chat";
                         topNavigationView.setVisibility(View.INVISIBLE);
                         break;
                     }
                     case R.id.navigation_menu3: {
                         transaction.replace(R.id.layout_main_frame, menu3Fragment).commitAllowingStateLoss();
                         mToolbarText.setText("게시판");
+                        mPage = "Board";
                         topNavigationView.setVisibility(View.INVISIBLE);
                         break;
                     }
@@ -131,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
                         if(mAuth.getCurrentUser()!=null) {
                             transaction.replace(R.id.layout_main_frame, menu4Fragment).commitAllowingStateLoss();
                             mToolbarText.setText("독서마라톤");
+                            mPage = "MaratonPage";
                             topNavigationView.setVisibility(View.VISIBLE);
                         }else{
                             AlertDialog.Builder alert_ex = new AlertDialog.Builder(MainActivity.this);
@@ -153,10 +162,6 @@ public class MainActivity extends AppCompatActivity {
                             alert_ex.setTitle("Your Thinking");
                             AlertDialog alert = alert_ex.create();
                             alert.show();
-                            //Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            // startActivity(intent);
-                            //finish();
-
                         }
                         break;
                     }
@@ -205,6 +210,7 @@ public class MainActivity extends AppCompatActivity {
                 if(mAuth.getCurrentUser()!=null) {
                     Toast.makeText(getApplicationContext(), "사용자관리", Toast.LENGTH_SHORT).show();
                     Intent accountIntent = new Intent(getApplication(), AccountActivity.class);
+                    accountIntent.putExtra("page",mPage);
                     startActivity(accountIntent);
                 }else{
                     AlertDialog.Builder alert_ex = new AlertDialog.Builder(this);

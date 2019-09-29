@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="20dp"
+            android:gravity="center_horizontal"
             android:text="사용자이름"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -27,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="10dp"
             android:text="철학 : "
             android:textSize="18sp"
             android:textStyle="bold"
@@ -38,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="10dp"
             android:text="종교 : "
             android:textSize="18sp"
             android:textStyle="bold"
@@ -48,8 +49,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="10dp"
             android:text="사회과학 : "
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+        <TextView
+            android:id="@+id/text_view_maraton_statistics_nat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="자연과학 : "
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"/>
@@ -58,8 +69,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginBottom="5dp"
-            android:text="자연과학 : "
+            android:layout_marginBottom="10dp"
+            android:text="기술과학 : "
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"/>
@@ -68,8 +79,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginBottom="5dp"
-            android:text="기술과학 : "
+            android:layout_marginBottom="10dp"
+            android:text="예술 : "
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"/>
@@ -78,8 +89,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginBottom="5dp"
-            android:text="예술 : "
+            android:layout_marginBottom="10dp"
+            android:text="언어 : "
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"/>
@@ -88,18 +99,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginBottom="5dp"
-            android:text="언어 : "
+            android:layout_marginBottom="10dp"
+            android:text="문학 : "
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"/>
         <TextView
-            android:id="@+id/text_view_maraton_statistics_history"
+            android:id="@+id/text_view_maraton_statistics_his"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginBottom="5dp"
-            android:text="문학 : "
+            android:layout_marginBottom="10dp"
+            android:text="역사 : "
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"/>
@@ -108,15 +119,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="10dp"
             android:text="기타 : "
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"/>
 
         <View
+            android:id="@+id/view_result_border2"
             android:layout_width="match_parent"
-            android:layout_height="2dp"/>
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/layoutBorder" />
 
         <TextView
             android:layout_width="match_parent"

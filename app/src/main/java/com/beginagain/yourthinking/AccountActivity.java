@@ -43,16 +43,15 @@ import com.google.firebase.storage.UploadTask;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AccountActivity extends AppCompatActivity {
-    private Button mGoogleLogoutBtn, mGoogleRevokeBtn, mChangeBtn, mMyBoard, mMyChat;
-    private TextView mUserName, mUserEmail, mProgressText,mProgressNotText;
-    private ProgressBar mProgressBar;
+    private Button mGoogleLogoutBtn, mGoogleRevokeBtn, mChangeBtn, mMyBoard, mMyChat, mMaraton;
+    private TextView mUserName, mUserEmail;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
     SharedPreferences.Editor editor;
     Uri photoURI;
 
     private de.hdodenhof.circleimageview.CircleImageView mUserImage;
-    private String name, email;
+    private String name, email, page;
     private Uri profilePhotoUrl;
 
     public static final String PREFNAME = "Preferences";
@@ -64,6 +63,8 @@ public class AccountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_account);
 
         init();
+        Intent intent = getIntent();
+        page = intent.getStringExtra("page");
 
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setStatusBarColor(Color.parseColor("#82b3c9")); // deep
@@ -227,22 +228,9 @@ public class AccountActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-/**
-        Log.d("test", "마라톤 진행 여부 : " + isBookMaratonOnGoing());
-
-        if(isBookMaratonOnGoing()) {
-            updateProgressBar();
-            showMaratonProgress();
-        } else {
-            hide_ProgressBar();
-        }
- **/
     }
     private void init() {
         mUserImage = (CircleImageView) findViewById(R.id.image_menu1_profile_image);
-        mProgressBar = (ProgressBar)findViewById(R.id.progress_maraton);
-        mProgressText = (TextView) findViewById(R.id.text_view_maraton_Progress_Text);
-        mProgressNotText = (TextView) findViewById(R.id.text_view_maraton_ProgressNot);
         mUserName = (TextView) findViewById(R.id.text_view_menu1_profile_name);
         mUserEmail = (TextView) findViewById(R.id.text_view_menu1_profile_email);
         mMyBoard = (Button)findViewById(R.id.btn_account_myBoard);
@@ -264,86 +252,24 @@ public class AccountActivity extends AppCompatActivity {
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_info);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
-    }
-    public void showMaratonProgress(){
-        mProgressText.setVisibility(View.VISIBLE);
-        mProgressBar.setVisibility(View.VISIBLE);
-        mProgressNotText.setVisibility(View.INVISIBLE);
-    }
-    public void hide_ProgressBar(){
-        mProgressText.setVisibility(View.INVISIBLE);
-        mProgressBar.setVisibility(View.INVISIBLE);
-        mProgressNotText.setVisibility(View.VISIBLE);
-    }
-    /**
-    private void updateProgressBar() {
-        float max = 0;
-        float current = 0;
-        SQLiteDatabase maratonDB = null;
-        Cursor c = null;
-
-        try {
-            maratonDB = this.getApplication().openOrCreateDatabase(Menu4Fragment.dbName_Maraton, MODE_PRIVATE, null);
-            c = maratonDB.rawQuery("SELECT * FROM " + Menu4Fragment.tableName_Maraton, null);
-
-            if (c != null & c.moveToFirst()) {
-                do {
-                    String title = c.getString(c.getColumnIndex("title"));
-                    max += c.getInt(c.getColumnIndex(Menu4Fragment.TAG_PageNum));
-                    current += c.getInt(c.getColumnIndex(Menu4Fragment.TAG_currPageNum));
-
-                } while (c.moveToNext());
+        mMaraton = (Button)findViewById(R.id.btn_account_myMaraton);
+        mMaraton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplication(),MainActivity.class);
+                intent.putExtra("page","MaratonStatics");
+                startActivity(intent);
             }
+        });
 
-            mProgressBar.setMax((int)max);
-            mProgressBar.setProgress((int)current);
 
-            int percertage;
-
-            if(current == 0)
-                percertage = 0;
-            else
-                percertage = (int)((current / max) * 100);
-
-            mProgressText.setText("독서 마라톤 진행률 : " + percertage + "%");
-        }catch (SQLiteException e) {
-            Log.d("test", "Update Progress Bar 오류 발생 : " + e.getMessage());
-        } finally {
-            if (maratonDB != null)
-                maratonDB.close();
-            if(c != null)
-                c.close();
-        }
     }
 
-    private boolean isBookMaratonOnGoing() {
-        SQLiteDatabase maratonDB = null;
-        Cursor c = null;
-        try {
-            maratonDB = getApplication().openOrCreateDatabase(Menu4Fragment.dbName_Maraton, MODE_PRIVATE, null);
-            c = maratonDB.rawQuery("SELECT * FROM " + Menu4Fragment.tableName_Maraton, null);
-
-            if (c != null & c.moveToFirst()) {
-                Log.d("Test", "*********** 북 마라톤 진행중 ***********");
-                return true;
-
-            } else {
-                Log.d("Test", "******** 진행중인 북 마라톤 없음 ************");
-                return false;
-            }
-        } catch (SQLiteException e) {
-            Log.d("Test", "데이터 베이스 읽기 실패 : " + e.getMessage());
-        } finally {
-            if (c != null)
-                c.close();
-        }
-        return false;
-    }
-     **/
     @Override
     public void onBackPressed() {
         finish();
         Intent intent  = new Intent(this, MainActivity.class);
+        intent.putExtra("page",page);
         startActivity(intent);
     }
 }

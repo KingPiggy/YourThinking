@@ -78,9 +78,9 @@ public class WriteNoticeActivity extends AppCompatActivity implements View.OnCli
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Toast.makeText(WriteNoticeActivity.this, "업로드 성공!", Toast.LENGTH_SHORT).show();
-                                finish();
                                 Intent intent = new Intent(WriteNoticeActivity.this, NoticeActivity.class);
                                 startActivity(intent);
+                                finish();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {

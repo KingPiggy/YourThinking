@@ -1,6 +1,5 @@
 package com.beginagain.yourthinking.MenuFragment;
 
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,11 +11,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.beginagain.yourthinking.Adapter.BookMaratonStatAdapter;
 import com.beginagain.yourthinking.Adapter.BookRecommendAdapter;
-import com.beginagain.yourthinking.Item.MaratonBookItem;
 import com.beginagain.yourthinking.Item.RecommendBookItem;
 import com.beginagain.yourthinking.MainActivity;
 import com.beginagain.yourthinking.R;
@@ -39,25 +37,27 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
-public class MenuTop1Fragment  extends Fragment {
+public class MenuTop1Fragment  extends Fragment implements View.OnClickListener {
 
     View view;
     private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     MainActivity activity;
 
-    String image, cat;
+    String image, cat, mName;
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager layoutManager;
     private ArrayList<RecommendBookItem> emptyItems = new ArrayList<RecommendBookItem>();
     private BookRecommendAdapter recyclerAdapter = new BookRecommendAdapter(activity, emptyItems, R.layout.fragment_menu_top1);
 
-    private String category;
+    int category=0;
 
-    int philCount=0, reliCount=0, scoialCount=0, natCount=0, tecCount=0, artCount=0, langCount=0,novelCount=0, hisCount=0, etcCount=0;
+    int max;
+    int[] arr = new int[10];
+
+    TextView mPhil, mReli, mSocial, mNat, mTec, mArt, mLang, mNovel, mHIs, mEtc, mUser;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -69,9 +69,12 @@ public class MenuTop1Fragment  extends Fragment {
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        int philCount=0, reliCount=0, scoialCount=0, natCount=0, tecCount=0, artCount=0, langCount=0,novelCount=0, hisCount=0, etcCount=0;
+                        int count=0;
                         for(QueryDocumentSnapshot dc : queryDocumentSnapshots){
-                            String uid = (String) dc.getData().get("uid");
+                            String uid = (String) dc.getData().get("user");
                             if(myUId.equals(uid)){
+                                count++;
                                 image = (String) dc.getData().get("image");
                                 cat = (String)dc.getData().get("category");
                                 if(cat.equals("119")||cat.equals("8516")){
@@ -95,58 +98,94 @@ public class MenuTop1Fragment  extends Fragment {
                                 }else{
                                     etcCount++;
                                 }
+                                mPhil.setText("철학 : "+philCount+"권");
+                                mReli.setText("종교 : "+reliCount+"권");
+                                mSocial.setText("사회과학 : "+scoialCount+"권");
+                                mNat.setText("자연과학 : "+natCount+"권");
+                                mTec.setText("기술과학 : "+tecCount+"권");
+                                mArt.setText("예술 : "+artCount+"권");
+                                mLang.setText("언어 : "+langCount+"권");
+                                mNovel.setText("문학 : "+novelCount+"권");
+                                mHIs.setText("철학 : "+hisCount+"권");
+                                mEtc.setText("기타 : "+etcCount+"권");
                             }
                         }
-                       Max();
+                        arr[0]=philCount;
+                        arr[1]=reliCount;
+                        arr[2]=scoialCount;
+                        arr[3]=natCount;
+                        arr[4]=tecCount;
+                        arr[5]=artCount;
+                        arr[6]=langCount;
+                        arr[7]=novelCount;
+                        arr[8]=hisCount;
+                        arr[9]=etcCount;
+                        max=arr[0];
+                        for(int i=0;i<10;i++){
+                            if(max<arr[i]){
+                                max=arr[i];
+                            }
+                        }
+
+
+                        if(max==philCount){
+                            category = 119;
+                        }else if(max==reliCount){
+                            category =120 ;
+                        }else if(max==scoialCount){
+                            category =104 ;
+                        }else if(max==natCount){
+                            category = 116;
+                        }else if(max==tecCount){
+                            category = 111;
+                        }else if(max==artCount){
+                            category = 103;
+                        }else if(max==langCount){
+                            category = 115;
+                        }else if(max==novelCount){
+                            category = 101;
+                        }else if(max==hisCount){
+                            category = 105;
+                        }else if(max==etcCount){
+                            category = 0;
+                        }
+                        new BookMaratonAsyncTask().execute();
                     }
+
                 });
+
 
         return view;
     }
     private void init() {
+        mPhil = view.findViewById(R.id.text_view_maraton_statistics_phil);
+        mReli = view.findViewById(R.id.text_view_maraton_statistics_reli);
+        mSocial= view.findViewById(R.id.text_view_maraton_statistics_social);
+        mNat= view.findViewById(R.id.text_view_maraton_statistics_nat);
+        mTec= view.findViewById(R.id.text_view_maraton_statistics_tec);
+        mArt= view.findViewById(R.id.text_view_maraton_statistics_art);
+        mLang= view.findViewById(R.id.text_view_maraton_statistics_lang);
+        mNovel= view.findViewById(R.id.text_view_maraton_statistics_novel);
+        mHIs= view.findViewById(R.id.text_view_maraton_statistics_his);
+        mEtc = view.findViewById(R.id.text_view_maraton_statistics_etc);
+        mUser = view.findViewById(R.id.text_view_maraton_statistics_user);
+
+        mName = user.getDisplayName();
+        mUser.setText(mName+"의 독서 통계");
+
+        mRecyclerView = view.findViewById(R.id.recycler_maraton_statistics);
         mRecyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(recyclerAdapter);
         mRecyclerView.setNestedScrollingEnabled(false);
     }
-    private void Max() {
-        ArrayList<Integer> list = new ArrayList<Integer>();
-        list.add(philCount);
-        list.add(reliCount);
-        list.add(scoialCount);
-        list.add(natCount);
-        list.add(tecCount);
-        list.add(artCount);
-        list.add(langCount);
-        list.add(novelCount);
-        list.add(hisCount);
-        list.add(etcCount);
-        Integer MAX = Collections.max(list);
 
-        if(MAX==philCount){
-            //category
-        }else if(MAX==reliCount){
-
-        }else if(MAX==scoialCount){
-
-        }else if(MAX==natCount){
-
-        }else if(MAX==tecCount){
-
-        }else if(MAX==artCount){
-
-        }else if(MAX==langCount){
-
-        }else if(MAX==novelCount){
-
-        }else if(MAX==hisCount){
-
-        }else if(MAX==etcCount){
-
-        }
+    @Override
+    public void onClick(View view) {
 
     }
+
     private class BookMaratonAsyncTask extends AsyncTask<Void, Void, ArrayList<RecommendBookItem>> {
         @Override
         protected void onPreExecute() {
@@ -161,9 +200,13 @@ public class MenuTop1Fragment  extends Fragment {
                 String outputStyle = "json";
                 String str, receiveMsg = "";
                 try {
-                    urlSource = "http://book.interpark.com/api/bestSeller.api?key=" + myKey;
-                    urlSource += "&categoryId=" + "&output=" + outputStyle;
-
+                    if(category==0){
+                        urlSource = "http://book.interpark.com/api/bestSeller.api?key=" + myKey;
+                        urlSource += "&categoryId=" + 100 +"&output=" + outputStyle;
+                    }else {
+                        urlSource = "http://book.interpark.com/api/recommend.api?key=" + myKey;
+                        urlSource += "&categoryId=" + category + "&output=" + outputStyle;
+                    }
                     URL url = new URL(urlSource);
 
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -218,5 +261,6 @@ public class MenuTop1Fragment  extends Fragment {
             recyclerAdapter.notifyDataSetChanged();
         }
     }
+
 }
 

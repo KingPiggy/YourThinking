@@ -20,6 +20,7 @@
         android:layout_width="210dp"
         android:layout_height="50dp"
         android:layout_below="@id/image_login_logo"
+
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp">
 
@@ -30,11 +31,16 @@
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_below="@id/btn_google_login"
-        android:background="@drawable/loginbutton"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/loginbutton"
+        android:drawableStart="@drawable/ic_person"
+        android:drawableEnd="@drawable/ic_person"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:text="게스트로 들어가기"
         android:textColor="#6f6f6f"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"

@@ -114,8 +114,6 @@ public class SearchBoardActivity extends AppCompatActivity implements View.OnCli
                                         }else if(name.toLowerCase().contains(text)) {
                                             BookBoardItem data = new BookBoardItem(id, title, contents, name, date, image, author, booktitle, recommend);
                                             mSearchList.add(data);
-                                        }else{
-                                            Toast.makeText(getApplicationContext(), "찾을수가 없습니다.", Toast.LENGTH_SHORT).show();
                                         }
                                         break;
                                     case "1":
@@ -123,10 +121,8 @@ public class SearchBoardActivity extends AppCompatActivity implements View.OnCli
                                             BookBoardItem data = new BookBoardItem(id, title, contents, name, date ,image, author, booktitle, recommend);
                                             mSearchList.add(data);
                                         }else if(title.toLowerCase().contains(text)) {
-                                            BookBoardItem data = new BookBoardItem(id, title, contents, name, date ,image, author, booktitle, recommend);
+                                            BookBoardItem data = new BookBoardItem(id, title, contents, name, date, image, author, booktitle, recommend);
                                             mSearchList.add(data);
-                                        }else{
-                                            Toast.makeText(getApplicationContext(), "찾을수가 없습니다.", Toast.LENGTH_SHORT).show();
                                         }
                                         break;
                                     case "2":
@@ -136,13 +132,16 @@ public class SearchBoardActivity extends AppCompatActivity implements View.OnCli
                                         }else if(contents.toLowerCase().contains(text)) {
                                             BookBoardItem data = new BookBoardItem(id, title, contents, name, date ,image, author, booktitle, recommend);
                                             mSearchList.add(data);
-                                        }else{
-                                            Toast.makeText(getApplicationContext(), "찾을수가 없습니다.", Toast.LENGTH_SHORT).show();
                                         }
                                         break;
                                 }
                             }
+                            if(mSearchList.size()==0){
+                                Toast.makeText(getApplicationContext(), "찾을수가 없습니다.", Toast.LENGTH_SHORT).show();
+                            }
+
                             mAdapter = new BoardSearchAdapter(mSearchList);
+
                             searchRecyclerView.setAdapter(mAdapter);
                         }
                     });

@@ -42,7 +42,9 @@
         <activity android:name=".NoticeActivity" />
         <activity android:name=".WriteNoticeActivity" />
         <activity android:name=".AccountActivity" />
-        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,5 +1,7 @@
 package com.beginagain.yourthinking;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -7,6 +9,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +23,8 @@ import android.widget.Toast;
 import com.beginagain.yourthinking.Adapter.BoardSearchAdapter;
 import com.beginagain.yourthinking.Board.WriteActivity;
 import com.beginagain.yourthinking.Item.BookBoardItem;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -42,6 +48,7 @@ public class BookInfoActivity  extends AppCompatActivity {
     private String id = "null";
 
     private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,21 +56,42 @@ public class BookInfoActivity  extends AppCompatActivity {
         setContentView(R.layout.activity_book_info);
 
         init();
-
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(BookInfoActivity.this, WriteActivity.class);
-                intent.putExtra("Flag","1");
-                intent.putExtra("Title", title);
-                intent.putExtra("Author",author);
-                intent.putExtra("Company",publisher);
-                intent.putExtra("Isbn", isbn);
-                intent.putExtra("pubDate", date);
-                intent.putExtra("Image",image);
+                if (mAuth.getCurrentUser() != null) {
+                    Intent intent = new Intent(BookInfoActivity.this, WriteActivity.class);
+                    intent.putExtra("Flag", "1");
+                    intent.putExtra("Title", title);
+                    intent.putExtra("Author", author);
+                    intent.putExtra("Company", publisher);
+                    intent.putExtra("Isbn", isbn);
+                    intent.putExtra("pubDate", date);
+                    intent.putExtra("Image", image);
 
-                startActivity(intent);
-                finish();
+                    startActivity(intent);
+                    finish();
+                } else {
+                    AlertDialog.Builder alert_ex = new AlertDialog.Builder(getApplicationContext());
+                    alert_ex.setMessage("로그인 후 사용가능합니다. 로그인 하시겠습니까?");
+
+                    alert_ex.setPositiveButton("로그인", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent accountIntent = new Intent(getApplication(), LoginActivity.class);
+                            startActivity(accountIntent);
+                            finish();
+                        }
+                    });
+                    alert_ex.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    alert_ex.setTitle("Your Thinking");
+                    AlertDialog alert = alert_ex.create();
+                    alert.show();
+                }
             }
         });
     }
@@ -141,6 +169,7 @@ public class BookInfoActivity  extends AppCompatActivity {
                     }
                 });
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

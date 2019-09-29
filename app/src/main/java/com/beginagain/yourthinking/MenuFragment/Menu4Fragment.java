@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
@@ -35,7 +36,7 @@ public class Menu4Fragment extends Fragment {
     private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
+    FloatingActionButton mFloatingMaraton;
 
     View view;
 
@@ -91,8 +92,8 @@ public class Menu4Fragment extends Fragment {
 
 
 
-        mMakeMaraton = view.findViewById(R.id.btn_maraton_add);
-        mMakeMaraton.setOnClickListener(new View.OnClickListener() {
+        mFloatingMaraton = view.findViewById(R.id.fab_maraton_add);
+        mFloatingMaraton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), BookMaratonActivity.class);
