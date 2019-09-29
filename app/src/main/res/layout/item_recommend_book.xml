@@ -22,7 +22,6 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/digimon"
                 android:scaleType="fitXY" />
 
             <TextView
@@ -35,35 +34,46 @@
                 android:textColor="@color/blackSoft"
                 android:text="책 타이틀"
                 android:textSize="14dp" />
-
-            <TextView
-                android:id="@+id/text_view_recommend_item_author"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/recommend_layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:layout_below="@id/text_view_recommend_item_title"
                 android:layout_alignLeft="@id/text_view_recommend_item_title"
-                android:layout_marginTop="5dp"
-                android:text="저자"
-                android:textColor="@color/blackSoft"
-                android:textSize="12dp" />
+                android:layout_marginTop="5dp">
+                <TextView
+                    android:id="@+id/text_view_recommend_item_author"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:text="저자"
+                    android:textColor="@color/blackSoft"
+                    android:textSize="12dp" />
 
-            <TextView
-                android:id="@+id/text_view_recommend_item_company"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@id/text_view_recommend_item_author"
-                android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@id/text_view_recommend_item_author"
-                android:text="출판사"
-                android:textColor="@color/blackSoft"
-                android:textSize="12dp" />
+                <TextView
+                    android:id="@+id/text_view_recommend_item_company"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/text_view_recommend_item_author"
+                    android:text="출판사"
+                    android:textColor="@color/blackSoft"
+                    android:textSize="12dp" />
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/text_view_recommend_item_isbn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/text_view_recommend_item_author"
-                android:layout_alignLeft="@id/text_view_recommend_item_author"
+                android:layout_below="@id/recommend_layout"
+                android:layout_alignLeft="@id/recommend_layout"
                 android:layout_marginTop="5dp"
                 android:text="ISBN"
                 android:textSize="12dp" />

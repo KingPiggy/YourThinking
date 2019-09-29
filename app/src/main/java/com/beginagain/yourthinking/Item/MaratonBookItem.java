@@ -30,8 +30,9 @@ public class MaratonBookItem{
         this.isbn = isbn;
         this.pubdate = pubdate;
     }
-    public MaratonBookItem(String category){
+    public MaratonBookItem(String category, String Image){
         this.category=category;
+        this.image=image;
     }
 
     public String getTitle() {

@@ -33,10 +33,10 @@ import java.util.List;
 import java.util.Map;
 
 public class BookMaratonHistoryAdapter extends RecyclerView.Adapter<BookMaratonHistoryAdapter.MyViewHolder> {
-    Context context;
+
     List<MaratonBookItem> mMaratonList;
     String title, author, company, ISBN, thumbnail, id, category, totalPage, readPage, date, pubDate;
-    int itemLayout;
+
     private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -59,8 +59,7 @@ public class BookMaratonHistoryAdapter extends RecyclerView.Adapter<BookMaratonH
 
         MaratonBookItem data = mMaratonList.get(position);
         myViewHolder.mTitle.setText(data.getTitle());
-        myViewHolder.mTotalPage.setText(data.getTotalPage());
-        myViewHolder.mReadPage.setText(data.getReadPage());
+        myViewHolder.mTotalPage.setText(data.getTotalPage()+"p");
         myViewHolder.mDate.setText(data.getDate());
         Picasso.get().load(data.getImage()).into(myViewHolder.mThumbnail);
 
@@ -76,7 +75,7 @@ public class BookMaratonHistoryAdapter extends RecyclerView.Adapter<BookMaratonH
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        public TextView mTitle, mReadPage, mTotalPage, mDate;
+        public TextView mTitle, mTotalPage, mDate;
         public ImageView mThumbnail;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -84,7 +83,6 @@ public class BookMaratonHistoryAdapter extends RecyclerView.Adapter<BookMaratonH
 
             mTitle = (TextView) itemView.findViewById(R.id.text_view_maraton_item_title);
             mTotalPage = (TextView) itemView.findViewById(R.id.text_view_maraton_item_total_page);
-            mReadPage = (TextView) itemView.findViewById(R.id.text_view_maraton_item_read_page);
             mDate = (TextView) itemView.findViewById(R.id.text_view_maraton_item_date);
             mThumbnail = (ImageView)itemView.findViewById(R.id.iv_maraton_item_thumbnail);
 

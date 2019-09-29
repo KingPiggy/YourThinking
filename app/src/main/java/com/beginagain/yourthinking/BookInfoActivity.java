@@ -54,6 +54,14 @@ public class BookInfoActivity  extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(BookInfoActivity.this, WriteActivity.class);
+                intent.putExtra("Flag","1");
+                intent.putExtra("Title", title);
+                intent.putExtra("Author",author);
+                intent.putExtra("Company",publisher);
+                intent.putExtra("Isbn", isbn);
+                intent.putExtra("pubDate", date);
+                intent.putExtra("Image",image);
+
                 startActivity(intent);
                 finish();
             }

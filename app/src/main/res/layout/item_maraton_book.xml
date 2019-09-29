@@ -14,7 +14,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/lightGray">
+            android:background="@color/white">
 
             <ImageView
                 android:id="@+id/iv_maraton_item_thumbnail"
@@ -30,6 +30,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@id/iv_maraton_item_thumbnail"
                 android:text="책 타이틀"
+                android:textStyle="bold"
+                android:textColor="@color/black"
                 android:textSize="14dp" />
 
             <TextView
@@ -43,21 +45,10 @@
                 android:textSize="12dp" />
 
             <TextView
-                android:id="@+id/text_view_maraton_item_read_page"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/text_view_maraton_item_title"
-                android:layout_toRightOf="@id/text_view_maraton_item_total_page"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="20dp"
-                android:text="읽은 페이지"
-                android:textSize="12dp" />
-
-            <TextView
                 android:id="@+id/text_view_maraton_item_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/text_view_maraton_item_read_page"
+                android:layout_below="@id/text_view_maraton_item_total_page"
                 android:layout_toRightOf="@id/iv_maraton_item_thumbnail"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"

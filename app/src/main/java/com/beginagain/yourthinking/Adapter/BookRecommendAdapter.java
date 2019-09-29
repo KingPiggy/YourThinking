@@ -49,8 +49,11 @@ public class BookRecommendAdapter extends RecyclerView.Adapter<BookRecommendAdap
         myViewHolder.mAuthor.setText(item.getAuthor());
         myViewHolder.mCompany.setText(item.getPublisher());
         myViewHolder.mISBN.setText(item.getIsbn());
-        Picasso.get().load(item.getImage()).into(myViewHolder.mThumbnail);
-
+        if(item.getImage().equals("0")) {
+            myViewHolder.mThumbnail.setImageResource(R.drawable.logo);
+        }else {
+            Picasso.get().load(item.getImage()).into(myViewHolder.mThumbnail);
+        }
     }
 
     @Override

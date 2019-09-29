@@ -36,9 +36,7 @@
             android:name=".Board.BoardResultActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".Board.MyBoardActivity" />
-        <activity android:name=".Board.RetouchBoardActivity" />
         <activity android:name=".BookMaraton.BookMaratonActivity" />
-
         <activity android:name=".Board.WriteBookActivity" />
         <activity android:name=".BookInfoActivity" />
         <activity android:name=".NoticeActivity" />

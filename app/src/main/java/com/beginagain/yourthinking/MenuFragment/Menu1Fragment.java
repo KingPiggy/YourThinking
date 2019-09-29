@@ -1,14 +1,9 @@
 package com.beginagain.yourthinking.MenuFragment;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.database.DataSetObserver;
 import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.ArrayRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,25 +14,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beginagain.yourthinking.Adapter.BookRecommendAdapter;
 import com.beginagain.yourthinking.Item.RecommendBookItem;
 import com.beginagain.yourthinking.MainActivity;
 import com.beginagain.yourthinking.R;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,9 +39,6 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
-import static android.content.Context.CONNECTIVITY_SERVICE;
-import static android.support.constraint.Constraints.TAG;
 
 public class Menu1Fragment extends Fragment {
 
@@ -87,14 +71,13 @@ public class Menu1Fragment extends Fragment {
 
     EditText editBookSearch;
     private ImageButton btnBookSearch;
-    String spinnercount =null;
+    String spinnercount ="0";
     String text;
 
     long mNow = System.currentTimeMillis();
     Date mDate = new Date(mNow);
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd");
     String formatDate = mFormat.format(mDate);
-
 
     @Nullable
     @Override
@@ -144,28 +127,28 @@ public class Menu1Fragment extends Fragment {
                     isBestSeller = 1;
                     isNewBooks = 0;
                     mCategorySpinner.setSelection(0);
-                    mInterpark.setTextColor(Color.RED);
-                    mLibrary.setTextColor(Color.BLACK);
-                    mAladin.setTextColor(Color.BLACK);
+                    mInterpark.setTextColor(Color.BLACK);
+                    mLibrary.setTextColor(Color.GRAY);
+                    mAladin.setTextColor(Color.GRAY);
                     mNewBooksBtn.setText("새로나온 책");
                     new BookRecoAsyncTask().execute();
                     break;
                 case R.id.btn_aladin:
                     flag = 1;
                     mCategorySpinner.setSelection(0);
-                    mInterpark.setTextColor(Color.BLACK);
-                    mLibrary.setTextColor(Color.BLACK);
-                    mAladin.setTextColor(Color.RED);
+                    mInterpark.setTextColor(Color.GRAY);
+                    mLibrary.setTextColor(Color.GRAY);
+                    mAladin.setTextColor(Color.BLACK);
                     mNewBooksBtn.setText("새로나온 책");
                     new BookRecoAsyncTask().execute();
                     break;
                 case R.id.btn_lib:
                     flag = 2;
-                    mLibrary.setTextColor(Color.RED);
-                    mAladin.setTextColor(Color.BLACK);
-                    mInterpark.setTextColor(Color.BLACK);
+                    mLibrary.setTextColor(Color.BLACK);
+                    mAladin.setTextColor(Color.GRAY);
+                    mInterpark.setTextColor(Color.GRAY);
                     mCategorySpinner.setSelection(0);
-                    mNewBooksBtn.setText("도서관 추천");
+                    mNewBooksBtn.setText("스테디 셀러");
                     new BookRecoAsyncTask().execute();
                     break;
             }
@@ -179,15 +162,15 @@ public class Menu1Fragment extends Fragment {
                 case R.id.btn_recommend_bestseller:
                     isBestSeller = 1;
                     isNewBooks = 0;
-                    mBestSellerBtn.setTextColor(Color.RED);
-                    mNewBooksBtn.setTextColor(Color.BLACK);
+                    mBestSellerBtn.setTextColor(Color.BLACK);
+                    mNewBooksBtn.setTextColor(Color.GRAY);
                     new BookRecoAsyncTask().execute();
                     break;
                 case R.id.btn_recommend_new:
                     isBestSeller = 0;
                     isNewBooks = 1;
-                    mBestSellerBtn.setTextColor(Color.BLACK);
-                    mNewBooksBtn.setTextColor(Color.RED);
+                    mBestSellerBtn.setTextColor(Color.GRAY);
+                    mNewBooksBtn.setTextColor(Color.BLACK);
                     new BookRecoAsyncTask().execute();
                     break;
             }
@@ -234,8 +217,8 @@ public class Menu1Fragment extends Fragment {
             }
         });
 
-        mInterpark.setTextColor(Color.RED);
-        mBestSellerBtn.setTextColor(Color.RED);
+        mInterpark.setTextColor(Color.BLACK);
+        mBestSellerBtn.setTextColor(Color.BLACK);
         mCategorySpinner.setSelection(0);
         mInterpark.setOnClickListener(btnListener);
         mAladin.setOnClickListener(btnListener);
@@ -382,19 +365,20 @@ public class Menu1Fragment extends Fragment {
                 String LibMyKey = "cc993dfdb2bc12abfdad42caf1f79c39b8d59925ec7d53f2f49230cd81e39574";
                 String urlSource = "";
                 String outputStyle = "&format=json";
-                String query = "&startDt=2019-01-01&endDt=2019-09-26";
+                String query = "&startDt=2019-01-01&endDt=";
+                String query_steady = "&startDt=2000-01-01&endDt=";
                 String top30 = "&pageNo=1&pageSize=30";
                 String str, receiveMsg = "";
 
                 try {
 
                     if (isBestSeller == 1) {
-                        urlSource =  "http://www.data4library.kr/api/loanItemSrch?authKey=" + LibMyKey+query+top30;
+                        urlSource =  "http://www.data4library.kr/api/loanItemSrch?authKey=" + LibMyKey+query+formatDate+top30;
                         urlSource += "&kdc=" + Integer.toString(libCategory)+outputStyle  ;
                     } else if (isNewBooks == 1) {
                      //   urlSource =  "http://data4library.kr/api/hotTrend?authKey=" + LibMyKey+"&searchDt="+formatDate;
                       //  urlSource+=outputStyle;
-                        urlSource =  "http://www.data4library.kr/api/loanItemSrch?authKey=" + LibMyKey+query+top30;
+                        urlSource =  "http://www.data4library.kr/api/loanItemSrch?authKey=" + LibMyKey+query_steady+formatDate+top30;
                         urlSource += "&kdc=" + Integer.toString(libCategory)+outputStyle  ;
                     }
 
@@ -425,7 +409,7 @@ public class Menu1Fragment extends Fragment {
                 try {
 
                     JSONArray jarray = new JSONObject(receiveMsg).getJSONObject("response").getJSONArray("docs");
-
+                    String image;
                     for (int i = 0; i < jarray.length(); i++) {
 
                         JSONObject bookItem = jarray.getJSONObject(i).getJSONObject("doc");
@@ -434,7 +418,11 @@ public class Menu1Fragment extends Fragment {
                         String author = "저자 : " + bookItem.getString("authors");
                         String publisher = "출판사 : " + bookItem.getString("publisher");
                         String isbn = "ISBN13 : " + bookItem.getString("isbn13");
-                        String image = bookItem.getString("bookImageURL");
+                        if(bookItem.get("bookImageURL").equals("")){
+                            image = "0";
+                        }else{
+                            image = bookItem.getString("bookImageURL");
+                        }
                         String date= "출판일 : " + bookItem.getString("publication_year");
                         String desc = "도서관에서 제공을 하지 않습니다.";
 

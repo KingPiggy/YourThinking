@@ -74,7 +74,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="글 제목"
-                android:textColor="@color/blackSoft"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:textSize="22sp" />
             <LinearLayout
                 android:layout_width="match_parent"
@@ -115,7 +116,7 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:background="@color/deepGray" />
+                android:background="@color/primaryDeep" />
             <ImageView
                 android:id="@+id/iv_result_photos"
                 android:layout_width="wrap_content"
@@ -144,7 +145,7 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:background="@color/deepGray" />
+                android:background="@color/primaryDeep" />
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_Reply"
                 android:layout_width="match_parent"

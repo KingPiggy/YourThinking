@@ -16,7 +16,7 @@
             android:layout_weight="1"
             android:text="인터파크"
             android:textStyle="bold"
-            android:textSize="17sp"
+            android:textSize="18sp"
             android:background="@color/white"/>
         <View
             android:layout_width="2dp"
@@ -29,7 +29,8 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:text="알라딘"
-            android:textSize="17sp"
+            android:textSize="18sp"
+            android:textColor="@color/gray"
             android:textStyle="bold"
             android:background="@color/white"/>
         <View
@@ -44,6 +45,7 @@
             android:layout_weight="1"
             android:text="도서관 대출"
             android:textSize="17sp"
+            android:textColor="@color/gray"
             android:textStyle="bold"
             android:background="@color/white"/>
 
@@ -65,7 +67,8 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:background="@color/white"
-            android:text="베스트 셀러" />
+            android:text="베스트 셀러"
+            android:textStyle="bold"/>
         <View
             android:layout_width="2dp"
             android:layout_height="50dp"
@@ -78,7 +81,9 @@
             android:layout_weight="1"
             android:layout_toRightOf="@id/btn_recommend_bestseller"
             android:background="@color/white"
-            android:text="새로나온 책" />
+            android:text="새로나온 책"
+            android:textColor="@color/gray"
+            android:textStyle="bold"/>
         <View
             android:layout_width="2dp"
             android:layout_height="50dp"
