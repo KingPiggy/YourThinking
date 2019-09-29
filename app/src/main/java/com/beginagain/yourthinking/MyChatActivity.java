@@ -69,9 +69,28 @@ public class MyChatActivity extends AppCompatActivity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                Toast.makeText(getApplicationContext(), "pos : " + pos, Toast.LENGTH_SHORT).show();
 
                 String chatRoomName = list.get(pos);
+
+                databaseReference.child("mychat").child(uid).addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        if (!dataSnapshot.getKey().isEmpty()) {
+                            list.add(dataSnapshot.getKey());
+                            arrayAdapter.notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {}
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {}
+                });
 
                 Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
                 intent.putExtra("chatRoomName", chatRoomName);
@@ -97,7 +116,6 @@ public class MyChatActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 if (!dataSnapshot.getKey().isEmpty()) {
-                    Log.d("hoon", "hi" + dataSnapshot.getKey());
                     list.add(dataSnapshot.getKey());
                     arrayAdapter.notifyDataSetChanged();
                 }

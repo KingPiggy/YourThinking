@@ -1,11 +1,15 @@
 package com.beginagain.yourthinking.Adapter;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +18,15 @@ import android.widget.Toast;
 
 import com.beginagain.yourthinking.ChatActivity;
 import com.beginagain.yourthinking.Item.ChatRoomItem;
+import com.beginagain.yourthinking.LoginActivity;
 import com.beginagain.yourthinking.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -24,6 +36,8 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.MyView
     ArrayList<Integer> uidCounts;
     int itemLayout;
     int peopleCount = 0;
+
+    private String uid;
 
     public ChatRoomAdapter(Context context, ArrayList<ChatRoomItem> items, ArrayList<Integer> uidCounts, int itemLayout) {
         this.context = context;
@@ -55,17 +69,40 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.MyView
         myViewHolder.mRoomName.setText(item.getRoomTitle());
         myViewHolder.mBookName.setText(item.getBookTitle());
         myViewHolder.mDesc.setText(item.getDesc());
-        myViewHolder.mPeopleCount.setText("참여인원 " + uidCounts.get(position) + "/" + item.getRoomPeopleSetting());
+        myViewHolder.mPeopleCount.setText("참여인원 " + uidCounts.get(position));
         myViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int pos = (int) view.getTag();
                 String chatRoomName = items.get(pos).getRoomTitle();
 
-                if(peopleCount >= items.get(pos).getRoomPeopleSetting()){
-                    Toast.makeText(context, "채팅방 인원이 다 찼습니다.", Toast.LENGTH_SHORT).show();
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user != null) {
+                    uid = user.getUid();
                 }
+                else{
+                    AlertDialog.Builder alert_ex = new AlertDialog.Builder(context);
+                    alert_ex.setMessage("로그인 후 사용가능합니다. 로그인 하시겠습니까?");
 
+                    alert_ex.setPositiveButton("로그인", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent accountIntent = new Intent(context, LoginActivity.class);
+                            context.startActivity(accountIntent);
+                        }
+                    });
+                    alert_ex.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    alert_ex.setTitle("Your Thinking");
+                    AlertDialog alert = alert_ex.create();
+                    alert.show();
+
+                    return;
+                }
                 Intent intent = new Intent(context, ChatActivity.class);
                 intent.putExtra("chatRoomName", chatRoomName);
                 intent.putExtra("count", uidCounts.get(pos));
@@ -98,7 +135,5 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.MyView
             mDesc = (TextView) itemView.findViewById(R.id.text_view_chat_room_item_room_desc);
             mPeopleCount = (TextView) itemView.findViewById(R.id.text_view_chat_room_item_count);
         }
-
-
     }
 }

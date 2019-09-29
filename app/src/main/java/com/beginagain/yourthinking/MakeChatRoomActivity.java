@@ -81,13 +81,6 @@ public class MakeChatRoomActivity extends AppCompatActivity {
                             break;
                         case 3:
                             desc = mEditText.getText().toString();
-                            mTitleText.setText("채팅방 인원을 지정해주세요.");
-                            mEditText.setText("");
-                            mEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
-                            makeSeq++;
-                            break;
-                        case 4:
-                            roomPeopleSetting = Integer.parseInt(mEditText.getText().toString());
                             mEditText.setText("");
                             mOkayBtn.setText("완료");
                             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -128,13 +121,6 @@ public class MakeChatRoomActivity extends AppCompatActivity {
                         break;
                     case 3:
                         desc = mEditText.getText().toString();
-                        mTitleText.setText("채팅방 인원을 지정해주세요.");
-                        mEditText.setText("");
-                        mEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
-                        makeSeq++;
-                        break;
-                    case 4:
-                        roomPeopleSetting = Integer.parseInt(mEditText.getText().toString());
                         mEditText.setText("");
                         mOkayBtn.setText("완료");
                         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -161,11 +147,6 @@ public class MakeChatRoomActivity extends AppCompatActivity {
                 break;
             case 3: //소개 화면에서 Back
                 mTitleText.setText("이야기 나눌 책 제목을 입력해주세요.");
-                mEditText.setText("");
-                makeSeq--;
-                break;
-            case 4:
-                mTitleText.setText("채팅방 소개를 해주세요.");
                 mEditText.setText("");
                 makeSeq--;
                 break;

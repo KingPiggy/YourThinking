@@ -26,13 +26,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
-
-import static android.app.Activity.RESULT_OK;
 
 public class Menu2Fragment extends Fragment {
     View view;
@@ -108,7 +103,6 @@ public class Menu2Fragment extends Fragment {
 
                 ChatRoomItem chatRoomItem = dataSnapshot.child("info").getValue(ChatRoomItem.class);
                 int count = (int) dataSnapshot.child("people").getChildrenCount();
-
 
                 if (chatRoomItem != null) {
                     chatRoomItems.add(chatRoomItem);
