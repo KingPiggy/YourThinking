@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,11 +48,14 @@ public class MenuTop1Fragment  extends Fragment implements View.OnClickListener 
 
     String image, cat, mName;
     RecyclerView mRecyclerView;
-    RecyclerView.LayoutManager layoutManager;
+   // RecyclerView.LayoutManager layoutManager;
     private ArrayList<RecommendBookItem> emptyItems = new ArrayList<RecommendBookItem>();
     private BookRecommendAdapter recyclerAdapter = new BookRecommendAdapter(activity, emptyItems, R.layout.fragment_menu_top1);
 
+
+    ProgressBar mPrPhil, mPrReli, mPrSoc, mPrNat, mPrTec, mPrArt, mPrLang, mPrNovel, mPrHis, mPrEtc;
     int category=0;
+    int recConunt=0;
 
     int max;
     int[] arr = new int[10];
@@ -99,15 +103,35 @@ public class MenuTop1Fragment  extends Fragment implements View.OnClickListener 
                                     etcCount++;
                                 }
                                 mPhil.setText("철학 : "+philCount+"권");
+                                mPrPhil.setMax(count);
+                                mPrPhil.setProgress(philCount);
                                 mReli.setText("종교 : "+reliCount+"권");
+                                mPrReli.setMax(count);
+                                mPrReli.setProgress(reliCount);
                                 mSocial.setText("사회과학 : "+scoialCount+"권");
+                                mPrSoc.setMax(count);
+                                mPrSoc.setProgress(scoialCount);
                                 mNat.setText("자연과학 : "+natCount+"권");
+                                mPrNat.setMax(count);
+                                mPrNat.setProgress(natCount);
                                 mTec.setText("기술과학 : "+tecCount+"권");
+                                mPrTec.setMax(count);
+                                mPrTec.setProgress(tecCount);
                                 mArt.setText("예술 : "+artCount+"권");
+                                mPrArt.setMax(count);
+                                mPrArt.setProgress(artCount);
                                 mLang.setText("언어 : "+langCount+"권");
+                                mPrLang.setMax(count);
+                                mPrLang.setProgress(langCount);
                                 mNovel.setText("문학 : "+novelCount+"권");
+                                mPrNovel.setMax(count);
+                                mPrNovel.setProgress(novelCount);
                                 mHIs.setText("철학 : "+hisCount+"권");
+                                mPrHis.setMax(count);
+                                mPrHis.setProgress(hisCount);
                                 mEtc.setText("기타 : "+etcCount+"권");
+                                mPrEtc.setMax(count);
+                                mPrEtc.setProgress(etcCount);
                             }
                         }
                         arr[0]=philCount;
@@ -126,8 +150,6 @@ public class MenuTop1Fragment  extends Fragment implements View.OnClickListener 
                                 max=arr[i];
                             }
                         }
-
-
                         if(max==philCount){
                             category = 119;
                         }else if(max==reliCount){
@@ -170,15 +192,26 @@ public class MenuTop1Fragment  extends Fragment implements View.OnClickListener 
         mEtc = view.findViewById(R.id.text_view_maraton_statistics_etc);
         mUser = view.findViewById(R.id.text_view_maraton_statistics_user);
 
+        mPrPhil = view.findViewById(R.id.pr_phil);
+        mPrReli = view.findViewById(R.id.pr_reli);
+        mPrSoc = view.findViewById(R.id.pr_social);
+        mPrNat = view.findViewById(R.id.pr_nat);
+        mPrTec = view.findViewById(R.id.pr_tec);
+        mPrArt = view.findViewById(R.id.pr_art);
+        mPrLang = view.findViewById(R.id.pr_lang);
+        mPrNovel = view.findViewById(R.id.pr_novel);
+        mPrHis = view.findViewById(R.id.pr_his);
+        mPrEtc  = view.findViewById(R.id.pr_etc);
+
         mName = user.getDisplayName();
         mUser.setText(mName+"의 독서 통계");
 
         mRecyclerView = view.findViewById(R.id.recycler_maraton_statistics);
-        mRecyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(layoutManager);
+       // mRecyclerView.setHasFixedSize(true);
+       // layoutManager = new LinearLayoutManager(getActivity());
+       // mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(recyclerAdapter);
-        mRecyclerView.setNestedScrollingEnabled(false);
+       // mRecyclerView.setNestedScrollingEnabled(false);
     }
 
     @Override
@@ -230,10 +263,10 @@ public class MenuTop1Fragment  extends Fragment implements View.OnClickListener 
                 }
                 try {
                     JSONArray jarray = new JSONObject(receiveMsg).getJSONArray("item");
-
+                    int recConunt=0;
                     for (int i = 0; i < jarray.length(); i++) {
                         JSONObject bookItem = jarray.getJSONObject(i);
-
+                        recConunt++;
                         String title = bookItem.getString("title");
                         String author = "저자 : " + bookItem.getString("author");
                         String publisher = "출판사 : " + bookItem.getString("publisher");
@@ -241,9 +274,10 @@ public class MenuTop1Fragment  extends Fragment implements View.OnClickListener 
                         String image = bookItem.getString("coverLargeUrl");
                         String date= "출판일 : " + bookItem.getString("pubDate");
                         String desc = bookItem.getString("description");
-
-                        RecommendBookItem recommendBookItem = new RecommendBookItem(title, author, publisher, isbn, image,date, desc);
-                        newItems.add(recommendBookItem);
+                        if(recConunt<=3) {
+                            RecommendBookItem recommendBookItem = new RecommendBookItem(title, author, publisher, isbn, image, date, desc);
+                            newItems.add(recommendBookItem);
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

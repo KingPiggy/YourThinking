@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
                         transaction.replace(R.id.layout_main_frame, menu1Fragment).commitAllowingStateLoss();
                         mToolbarText.setText("도서추천");
                         mPage = "Recommend";
+                        topNavigationView.setVisibility(View.INVISIBLE);
                         break;
                     }
                     case R.id.navigation_menu2: {

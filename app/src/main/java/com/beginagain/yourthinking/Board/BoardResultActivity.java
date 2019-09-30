@@ -342,31 +342,53 @@ public class BoardResultActivity extends AppCompatActivity implements View.OnCli
 
                 break;
             case R.id.btn_board_recommend:
-                mStore.collection("board").document(id).collection("recommend")
-                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                            @Override
-                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                                for (QueryDocumentSnapshot dc : queryDocumentSnapshots) {
-                                    String name = (String) dc.getData().get("name");
-                                    if (mReName.equals(name)) {
-                                        count = 1;
-                                        break;
+                if(mUser.equals("1")) {
+                    mStore.collection("board").document(id).collection("recommend")
+                            .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                @Override
+                                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                                    for (QueryDocumentSnapshot dc : queryDocumentSnapshots) {
+                                        String name = (String) dc.getData().get("name");
+                                        if (mReName.equals(name)) {
+                                            count = 1;
+                                            break;
+                                        }
+                                    }
+                                    if (count == 0) {
+                                        recommendid = mStore.collection("board").document(id).collection("recommend").document().getId();
+                                        Map<String, Object> recommendPost = new HashMap<>();
+                                        recommendPost.put("id", recommendid);
+                                        recommendPost.put("name", mReName);
+                                        recommendPost.put("date", formatDate);
+                                        mStore.collection("board").document(id)
+                                                .collection("recommend").document().set(recommendPost);
+                                        Toast.makeText(BoardResultActivity.this, "추천!", Toast.LENGTH_SHORT).show();
                                     }
                                 }
-                                if (count == 0) {
-                                    recommendid = mStore.collection("board").document(id).collection("recommend").document().getId();
-                                    Map<String, Object> recommendPost = new HashMap<>();
-                                    recommendPost.put("id", recommendid);
-                                    recommendPost.put("name", mReName);
-                                    recommendPost.put("date", formatDate);
-                                    mStore.collection("board").document(id)
-                                            .collection("recommend").document().set(recommendPost);
-                                    Toast.makeText(BoardResultActivity.this, "추천!", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-                if (count == 1) {
-                    Toast.makeText(BoardResultActivity.this, "이미추천!", Toast.LENGTH_SHORT).show();
+                            });
+                    if (count == 1) {
+                        Toast.makeText(BoardResultActivity.this, "이미추천!", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    AlertDialog.Builder alert_ex = new AlertDialog.Builder(BoardResultActivity.this);
+                    alert_ex.setMessage("로그인 후 사용가능합니다. 로그인 하시겠습니까?");
+
+                    alert_ex.setPositiveButton("로그인", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent accountIntent = new Intent(getApplication(), LoginActivity.class);
+                            startActivity(accountIntent);
+                            finish();
+                        }
+                    });
+                    alert_ex.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    alert_ex.setTitle("Your Thinking");
+                    AlertDialog alert = alert_ex.create();
+                    alert.show();
                 }
                 break;
         }

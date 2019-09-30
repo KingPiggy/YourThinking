@@ -141,7 +141,6 @@ public class ChatActivity extends AppCompatActivity {
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_chat);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mExitBtn.setOnClickListener(new View.OnClickListener() {
             @Override

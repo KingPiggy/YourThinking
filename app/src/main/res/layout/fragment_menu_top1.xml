@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:scrollbars="vertical">
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,107 +23,257 @@
             android:textStyle="bold"
             android:textColor="@color/black"/>
 
-        <TextView
-            android:id="@+id/text_view_maraton_statistics_phil"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="철학 : "
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            />
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/text_view_maraton_statistics_phil"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="철학 : "
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+                <ProgressBar
+                    android:id="@+id/pr_phil"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:visibility="visible"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:progressTint="#FF0000"
+                    />
+        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
         <TextView
             android:id="@+id/text_view_maraton_statistics_reli"
-            android:layout_width="match_parent"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
             android:text="종교 : "
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"/>
-        <TextView
-            android:id="@+id/text_view_maraton_statistics_social"
+        <ProgressBar
+            android:id="@+id/pr_reli"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="visible"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:progressTint="#FF9100"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/text_view_maraton_statistics_social"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
             android:text="사회과학 : "
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"/>
-        <TextView
-            android:id="@+id/text_view_maraton_statistics_nat"
+        <ProgressBar
+            android:id="@+id/pr_social"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="visible"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:progressTint="#FFC300"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/text_view_maraton_statistics_nat"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
             android:text="자연과학 : "
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"/>
-        <TextView
-            android:id="@+id/text_view_maraton_statistics_tec"
+        <ProgressBar
+            android:id="@+id/pr_nat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="visible"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:progressTint="#80E12A"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/text_view_maraton_statistics_tec"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
             android:text="기술과학 : "
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"/>
-        <TextView
-            android:id="@+id/text_view_maraton_statistics_art"
+        <ProgressBar
+            android:id="@+id/pr_tec"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="visible"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:progressTint="#0064FF"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/text_view_maraton_statistics_art"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
             android:text="예술 : "
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"/>
-        <TextView
-            android:id="@+id/text_view_maraton_statistics_lang"
+        <ProgressBar
+            android:id="@+id/pr_art"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="visible"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:progressTint="#0000CD"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/text_view_maraton_statistics_lang"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
             android:text="언어 : "
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"/>
-        <TextView
-            android:id="@+id/text_view_maraton_statistics_novel"
+        <ProgressBar
+            android:id="@+id/pr_lang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="visible"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:progressTint="#6A5ACD"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/text_view_maraton_statistics_novel"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
             android:text="문학 : "
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"/>
-        <TextView
-            android:id="@+id/text_view_maraton_statistics_his"
+        <ProgressBar
+            android:id="@+id/pr_novel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="visible"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:progressTint="#FF0000"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/text_view_maraton_statistics_his"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
             android:text="역사 : "
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"/>
-        <TextView
-            android:id="@+id/text_view_maraton_statistics_etc"
+        <ProgressBar
+            android:id="@+id/pr_his"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="visible"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:progressTint="#FF0000"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/text_view_maraton_statistics_etc"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
             android:text="기타 : "
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"/>
+        <ProgressBar
+            android:id="@+id/pr_etc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="visible"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:progressTint="#FF0000"
+            />
+    </LinearLayout>
 
         <View
             android:id="@+id/view_result_border2"
@@ -145,8 +295,8 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_maraton_statistics"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_marginBottom="60dp"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
     </LinearLayout>
-
-
 </ScrollView>
