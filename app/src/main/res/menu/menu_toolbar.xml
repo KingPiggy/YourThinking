@@ -5,6 +5,13 @@
     tools:context=".MainActivity">
 
     <item
+        android:id="@+id/recommend_icon"
+        android:icon="@drawable/ic_recommend"
+        android:title="추천"
+        android:visible="false"
+        app:showAsAction="ifRoom"/>
+
+    <item
         android:id="@+id/notice_icon"
         android:icon="@drawable/ic_notice"
         android:title="공지사항"

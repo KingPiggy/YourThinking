@@ -94,8 +94,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:background="@color/white"
+                android:drawableStart="@drawable/ic_board"
+                android:drawableTint="@color/green"
                 android:gravity="left|center_vertical"
-                android:text="내가 쓴 글"
+                android:text=" 내가 쓴 글"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
@@ -106,18 +108,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:background="@color/white"
+                android:drawableStart="@drawable/ic_chat"
+                android:drawableTint="@color/blue"
                 android:gravity="left|center_vertical"
-                android:text="참여한 채팅방"
+                android:text=" 참여한 채팅방"
                 android:textSize="15sp"
                 android:textColor="@color/black" />
             <Button
                 android:id="@+id/btn_account_myMaraton"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:drawableStart="@drawable/ic_maraton"
+                android:drawableTint="@color/yellow"
                 android:gravity="left|center_vertical"
                 android:layout_marginLeft="10dp"
-                android:text="참여한 마라톤"
+                android:text=" 참여한 마라톤"
                 android:textSize="15sp"
                 android:textColor="@color/black" />
         </LinearLayout>
@@ -148,8 +155,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:background="@color/white"
+                android:drawableStart="@drawable/ic_photo_camera"
+                android:drawableTint="@color/purple"
                 android:gravity="left|center_vertical"
-                android:text="프로필 이미지 변경"
+                android:text=" 프로필 이미지 변경"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
@@ -160,8 +169,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:background="@color/white"
+                android:drawableStart="@drawable/ic_logout"
+                android:drawableTint="@color/orange"
                 android:gravity="left|center_vertical"
-                android:text="로그아웃"
+                android:text=" 로그아웃"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
@@ -172,8 +183,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:background="@color/white"
+                android:drawableStart="@drawable/ic_clear"
                 android:gravity="left|center_vertical"
-                android:text="회원탈퇴"
+                android:text=" 회원탈퇴"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
         </LinearLayout>

@@ -16,6 +16,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -44,6 +46,7 @@ public class SearchBoardActivity extends AppCompatActivity implements View.OnCli
     private ImageButton btnSearch;
     String text;
     String spinnercount =null;
+    Spinner spinner;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,16 +60,48 @@ public class SearchBoardActivity extends AppCompatActivity implements View.OnCli
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        RadioGroup rg = (RadioGroup)findViewById(R.id.radioGroup);
+        RadioButton rbRec=(RadioButton)findViewById(R.id.rg_btn1);
+        RadioButton rbBoard=(RadioButton)findViewById(R.id.rg_btn2);
+        RadioButton rbChat=(RadioButton)findViewById(R.id.rg_btn3);
+        RadioButton rbMaraton=(RadioButton)findViewById(R.id.rg_btn4);
+
+        spinner = (Spinner)findViewById(R.id.spinner_search);
+
+        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.rg_btn1:
+                        ArrayAdapter adapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.bookSearch,android.R.layout.simple_spinner_item);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinner.setAdapter(adapter);
+                        break;
+                    case R.id.rg_btn2:
+                        ArrayAdapter boardAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.search,android.R.layout.simple_spinner_item);
+                        boardAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinner.setAdapter(boardAdapter);
+                        break;
+                    case R.id.rg_btn3:
+                        ArrayAdapter chatAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.chatSearch,android.R.layout.simple_spinner_item);
+                        chatAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinner.setAdapter(chatAdapter);
+                        break;
+                    case R.id.rg_btn4:
+                        ArrayAdapter maratonAdapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.maratonSearch,android.R.layout.simple_spinner_item);
+                        maratonAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinner.setAdapter(maratonAdapter);
+                        break;
+
+                }
+            }
+        });
+
         searchRecyclerView=findViewById(R.id.recycler_search_user);
         searchRecyclerView.clearOnChildAttachStateChangeListeners();
         searchRecyclerView.addItemDecoration(new DividerItemDecoration(getApplication(), 1));
         editSearch = (EditText)findViewById(R.id.et_search);
         btnSearch = (ImageButton)findViewById(R.id.btn_search_data);
-
-        Spinner spinner = (Spinner)findViewById(R.id.spinner_search);
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(this,R.array.search,android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override

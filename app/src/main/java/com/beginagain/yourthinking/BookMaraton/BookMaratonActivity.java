@@ -87,13 +87,11 @@ public class BookMaratonActivity extends AppCompatActivity {
     }
 
     public void Init() {
-        mBookTitle = findViewById(R.id.et_maraton_search);
-        mBtnSearch = findViewById(R.id.btn_maraton_search);
+        mBookTitle = findViewById(R.id.et_maraton_add_search);
+        mBtnSearch = findViewById(R.id.btn_maraton_add_search);
 
         mMaratonRecyclerView = findViewById(R.id.recycler_maraton_search);
-        mMaratonRecyclerView.clearOnChildAttachStateChangeListeners();
-        mMaratonRecyclerView.addItemDecoration(new DividerItemDecoration(getApplication(), 1));
-        layoutManager = new LinearLayoutManager(this);
+        layoutManager = new LinearLayoutManager(getApplication());
         mMaratonRecyclerView.setLayoutManager(layoutManager);
         mMaratonRecyclerView.setAdapter(recyclerAdapter);
         mMaratonRecyclerView.setNestedScrollingEnabled(false);
@@ -123,7 +121,7 @@ public class BookMaratonActivity extends AppCompatActivity {
             try {
 
                 urlSource = "http://book.interpark.com/api/search.api?key=" + myKey;
-                urlSource += "&query=" + image +iec +queryType+ "&output=" + outputStyle;
+                urlSource += "&query=" + image+"&maxResults=50&output="+ outputStyle;
                 URL url = new URL(urlSource);
 
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();

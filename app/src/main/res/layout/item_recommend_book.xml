@@ -9,11 +9,13 @@
         cardCornerRadius="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="2dp">
+        app:cardElevation="2dp"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/primarysetting">
 
             <ImageView
                 android:id="@+id/iv_recommend_item_thumbnail"

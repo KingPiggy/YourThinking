@@ -22,12 +22,45 @@
             android:textStyle="bold"
             android:textSize="20sp"/>
     </android.support.v7.widget.Toolbar>
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_below="@id/toolbar_search"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/rg_btn1"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="도서추천"
+            android:checked="true"/>
+        <RadioButton
+            android:id="@+id/rg_btn2"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="게시판"/>
+        <RadioButton
+            android:id="@+id/rg_btn3"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="채팅방"/>
+        <RadioButton
+            android:id="@+id/rg_btn4"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="마라톤"/>
+    </RadioGroup>
+
 
     <LinearLayout
         android:id="@+id/ll_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar_search"
+        android:layout_below="@id/radioGroup"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:orientation="horizontal">

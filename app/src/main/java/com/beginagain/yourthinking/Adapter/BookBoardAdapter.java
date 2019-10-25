@@ -45,6 +45,7 @@ public class BookBoardAdapter extends RecyclerView.Adapter<BookBoardAdapter.Main
         holder.boardNameTextView.setText(data.getName());
         holder.boardTitleTextView.setText(data.getTitle());
         holder.boardDateTextView.setText(data.getDate());
+        holder.boardContentTextView.setText(data.getContents());
         holder.boardRecommendTextView.setText(data.getRecommend());
         Picasso.get().load(data.getImage()).into(holder.boardImageView);
     }
@@ -63,6 +64,7 @@ public class BookBoardAdapter extends RecyclerView.Adapter<BookBoardAdapter.Main
         public TextView boardNameTextView;
         public TextView boardDateTextView;
         public TextView boardRecommendTextView;
+        public TextView boardContentTextView;
         public ImageView boardImageView;
 
         public MainViewHolder(View itemView) {
@@ -71,6 +73,7 @@ public class BookBoardAdapter extends RecyclerView.Adapter<BookBoardAdapter.Main
             boardTitleTextView = itemView.findViewById(R.id.text_view_board_item_title);
             boardDateTextView = itemView.findViewById(R.id.text_view_board_item_time);
             boardRecommendTextView = itemView.findViewById(R.id.text_view_board_item_recommend);
+            boardContentTextView = itemView.findViewById(R.id.text_view_board_item_content);
             boardImageView = itemView.findViewById(R.id.iv_board_item_thumbnail);
 
             itemView.setOnClickListener(new View.OnClickListener() {

@@ -13,23 +13,51 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="match_parent"
+                <RelativeLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="당신의 독서마라톤"
-                    android:layout_marginBottom="10dp"
-                    android:textSize="18sp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"/>
+                    android:layout_below="@id/ll_board">
+                    <TextView
+                        android:id="@+id/tv_maraton_search"
+                        android:layout_width="70dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="5dp"
+                        android:text="제목"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="18dp">
+                    </TextView>
+
+                    <EditText
+                        android:id="@+id/et_maraton_search"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toLeftOf="@id/btn_maraton_search_data"
+                        android:layout_toRightOf="@id/tv_maraton_search"
+                        android:ems="6"
+                        android:imeOptions="actionSearch"
+                        android:lines="1"
+                        android:singleLine="true" />
+
+                    <ImageButton
+                        android:id="@+id/btn_maraton_search_data"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/ic_search"
+                        android:text="검색" />
+
+                </RelativeLayout>
                 <View
                     android:id="@+id/view_maraton_border"
                     android:layout_width="match_parent"
@@ -37,6 +65,8 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
                     android:background="@color/layoutBorder" />
+
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_maraton_doing"
                     android:layout_width="match_parent"

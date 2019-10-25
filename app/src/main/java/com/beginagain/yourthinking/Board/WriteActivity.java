@@ -54,7 +54,8 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
     private ImageView imageView;
 
     private String id, mCurrentPhotoPath;
-    private String flag, title, Date, image, author, category, company, isbn, pubDate;
+    private String title, Date, image, author, category, company, isbn, pubDate;
+    private String flag=null;
 
     private Uri photoURI, albumURI;
 
@@ -230,7 +231,7 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
                     // BookMaratonHistoryInfoActivity 에서 받아오는것
                     Intent intent = getIntent();
                     flag =intent.getStringExtra("Flag");
-                    if(flag.equals("1")) {
+                    if(flag!=null) {
                         title = intent.getStringExtra("Title");
                         image = intent.getStringExtra("Image");
                         author = intent.getStringExtra("Author");

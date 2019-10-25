@@ -10,4 +10,11 @@
         <item >저자</item>
         <item >출판사</item>
     </string-array>>
+    <string-array name="chatSearch">
+        <item >작성자</item>
+        <item >제목</item>
+    </string-array>>
+    <string-array name="maratonSearch">
+        <item >제목</item>
+    </string-array>>
 </resources>

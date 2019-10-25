@@ -18,4 +18,11 @@
     <color name="palletePink">#eea990</color>
     <color name="layoutBorder">#CCCCCC</color>
 
+    <color name="green">#01DF01</color>
+    <color name="purple">#B404AE</color>
+    <color name="blue">#0101DF</color>
+    <color name="red">#FF0000</color>
+    <color name="orange">#FF4000</color>
+    <color name="yellow">#FFFF00</color>
+
 </resources>

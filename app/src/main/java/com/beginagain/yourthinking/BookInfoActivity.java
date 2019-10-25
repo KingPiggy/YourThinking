@@ -72,7 +72,7 @@ public class BookInfoActivity  extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 } else {
-                    AlertDialog.Builder alert_ex = new AlertDialog.Builder(getApplicationContext());
+                    AlertDialog.Builder alert_ex = new AlertDialog.Builder(BookInfoActivity.this);
                     alert_ex.setMessage("로그인 후 사용가능합니다. 로그인 하시겠습니까?");
 
                     alert_ex.setPositiveButton("로그인", new DialogInterface.OnClickListener() {

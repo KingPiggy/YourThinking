@@ -47,7 +47,7 @@ public class Menu1Fragment extends Fragment {
 
     MainActivity activity;
 
-    Spinner mCategorySpinner, mSiteSpinner;
+    Spinner mCategorySpinner, mSiteSpinner, mSearchSpinner;
     Button mBestSellerBtn, mNewBooksBtn;
 
     RecyclerView mRecyclerView;
@@ -120,15 +120,13 @@ public class Menu1Fragment extends Fragment {
 
         mCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String item = parent.getItemAtPosition(position).toString();
-
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 if (flag == 0) {
-                    interparkCategory = intetpark_CategoryNo[position];
+                    interparkCategory = intetpark_CategoryNo[pos];
                 } else if (flag == 1) {
-                    aladinCategory = aladin_CategoryNo[position];
-                } else if (flag == 2) {
-                    libCategory = lib_CategoryNo[position];
+                    aladinCategory = aladin_CategoryNo[pos];
+                } else if (flag == 2){
+                    libCategory = lib_CategoryNo[pos];
                 }
                 new BookRecoAsyncTask().execute();
             }
@@ -137,7 +135,23 @@ public class Menu1Fragment extends Fragment {
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
+        mSearchSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String item = parent.getItemAtPosition(position).toString();
 
+                if (position == 0) {
+                    spinnercount="0";
+                } else if (position == 1) {
+                    spinnercount="1";
+                } else if (position == 2) {
+                    spinnercount="2";
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
         mRecyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
@@ -183,6 +197,7 @@ public class Menu1Fragment extends Fragment {
         mSiteSpinner = (Spinner) view.findViewById(R.id.spinner_site_category);
         editBookSearch = (EditText) view.findViewById(R.id.et_book_search);
         btnBookSearch = (ImageButton) view.findViewById(R.id.btn_book_search_data);
+        mSearchSpinner = (Spinner)view.findViewById(R.id.spinner_book_search);
 
         mBestSellerBtn.setSelected(true);
 
@@ -195,6 +210,7 @@ public class Menu1Fragment extends Fragment {
                 } else {
                     switch (spinnercount) {
                         case "0":
+                            flag = 0;
                             searchFlag = 0;
                             isBestSeller = 2;
                             isNewBooks = 2;
@@ -202,12 +218,18 @@ public class Menu1Fragment extends Fragment {
 
                             break;
                         case "1":
+                            flag = 0;
                             searchFlag = 1;
+                            isBestSeller = 2;
+                            isNewBooks = 2;
                             new BookRecoAsyncTask().execute();
 
                             break;
                         case "2":
+                            flag = 0;
                             searchFlag = 2;
+                            isBestSeller = 2;
+                            isNewBooks = 2;
                             new BookRecoAsyncTask().execute();
 
                             break;
@@ -246,11 +268,15 @@ public class Menu1Fragment extends Fragment {
                         urlSource = "http://book.interpark.com/api/newBook.api?key=" + myKey;
                         urlSource += "&categoryId=" + Integer.toString(interparkCategory) + "&output=" + outputStyle;
                     } else if (searchFlag == 0) {
-                        urlSource += "http://book.interpark.com/api/search.api?key=" + myKey + "&query=" + text;
+                        urlSource += "http://book.interpark.com/api/search.api?key=" + myKey + "&query=" + text+"&maxResults=50";
                         urlSource += "&output=" + outputStyle;
-
+                    }else if (searchFlag == 1) {
+                        urlSource += "http://book.interpark.com/api/search.api?key=" + myKey + "&query=" + text+"&queryType=author"+"&maxResults=50";
+                        urlSource += "&output=" + outputStyle;
+                    }else if (searchFlag == 2) {
+                        urlSource += "http://book.interpark.com/api/search.api?key=" + myKey + "&query=" + text+"&queryType=publisher"+"&maxResults=50";
+                        urlSource += "&output=" + outputStyle;
                     }
-
                     URL url = new URL(urlSource);
 
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -427,12 +453,6 @@ public class Menu1Fragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            } else if (searchFlag == 0) {
-
-            } else if (searchFlag == 1) {
-
-            } else if (searchFlag == 2) {
-
             }
 
             return newItems;

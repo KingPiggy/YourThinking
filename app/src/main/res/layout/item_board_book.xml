@@ -8,16 +8,20 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="2dp">
+        cardCornerRadius="2dp"
+        app:cardElevation="2dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="85dp"
+            android:background="@drawable/primarysetting">
 
             <ImageView
                 android:id="@+id/iv_board_item_thumbnail"
-                android:layout_width="65dp"
-                android:layout_height="80dp"
+                android:layout_width="55dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="5dp"
+                android:layout_centerVertical="true"
                 android:scaleType="fitXY" />
 
             <TextView
@@ -30,19 +34,42 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="반갑습니다하이요강찬종입니다"
-                android:textColor="@color/blackSoft"
+                android:textColor="@color/black"
                 android:textSize="17dp"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
+            <TextView
+                android:id="@+id/text_view_board_item_content"
+                android:layout_width="230dp"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/iv_board_item_thumbnail"
+                android:layout_below="@id/text_view_board_item_title"
+                android:layout_marginTop="3dp"
+                android:layout_marginLeft="10dp"
+                android:text="반갑습니다하이요강찬종입니다"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/blackSoft"
+                android:textSize="12dp"
+                tools:ignore="HardcodedText"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/text_view_board_item_title"
+                android:layout_below="@id/text_view_board_item_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="3dp"
                 android:layout_toRightOf="@id/iv_board_item_thumbnail"
                 android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/text_view_board_item_time"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text=" 00-00 00:00 "
+                    android:textColor="@color/gray"
+                    android:textSize="11dp" />
 
                 <TextView
                     android:id="@+id/text_view_board_item_name"
@@ -52,18 +79,11 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="Name"
-                    android:textColor="@color/blackSoft"
-                    android:textSize="12dp"
+                    android:textColor="@color/gray"
+                    android:textSize="11dp"
                     tools:ignore="HardCodedText" />
 
-                <TextView
-                    android:id="@+id/text_view_board_item_time"
-                    android:layout_width="110dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text=" 00-00 00:00 "
-                    android:textColor="@color/blackSoft"
-                    android:textSize="12dp" />
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -74,11 +94,11 @@
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:drawableStart="@drawable/ic_thumb_up"
+                        android:drawableStart="@drawable/ic_favorite_border"
                         android:gravity="center"
                         android:text="0"
-                        android:textColor="@color/blackSoft"
-                        android:textSize="12dp" />
+                        android:textColor="#D61F20"
+                        android:textSize="11dp" />
                 </RelativeLayout>
             </LinearLayout>
         </RelativeLayout>

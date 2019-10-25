@@ -4,7 +4,7 @@
     android:id="@+id/fragment_menu2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightGray">
+    android:background="@color/white">
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floating_chat_add"
@@ -15,7 +15,7 @@
         android:layout_marginRight="15dp"
         android:layout_marginBottom="15dp"
         android:backgroundTint="@color/primary"
-        android:src="@drawable/ic_add"
+        android:src="@drawable/ic_edit"
         app:borderWidth="0dp" />
 
     <android.support.v7.widget.RecyclerView

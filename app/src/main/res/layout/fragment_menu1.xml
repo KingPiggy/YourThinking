@@ -54,7 +54,7 @@
             android:layout_weight="1"
             android:background="@drawable/selector_btn_clip"
             android:text="새로나온 책"
-            android:textColor="@color/blackSoft"
+            android:textColor="@color/gray"
             android:textSize="15dp" />
 
         <Spinner

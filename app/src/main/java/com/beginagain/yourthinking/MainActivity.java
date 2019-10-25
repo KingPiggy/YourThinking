@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.beginagain.yourthinking.Board.SearchBoardActivity;
 import com.beginagain.yourthinking.MenuFragment.Menu1Fragment;
 import com.beginagain.yourthinking.MenuFragment.Menu2Fragment;
 import com.beginagain.yourthinking.MenuFragment.Menu3Fragment;
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         // 만들 툴바를 가져와 셋팅한다
         up_toolbar = (Toolbar) findViewById(R.id.up_toolbar);
         mToolbarText = (TextView)findViewById(R.id.text_view_pageTitle);
+        MenuItem item = up_toolbar.findViewById(R.id.recommend_icon);
 
         setSupportActionBar(up_toolbar);
 
@@ -97,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
                         mToolbarText.setText("독서마라톤");
                         mPage = "MaratonPage";
                         topNavigationView.setVisibility(View.VISIBLE);
+                        up_toolbar.getMenu().hasVisibleItems();
                         break;
                     }
                     case R.id.navigation_top_menu2:{
@@ -119,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
                         transaction.replace(R.id.layout_main_frame, menu1Fragment).commitAllowingStateLoss();
                         mToolbarText.setText("도서추천");
                         mPage = "Recommend";
+                        item.setVisible(true);
                         topNavigationView.setVisibility(View.INVISIBLE);
                         break;
                     }
@@ -179,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if (index == 2) {
             getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu2Fragment).commit();
+            mToolbarText.setText("채팅방");
             bottomNavigationView.setSelectedItemId(R.id.navigation_menu2);
         }
         if (index == 3) {
@@ -244,6 +250,19 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("user","0");
                 startActivity(intent);
                 finish();
+                return true;
+            case R.id.recommend_icon:
+
+
+                /**
+                Intent searchintent = new Intent(this, NoticeActivity.class);
+                if(mAuth.getCurrentUser()!=null)
+                    searchintent.putExtra("user", "1");
+                else
+                    intent.putExtra("user","0");
+                startActivity(intent);
+                finish();
+                 **/
                 return true;
         }
         return false;

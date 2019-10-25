@@ -246,7 +246,7 @@
             android:layout_weight="1"
             android:visibility="visible"
             style="?android:attr/progressBarStyleHorizontal"
-            android:progressTint="#FF0000"
+            android:progressTint="#FF9100"
             />
     </LinearLayout>
     <LinearLayout
@@ -271,7 +271,7 @@
             android:layout_weight="1"
             android:visibility="visible"
             style="?android:attr/progressBarStyleHorizontal"
-            android:progressTint="#FF0000"
+            android:progressTint="#FFC300"
             />
     </LinearLayout>
 
