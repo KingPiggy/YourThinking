@@ -1,19 +1,26 @@
 package com.beginagain.yourthinking.MenuFragment;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 
 import com.beginagain.yourthinking.Adapter.ChatRoomAdapter;
@@ -26,8 +33,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Menu2Fragment extends Fragment {
     View view;
@@ -42,6 +54,11 @@ public class Menu2Fragment extends Fragment {
     private ArrayList<ChatRoomItem> chatRoomItems = new ArrayList<>();
     private ArrayList<Integer> uidCounts = new ArrayList<>();
 
+    private EditText editSearch;
+    private ImageButton mSearchBtn;
+    private int idx;
+    private HashMap<String, Integer> map;
+    private String keySet[];
     MainActivity activity;
 
     @Nullable
@@ -68,6 +85,61 @@ public class Menu2Fragment extends Fragment {
             }
         });
 
+        mSearchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String searchStr  = editSearch.getText().toString();
+                map = new HashMap<>();
+
+                for (ChatRoomItem c : chatRoomItems){
+                    if(c.getRoomTitle().contains(searchStr)){
+                        map.put(c.getRoomTitle(), chatRoomItems.indexOf(c));
+                    }
+
+                }
+
+                idx = 0;
+                keySet = new String[map.size()];
+                for (Map.Entry<String, Integer> mapEntry : map.entrySet()) {
+                    keySet[idx] = mapEntry.getKey();
+                    idx++;
+                }
+
+                final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setTitle("검색 결과")        // 제목 설정
+                        .setCancelable(true)        // 뒤로 버튼 클릭시 취소 가능 설정
+                        .setItems(keySet, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int pos) {
+                                String selectedTitle = keySet[pos];
+                                idx = map.get(selectedTitle);
+
+                                mRecyclerView.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mRecyclerView.scrollToPosition(idx);
+                                    }
+                                });
+                            }
+                        });
+
+                AlertDialog dialog = builder.create();    // 알림창 객체 생성
+                dialog.show();    // 알림창 띄우기
+            }
+        });
+
+        editSearch.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
+                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(editSearch.getWindowToken(), 0);
+                        mSearchBtn.performClick();
+                }
+                return false;
+            }
+        });
+
         adapter.notifyDataSetChanged();
 
         return view;
@@ -90,6 +162,8 @@ public class Menu2Fragment extends Fragment {
     void init() {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_make_chat_chatlist);
         mFloatingActionButton = (FloatingActionButton) view.findViewById(R.id.floating_chat_add);
+        editSearch = (EditText) view.findViewById(R.id.et_menu2_search);
+        mSearchBtn = (ImageButton) view.findViewById(R.id.btn_menu2_search);
     }
 
     private void showChatList() {

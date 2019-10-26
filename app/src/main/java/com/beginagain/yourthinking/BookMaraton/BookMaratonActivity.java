@@ -1,12 +1,7 @@
 package com.beginagain.yourthinking.BookMaraton;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
+
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -17,19 +12,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.beginagain.yourthinking.Adapter.BookApiAdapter;
 import com.beginagain.yourthinking.Adapter.BookMaratonAdapter;
 import com.beginagain.yourthinking.Item.MaratonBookItem;
-import com.beginagain.yourthinking.Item.RecommendBookItem;
 import com.beginagain.yourthinking.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -45,11 +33,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Locale;
 
 public class BookMaratonActivity extends AppCompatActivity {
     private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
