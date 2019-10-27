@@ -11,34 +11,32 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 
 import com.beginagain.yourthinking.Adapter.ChatRoomAdapter;
+import com.beginagain.yourthinking.ChatActivity;
 import com.beginagain.yourthinking.Item.ChatRoomItem;
 import com.beginagain.yourthinking.MainActivity;
 import com.beginagain.yourthinking.MakeChatRoomActivity;
 import com.beginagain.yourthinking.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Menu2Fragment extends Fragment {
@@ -59,6 +57,8 @@ public class Menu2Fragment extends Fragment {
     private int idx;
     private HashMap<String, Integer> map;
     private String keySet[];
+    private Integer ValueSet[];
+    private String uid;
     MainActivity activity;
 
     @Nullable
@@ -95,13 +95,15 @@ public class Menu2Fragment extends Fragment {
                     if(c.getRoomTitle().contains(searchStr)){
                         map.put(c.getRoomTitle(), chatRoomItems.indexOf(c));
                     }
-
                 }
 
                 idx = 0;
                 keySet = new String[map.size()];
+                ValueSet = new Integer[map.size()];
+
                 for (Map.Entry<String, Integer> mapEntry : map.entrySet()) {
                     keySet[idx] = mapEntry.getKey();
+                    ValueSet[idx] = mapEntry.getValue();
                     idx++;
                 }
 
@@ -112,14 +114,21 @@ public class Menu2Fragment extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int pos) {
                                 String selectedTitle = keySet[pos];
+                                int selectedIdx = ValueSet[pos];
                                 idx = map.get(selectedTitle);
 
-                                mRecyclerView.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        mRecyclerView.scrollToPosition(idx);
-                                    }
-                                });
+                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                if (user != null) {
+                                    uid = user.getUid();
+                                }
+                                else{
+                                    Toast.makeText(getContext(), "로그인 후 사용가능합니다.", Toast.LENGTH_SHORT).show();
+                                }
+
+                                Intent intent = new Intent(getContext(), ChatActivity.class);
+                                intent.putExtra("chatRoomName", selectedTitle);
+                                intent.putExtra("count", uidCounts.get(selectedIdx));
+                                getContext().startActivity(intent);
                             }
                         });
 
